@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafetyOfficer Web App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <!-- Loading Spinner -->
+    <div class="loading-overlay" id="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading SafetyOfficer App...</p>
+    </div>
+
+    <!-- Login/Register Screen -->
+    <div class="login-screen" id="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <h2>SafetyOfficer App</h2>
+                <p>Please login or register to continue</p>
+            </div>
+            
+            <div class="login-tabs">
+                <div class="login-tab active" data-tab="login">Login</div>
+                <div class="login-tab" data-tab="register">Register</div>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="main-login-form" class="login-form active">
+                <div class="form-group">
+                    <label for="main-login-email">Email or Username</label>
+                    <input type="text" id="main-login-email" required>
+                    <div class="error-message" id="main-login-email-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="main-login-password">Password</label>
+                    <input type="password" id="main-login-password" required>
+                    <div class="error-message" id="main-login-password-error"></div>
+                </div>
+                
+                <button type="submit" style="width: 100%;">Login</button>
+            </form>
+            
+            <!-- Registration Form -->
+            <form id="main-register-form" class="login-form">
+                <div class="form-group">
+                    <label for="main-first-name">First Name</label>
+                    <input type="text" id="main-first-name" required>
+                    <div class="error-message" id="main-first-name-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="main-last-name">Last Name</label>
+                    <input type="text" id="main-last-name" required>
+                    <div class="error-message" id="main-last-name-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="main-email">Email</label>
+                    <input type="email" id="main-email" required>
+                    <div class="error-message" id="main-email-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="main-password">Password</label>
+                    <input type="password" id="main-password" required>
+                    <div class="error-message" id="main-password-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="main-position">Position</label>
+                    <select id="main-position" required>
+                        <option value="">Select Position</option>
+                        <option value="supervisor">Supervisor</option>
+                        <option value="miner">Miner</option>
+                        <option value="safetyofficer">Safety Officer</option>
+                    </select>
+                    <div class="error-message" id="main-position-error"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="main-employee-number">Employee Number (Auto-generated)</label>
+                    <input type="text" id="main-employee-number" readonly>
+                </div>
+                
+                <div class="form-group">
+                    <label for="main-username">Username (Auto-generated)</label>
+                    <input type="text" id="main-username" readonly>
+                </div>
+                
+                <button type="submit" style="width: 100%;">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Application Content (Hidden until logged in) -->
+    <div class="app-content" id="app-content">
+        <div class="container">
+            <header>
+                <div class="app-title">
+                    <div class="logo">SafetyOfficerApp</div>
+                    <div id="header-right">
+                        <div id="user-info" class="user-info">
+                            <div class="user-avatar" id="user-avatar">U</div>
+                            <div>
+                                <div id="user-display-name">User</div>
+                                <div id="user-role" style="font-size: 12px;">Role</div>
+                            </div>
+                        </div>
+                        <div class="auth-buttons">
+                            <button class="auth-btn" id="logout-btn">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="main-content">
+                <div class="sidebar">
+                    <h3>Modules</h3>
+                    <ul class="module-list">
+                        <li class="module-item active" data-target="pre-shift">Pre-Shift Roll Call</li>
+                        <li class="module-item" data-target="checklists">Safety Checklists</li>
+                        <li class="module-item" data-target="hazards">Hazard Reporting</li>
+                        <li class="module-item" data-target="reports">Reports & Data</li>
+                    </ul>
+                    
+                    <div class="data-actions">
+                        <button id="export-btn" class="btn-export">Export Data</button>
+                        <button id="clear-btn" class="btn-clear">Clear Data</button>
+                    </div>
+                </div>
+                
+                <div class="content-area">
+                    <!-- Pre-Shift Module -->
+                    <div id="pre-shift" class="module-content active">
+                        <h2>Pre-Shift Roll Call</h2>
+                        <div class="form-group">
+                            <label for="worker-id">Worker ID</label>
+                            <input type="text" id="worker-id" placeholder="Enter your worker ID">
+                        </div>
+                        <div class="form-group">
+                            <label for="supervisor">Supervisor</label>
+                            <input type="text" id="supervisor" placeholder="Supervisor name">
+                        </div>
+                        <div class="form-group">
+                            <label for="shift">Shift</label>
+                            <select id="shift">
+                                <option value="day">Day Shift</option>
+                                <option value="night">Night Shift</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" id="location" placeholder="Mine section/location">
+                        </div>
+                        <button id="submit-rollcall">Submit Roll Call</button>
+                    </div>
+                    
+                    <!-- Checklists Module -->
+                    <div id="checklists" class="module-content">
+                        <h2>Safety Checklists</h2>
+                        <div class="form-group">
+                            <label for="checklist-type">Checklist Type</label>
+                            <select id="checklist-type">
+                                <option value="pre_shift_ppe">Pre-Shift PPE Inspection</option>
+                                <option value="equipment">Equipment Safety Check</option>
+                                <option value="area">Work Area Inspection</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Jobs/To-Do List Section -->
+                        <div class="checklist-section">
+                            <h3 class="checklist-header">Jobs/To-Do List</h3>
+                            <div class="form-group">
+                                <label for="job-description">Description</label>
+                                <textarea id="job-description" rows="3" placeholder="Describe the tasks to be completed..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <!-- PPE List Section -->
+                        <div class="checklist-section">
+                            <h3 class="checklist-header">PPE List</h3>
+                            <div class="checklist-grid">
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="hearing-protection" checked>
+                                    <label for="hearing-protection">Hearing Protection</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="life-jacket">
+                                    <label for="life-jacket">Life Jacket</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="safety-harness" checked>
+                                    <label for="safety-harness">Safety Harness</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="respirator">
+                                    <label for="respirator">Respirator</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="welding-apron">
+                                    <label for="welding-apron">Welding Apron</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="welding-helmet" checked>
+                                    <label for="welding-helmet">Welding Helmet</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="leather-gloves">
+                                    <label for="leather-gloves">Leather Gloves</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="reflective-vest">
+                                    <label for="reflective-vest">Reflective Vest</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="overalls">
+                                    <label for="overalls">Overalls</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="gum-boots">
+                                    <label for="gum-boots">Gum Boots</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="safety-boots">
+                                    <label for="safety-boots">Safety Boots</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="gloves">
+                                    <label for="gloves">Gloves</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="biff">
+                                    <label for="biff">Biff</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="dust-mask">
+                                    <label for="dust-mask">Dust Mask</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="goggles">
+                                    <label for="goggles">Goggles</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="hard-hat">
+                                    <label for="hard-hat">Hard Hat</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="scsr">
+                                    <label for="scsr">SCSR</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="gdi-instrument">
+                                    <label for="gdi-instrument">GDI Instrument</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="lamp">
+                                    <label for="lamp">Lamp</label>
+                                </div>
+                                <div class="checklist-item">
+                                    <input type="checkbox" id="other-ppe">
+                                    <label for="other-ppe">Other</label>
+                                </div>
+                            </div>
+                            <div class="other-input" id="other-ppe-input">
+                                <input type="text" id="other-ppe-text" placeholder="Specify other PPE">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="checklist-notes">Additional Notes</label>
+                            <textarea id="checklist-notes" rows="3" placeholder="Additional observations..."></textarea>
+                        </div>
+                        
+                        <button id="submit-checklist">Submit Checklist</button>
+                    </div>
+                    
+                    <!-- Hazards Module -->
+                    <div id="hazards" class="module-content">
+                        <h2>Hazard Reporting</h2>
+                        <div class="form-group">
+                            <label for="hazard-type">Hazard Type</label>
+                            <select id="hazard-type">
+                                <option value="rockfall">Rockfall Risk</option>
+                                <option value="ventilation">Ventilation Issue</option>
+                                <option value="machinery">Machinery Hazard</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hazard-location">Hazard Location</label>
+                            <input type="text" id="hazard-location" placeholder="Exact location of hazard">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hazard-description">Description</label>
+                            <textarea id="hazard-description" rows="3" placeholder="Detailed description of the hazard..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="hazard-severity">Severity Level</label>
+                            <select id="hazard-severity">
+                                <option value="low">Low Risk</option>
+                                <option value="medium">Medium Risk</option>
+                                <option value="high">High Risk</option>
+                                <option value="immediate">Immediate Danger</option>
+                            </select>
+                        </div>
+                        
+                        <button id="submit-hazard">Report Hazard</button>
+                        
+                        <div id="reported-hazards" style="margin-top: 30px;">
+                            <h3>Recently Reported Hazards</h3>
+                            <div id="hazards-list"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Reports Module -->
+                    <div id="reports" class="module-content">
+                        <h2>Reports & Data</h2>
+                        
+                        <div class="card">
+                            <div class="card-title">Roll Call Records</div>
+                            <div id="rollcall-data">No data available</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title">Checklist Completions</div>
+                            <div id="checklist-data">No data available</div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-title">Hazard Reports</div>
+                            <div id="hazard-data">No data available</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <footer>
+                <p>Tech-Hubris Africa Pty Ltd &copy; 2025 | SafetyOfficer Web App Prototype</p>
+            </footer>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
