@@ -464,3 +464,83 @@ footer {
 .app-content.active {
     display: block;
 }
+
+/* Risk Assessment Table Styles */
+.risk-assessment {
+    margin: 25px 0;
+    overflow-x: auto;
+}
+
+.risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.risk-table th {
+    background-color: var(--primary);
+    color: white;
+    text-align: left;
+    padding: 12px;
+    font-weight: 500;
+}
+
+.risk-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+}
+
+.risk-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.risk-table input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    display: block;
+    margin: 0 auto;
+}
+
+.risk-table textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    min-height: 80px;
+    font-size: 14px;
+}
+
+.risk-category {
+    font-weight: 600;
+    background-color: #f0f0f0;
+}
+
+.rating-select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.section-toggle {
+    background-color: var(--light);
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.section-content {
+    display: none;
+}
+
+.section-content.active {
+    display: block;
+}
