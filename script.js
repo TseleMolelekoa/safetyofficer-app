@@ -1,8 +1,10 @@
-// Initialize data storage
+// Initialize data storage with all required arrays
 let appData = {
     rollCalls: [],
     checklists: [],
     hazards: [],
+    workPermits: [],
+    vehiclePermits: [],
     users: []
 };
 
@@ -10,6 +12,10 @@ let appData = {
 const savedData = localStorage.getItem('safetyOfficerData');
 if (savedData) {
     appData = JSON.parse(savedData);
+    
+    // Ensure all arrays exist (for backward compatibility)
+    if (!appData.workPermits) appData.workPermits = [];
+    if (!appData.vehiclePermits) appData.vehiclePermits = [];
 }
 
 // Utility functions
@@ -81,6 +87,32 @@ function updateDataDisplay() {
         `;
     } else {
         hazardDataElement.textContent = 'No data available';
+    }
+    
+    // Update work permit data
+    const permitDataElement = document.getElementById('permit-data');
+    if (appData.workPermits.length > 0) {
+        const activePermits = appData.workPermits.filter(p => new Date(p.validTo || p.endTime) > new Date()).length;
+        permitDataElement.innerHTML = `
+            <p>Total permits: ${appData.workPermits.length}</p>
+            <p>Active permits: ${activePermits}</p>
+            <p>Last issued: ${new Date(appData.workPermits[appData.workPermits.length - 1].timestamp).toLocaleString()}</p>
+        `;
+    } else {
+        permitDataElement.textContent = 'No data available';
+    }
+    
+    // Update vehicle permit data
+    const vehiclePermitDataElement = document.getElementById('vehicle-permit-data');
+    if (appData.vehiclePermits.length > 0) {
+        const activeVehiclePermits = appData.vehiclePermits.filter(p => new Date(p.validTo) > new Date()).length;
+        vehiclePermitDataElement.innerHTML = `
+            <p>Total permits: ${appData.vehiclePermits.length}</p>
+            <p>Active permits: ${activeVehiclePermits}</p>
+            <p>Last issued: ${new Date(appData.vehiclePermits[appData.vehiclePermits.length - 1].timestamp).toLocaleString()}</p>
+        `;
+    } else {
+        vehiclePermitDataElement.textContent = 'No data available';
     }
     
     // Update hazards list
@@ -523,6 +555,142 @@ document.addEventListener('DOMContentLoaded', function() {
         alert('Hazard reported successfully!');
     });
     
+    // Work Permit submission
+    document.getElementById('submit-permit').addEventListener('click', function() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            alert('Please login first');
+            return;
+        }
+        
+        const permitType = document.getElementById('permit-type').value;
+        const location = document.getElementById('permit-location').value;
+        const description = document.getElementById('permit-description').value;
+        const startTime = document.getElementById('permit-start').value;
+        const endTime = document.getElementById('permit-end').value;
+        const issuer = document.getElementById('permit-issuer').value;
+        const receiver = document.getElementById('permit-receiver').value;
+        
+        if (!location || !description || !startTime || !endTime || !issuer || !receiver) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Get safety precautions
+        const precautions = [];
+        for (let i = 1; i <= 6; i++) {
+            const checkbox = document.getElementById(`precaution-${i}`);
+            if (checkbox.checked) {
+                precautions.push(checkbox.nextElementSibling.textContent);
+            }
+        }
+        
+        const workPermit = {
+            type: permitType,
+            location,
+            description,
+            startTime,
+            endTime,
+            issuer,
+            receiver,
+            precautions,
+            timestamp: new Date().toISOString(),
+            issuedBy: currentUser.username,
+            status: 'active'
+        };
+        
+        appData.workPermits.push(workPermit);
+        saveData();
+        updateDataDisplay();
+        
+        // Reset form
+        document.getElementById('permit-type').value = 'hot-work';
+        document.getElementById('permit-location').value = '';
+        document.getElementById('permit-description').value = '';
+        document.getElementById('permit-start').value = '';
+        document.getElementById('permit-end').value = '';
+        document.getElementById('permit-issuer').value = '';
+        document.getElementById('permit-receiver').value = '';
+        
+        // Reset checkboxes
+        for (let i = 1; i <= 6; i++) {
+            document.getElementById(`precaution-${i}`).checked = false;
+        }
+        
+        alert('Work permit issued successfully!');
+    });
+    
+    // Vehicle Permit submission
+    document.getElementById('submit-vehicle-permit').addEventListener('click', function() {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (!currentUser) {
+            alert('Please login first');
+            return;
+        }
+        
+        const vehicleType = document.getElementById('vehicle-type').value;
+        const registration = document.getElementById('vehicle-registration').value;
+        const makeModel = document.getElementById('vehicle-make').value;
+        const driver = document.getElementById('vehicle-driver').value;
+        const area = document.getElementById('vehicle-area').value;
+        const purpose = document.getElementById('vehicle-purpose').value;
+        const issuer = document.getElementById('vehicle-issuer').value;
+        const validFrom = document.getElementById('vehicle-validfrom').value;
+        const validTo = document.getElementById('vehicle-validto').value;
+        
+        if (!registration || !makeModel || !driver || !area || !purpose || !issuer || !validFrom || !validTo) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Get vehicle safety checks
+        const safetyChecks = [];
+        for (let i = 1; i <= 8; i++) {
+            const checkbox = document.getElementById(`vehicle-check-${i}`);
+            if (checkbox.checked) {
+                safetyChecks.push(checkbox.nextElementSibling.textContent);
+            }
+        }
+        
+        const vehiclePermit = {
+            type: vehicleType,
+            registration,
+            makeModel,
+            driver,
+            area,
+            purpose,
+            issuer,
+            validFrom,
+            validTo,
+            safetyChecks,
+            timestamp: new Date().toISOString(),
+            issuedBy: currentUser.username,
+            status: 'active'
+        };
+        
+        appData.vehiclePermits.push(vehiclePermit);
+        saveData();
+        updateDataDisplay();
+        
+        // Reset form
+        document.getElementById('vehicle-type').value = 'light';
+        document.getElementById('vehicle-registration').value = '';
+        document.getElementById('vehicle-make').value = '';
+        document.getElementById('vehicle-driver').value = '';
+        document.getElementById('vehicle-area').value = '';
+        document.getElementById('vehicle-purpose').value = '';
+        document.getElementById('vehicle-issuer').value = '';
+        document.getElementById('vehicle-validfrom').value = '';
+        document.getElementById('vehicle-validto').value = '';
+        
+        // Reset checkboxes
+        for (let i = 1; i <= 8; i++) {
+            document.getElementById(`vehicle-check-${i}`).checked = false;
+        }
+        
+        alert('Vehicle permit issued successfully!');
+    });
+    
     // Data export
     document.getElementById('export-btn').addEventListener('click', function() {
         const dataStr = JSON.stringify(appData, null, 2);
@@ -543,6 +711,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 rollCalls: [],
                 checklists: [],
                 hazards: [],
+                workPermits: [],
+                vehiclePermits: [],
                 users: appData.users // Keep user data
             };
             saveData();
