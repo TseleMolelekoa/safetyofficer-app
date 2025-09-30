@@ -277,16 +277,21 @@
             display: block;
         }
         
+        .signature-container {
+            margin-bottom: 1rem;
+        }
+        
         .signature-pad {
             border: 1px solid #ddd;
             border-radius: 4px;
-            margin-bottom: 1rem;
+            background-color: white;
+            touch-action: none;
         }
         
         .signature-actions {
             display: flex;
             gap: 10px;
-            margin-bottom: 1rem;
+            margin-top: 10px;
         }
         
         footer {
@@ -546,11 +551,13 @@
                     
                     <div class="form-group">
                         <label>Operator Signature</label>
-                        <div id="signature-pad-1" class="signature-pad" style="height: 150px;"></div>
-                        <div class="signature-actions">
-                            <button type="button" class="btn btn-warning" id="clear-signature-1">Clear</button>
+                        <div class="signature-container">
+                            <canvas id="signature-pad-1" class="signature-pad" width="400" height="150"></canvas>
+                            <div class="signature-actions">
+                                <button type="button" class="btn btn-warning" id="clear-signature-1">Clear</button>
+                            </div>
+                            <input type="hidden" id="operator-signature" required>
                         </div>
-                        <input type="hidden" id="operator-signature" required>
                     </div>
                     
                     <div class="workflow-nav">
@@ -615,19 +622,23 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label>Driver/Operator Signature</label>
-                            <div id="signature-pad-2" class="signature-pad" style="height: 150px;"></div>
-                            <div class="signature-actions">
-                                <button type="button" class="btn btn-warning" id="clear-signature-2">Clear</button>
+                            <div class="signature-container">
+                                <canvas id="signature-pad-2" class="signature-pad" width="400" height="150"></canvas>
+                                <div class="signature-actions">
+                                    <button type="button" class="btn btn-warning" id="clear-signature-2">Clear</button>
+                                </div>
+                                <input type="hidden" id="driver-signature" required>
                             </div>
-                            <input type="hidden" id="driver-signature" required>
                         </div>
                         <div class="form-group">
                             <label>Foreman/Supervisor Signature</label>
-                            <div id="signature-pad-3" class="signature-pad" style="height: 150px;"></div>
-                            <div class="signature-actions">
-                                <button type="button" class="btn btn-warning" id="clear-signature-3">Clear</button>
+                            <div class="signature-container">
+                                <canvas id="signature-pad-3" class="signature-pad" width="400" height="150"></canvas>
+                                <div class="signature-actions">
+                                    <button type="button" class="btn btn-warning" id="clear-signature-3">Clear</button>
+                                </div>
+                                <input type="hidden" id="supervisor-signature">
                             </div>
-                            <input type="hidden" id="supervisor-signature">
                         </div>
                     </div>
                     
@@ -673,11 +684,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="production-handover-signature">Signature</label>
-                                <div id="signature-pad-4" class="signature-pad" style="height: 150px;"></div>
-                                <div class="signature-actions">
-                                    <button type="button" class="btn btn-warning" id="clear-signature-4">Clear</button>
+                                <div class="signature-container">
+                                    <canvas id="signature-pad-4" class="signature-pad" width="400" height="150"></canvas>
+                                    <div class="signature-actions">
+                                        <button type="button" class="btn btn-warning" id="clear-signature-4">Clear</button>
+                                    </div>
+                                    <input type="hidden" id="production-handover-signature">
                                 </div>
-                                <input type="hidden" id="production-handover-signature">
                             </div>
                         </div>
                     </div>
@@ -1052,75 +1065,108 @@
         
         // Initialize signature pads
         function initSignaturePads() {
-            // In a real implementation, you would use a library like signature_pad
-            // For this demo, we'll create simple canvas elements
             for (let i = 1; i <= 4; i++) {
                 const canvas = document.getElementById(`signature-pad-${i}`);
                 const ctx = canvas.getContext('2d');
+                const clearBtn = document.getElementById(`clear-signature-${i}`);
+                const hiddenInput = document.getElementById(
+                    i === 1 ? 'operator-signature' : 
+                    i === 2 ? 'driver-signature' : 
+                    i === 3 ? 'supervisor-signature' : 
+                    'production-handover-signature'
+                );
                 
-                // Set up canvas
+                // Set canvas size explicitly
                 canvas.width = canvas.offsetWidth;
                 canvas.height = canvas.offsetHeight;
-                ctx.fillStyle = 'white';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.strokeStyle = 'black';
-                ctx.lineWidth = 2;
                 
-                // Set up drawing
+                // Set up drawing context
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                
                 let isDrawing = false;
                 let lastX = 0;
                 let lastY = 0;
                 
+                // Function to get correct coordinates
+                function getCoordinates(e) {
+                    const rect = canvas.getBoundingClientRect();
+                    let clientX, clientY;
+                    
+                    if (e.type.includes('touch')) {
+                        clientX = e.touches[0].clientX;
+                        clientY = e.touches[0].clientY;
+                    } else {
+                        clientX = e.clientX;
+                        clientY = e.clientY;
+                    }
+                    
+                    return {
+                        x: clientX - rect.left,
+                        y: clientY - rect.top
+                    };
+                }
+                
+                // Start drawing
+                function startDrawing(e) {
+                    isDrawing = true;
+                    const coords = getCoordinates(e);
+                    [lastX, lastY] = [coords.x, coords.y];
+                }
+                
+                // Draw
+                function draw(e) {
+                    if (!isDrawing) return;
+                    e.preventDefault();
+                    
+                    const coords = getCoordinates(e);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
+                    ctx.lineTo(coords.x, coords.y);
+                    ctx.stroke();
+                    
+                    [lastX, lastY] = [coords.x, coords.y];
+                    
+                    // Update hidden input with signature data
+                    hiddenInput.value = canvas.toDataURL();
+                }
+                
+                // Stop drawing
+                function stopDrawing() {
+                    isDrawing = false;
+                }
+                
+                // Clear signature
+                function clearSignature() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    hiddenInput.value = '';
+                }
+                
+                // Mouse events
                 canvas.addEventListener('mousedown', startDrawing);
                 canvas.addEventListener('mousemove', draw);
                 canvas.addEventListener('mouseup', stopDrawing);
                 canvas.addEventListener('mouseout', stopDrawing);
                 
-                // Touch events for mobile
-                canvas.addEventListener('touchstart', handleTouch);
-                canvas.addEventListener('touchmove', handleTouch);
-                canvas.addEventListener('touchend', stopDrawing);
-                
-                function handleTouch(e) {
+                // Touch events
+                canvas.addEventListener('touchstart', (e) => {
                     e.preventDefault();
-                    const touch = e.touches[0];
-                    const mouseEvent = new MouseEvent('mousedown', {
-                        clientX: touch.clientX,
-                        clientY: touch.clientY
-                    });
-                    canvas.dispatchEvent(mouseEvent);
-                }
-                
-                function startDrawing(e) {
-                    isDrawing = true;
-                    [lastX, lastY] = [e.offsetX, e.offsetY];
-                }
-                
-                function draw(e) {
-                    if (!isDrawing) return;
-                    ctx.beginPath();
-                    ctx.moveTo(lastX, lastY);
-                    ctx.lineTo(e.offsetX, e.offsetY);
-                    ctx.stroke();
-                    [lastX, lastY] = [e.offsetX, e.offsetY];
-                    
-                    // Update the hidden input with the signature data
-                    const signatureInput = document.getElementById(canvas.id.replace('signature-pad', 'signature').replace('-', '-'));
-                    signatureInput.value = canvas.toDataURL();
-                }
-                
-                function stopDrawing() {
-                    isDrawing = false;
-                }
+                    startDrawing(e);
+                });
+                canvas.addEventListener('touchmove', (e) => {
+                    e.preventDefault();
+                    draw(e);
+                });
+                canvas.addEventListener('touchend', (e) => {
+                    e.preventDefault();
+                    stopDrawing();
+                });
                 
                 // Clear button
-                document.getElementById(`clear-signature-${i}`).addEventListener('click', () => {
-                    ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    ctx.fillStyle = 'white';
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    const signatureInput = document.getElementById(canvas.id.replace('signature-pad', 'signature').replace('-', '-'));
-                    signatureInput.value = '';
-                });
+                clearBtn.addEventListener('click', clearSignature);
             }
         }
         
