@@ -3,385 +3,1592 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SafetyOfficer Web App</title>
-    <link rel="stylesheet" href="style.css">
+    <title>SafetyOfficer App - DMR Compliance</title>
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #2980b9;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --success: #27ae60;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.5rem;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid white;
+            color: white;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        main {
+            padding: 2rem 0;
+            min-height: calc(100vh - 140px);
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-header {
+            border-bottom: 1px solid #eee;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .dashboard-card h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .dashboard-card .count {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .workflow-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .section {
+            margin-bottom: 2rem;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-content {
+            padding: 1rem;
+            display: none;
+        }
+        
+        .section.active .section-content {
+            display: block;
+        }
+        
+        .signature-pad {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .signature-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        footer {
+            background-color: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Loading Spinner -->
-    <div class="loading-overlay" id="loading-spinner">
-        <div class="spinner"></div>
-        <p>Loading SafetyOfficer App...</p>
-    </div>
-
-    <!-- Login/Register Screen -->
-    <div class="login-screen" id="login-screen">
-        <div class="login-container">
-            <div class="login-header">
-                <h2>SafetyOfficer App</h2>
-                <p>Please login or register to continue</p>
-            </div>
-            
-            <div class="login-tabs">
-                <div class="login-tab active" data-tab="login">Login</div>
-                <div class="login-tab" data-tab="register">Register</div>
-            </div>
-            
-            <!-- Login Form -->
-            <form id="main-login-form" class="login-form active">
-                <div class="form-group">
-                    <label for="main-login-email">Email or Username</label>
-                    <input type="text" id="main-login-email" required>
-                    <div class="error-message" id="main-login-email-error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="main-login-password">Password</label>
-                    <input type="password" id="main-login-password" required>
-                    <div class="error-message" id="main-login-password-error"></div>
-                </div>
-                
-                <button type="submit" style="width: 100%;">Login</button>
-            </form>
-            
-            <!-- Registration Form -->
-            <form id="main-register-form" class="login-form">
-                <div class="form-group">
-                    <label for="main-first-name">First Name</label>
-                    <input type="text" id="main-first-name" required>
-                    <div class="error-message" id="main-first-name-error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="main-last-name">Last Name</label>
-                    <input type="text" id="main-last-name" required>
-                    <div class="error-message" id="main-last-name-error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="main-email">Email</label>
-                    <input type="email" id="main-email" required>
-                    <div class="error-message" id="main-email-error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="main-password">Password</label>
-                    <input type="password" id="main-password" required>
-                    <div class="error-message" id="main-password-error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="main-position">Position</label>
-                    <select id="main-position" required>
-                        <option value="">Select Position</option>
-                        <option value="supervisor">Supervisor</option>
-                        <option value="miner">Miner</option>
-                        <option value="safetyofficer">Safety Officer</option>
-                    </select>
-                    <div class="error-message" id="main-position-error"></div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="main-employee-number">Employee Number (Auto-generated)</label>
-                    <input type="text" id="main-employee-number" readonly>
-                </div>
-                
-                <div class="form-group">
-                    <label for="main-username">Username (Auto-generated)</label>
-                    <input type="text" id="main-username" readonly>
-                </div>
-                
-                <button type="submit" style="width: 100%;">Register</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Main Application Content (Hidden until logged in) -->
-    <div class="app-content" id="app-content">
+    <header>
         <div class="container">
-            <header>
-                <div class="app-title">
-                    <div class="logo">SafetyOfficer Web App</div>
-                    <div id="header-right">
-                        <div id="user-info" class="user-info">
-                            <div class="user-avatar" id="user-avatar">U</div>
-                            <div>
-                                <div id="user-display-name">User</div>
-                                <div id="user-role" style="font-size: 12px;">Role</div>
-                            </div>
-                        </div>
-                        <div class="auth-buttons">
-                            <button class="auth-btn" id="logout-btn">Logout</button>
-                        </div>
-                    </div>
+            <div class="header-content">
+                <div class="logo">
+                    <h1>SafetyOfficer</h1>
                 </div>
-            </header>
-            
-            <div class="main-content">
-                <div class="sidebar">
-                    <h3>Modules</h3>
-                    <ul class="module-list">
-                        <li class="module-item active" data-target="pre-shift">Pre-Shift Roll Call</li>
-                        <li class="module-item" data-target="checklists">Safety Checklists</li>
-                        <li class="module-item" data-target="hazards">Hazard Reporting</li>
-                        <li class="module-item" data-target="work-permits">Safe Work Permits</li>
-                        <li class="module-item" data-target="vehicle-permits">Vehicle Permits</li>
-                        <li class="module-item" data-target="reports">Reports & Data</li>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                        <li><a href="#" class="nav-link" data-page="pre-shift">Pre-Shift</a></li>
+                        <li><a href="#" class="nav-link" data-page="vehicle-checklist">Vehicle Checklist</a></li>
+                        <li><a href="#" class="nav-link" data-page="safe-work-permit">Safe Work Permit</a></li>
+                        <li><a href="#" class="nav-link" data-page="hira">HIRA</a></li>
+                        <li><a href="#" class="nav-link" data-page="reports">Reports</a></li>
                     </ul>
-                    
-                    <div class="data-actions">
-                        <button id="export-btn" class="btn-export">Export Data</button>
-                        <button id="clear-btn" class="btn-clear">Clear Data</button>
-                    </div>
+                </nav>
+                <div class="auth-buttons">
+                    <button id="logout-btn" class="btn btn-outline" style="display: none;">Logout</button>
+                    <button id="login-btn" class="btn btn-outline">Login</button>
+                    <button id="register-btn" class="btn btn-primary">Register</button>
                 </div>
-                
-                <div class="content-area">
-                    <!-- Pre-Shift Module -->
-                    <div id="pre-shift" class="module-content active">
-                        <h2>Pre-Shift Roll Call</h2>
-                        <div class="form-group">
-                            <label for="worker-id">Worker ID</label>
-                            <input type="text" id="worker-id" placeholder="Enter your worker ID">
-                        </div>
-                        <div class="form-group">
-                            <label for="supervisor">Supervisor</label>
-                            <input type="text" id="supervisor" placeholder="Supervisor name">
-                        </div>
-                        <div class="form-group">
-                            <label for="shift">Shift</label>
-                            <select id="shift">
-                                <option value="day">Day Shift</option>
-                                <option value="night">Night Shift</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="location">Location</label>
-                            <input type="text" id="location" placeholder="Mine section/location">
-                        </div>
-                        <button id="submit-rollcall">Submit Roll Call</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Login Page -->
+        <div id="login-page" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Login to SafetyOfficer</h2>
+                </div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
                     </div>
-                    
-                    <!-- Checklists Module -->
-                    <div id="checklists" class="module-content">
-                        <h2>Safety Checklists</h2>
-                        <!-- ... (existing checklist content) ... -->
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
                     </div>
-                    
-                    <!-- Hazards Module -->
-                    <div id="hazards" class="module-content">
-                        <h2>Hazard Reporting</h2>
-                        <!-- ... (existing hazard content) ... -->
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                <p style="margin-top: 1rem;">Don't have an account? <a href="#" id="show-register">Register here</a></p>
+            </div>
+        </div>
+
+        <!-- Register Page -->
+        <div id="register-page" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Register for SafetyOfficer</h2>
+                </div>
+                <form id="register-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="register-firstname">First Name</label>
+                            <input type="text" id="register-firstname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-lastname">Last Name</label>
+                            <input type="text" id="register-lastname" required>
+                        </div>
                     </div>
-                    
-                    <!-- Safe Work Permits Module -->
-                    <div id="work-permits" class="module-content">
-                        <h2>Safe Work Permits</h2>
-                        <div class="form-group">
-                            <label for="permit-type">Permit Type</label>
-                            <select id="permit-type">
-                                <option value="hot-work">Hot Work Permit</option>
-                                <option value="confined-space">Confined Space Entry</option>
-                                <option value="electrical">Electrical Work</option>
-                                <option value="excavation">Excavation Permit</option>
-                                <option value="height-work">Working at Height</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="permit-location">Work Location</label>
-                            <input type="text" id="permit-location" placeholder="Exact location of work">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="permit-description">Work Description</label>
-                            <textarea id="permit-description" rows="3" placeholder="Detailed description of the work to be performed..."></textarea>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="permit-start">Start Date & Time</label>
-                            <input type="datetime-local" id="permit-start">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="permit-end">End Date & Time</label>
-                            <input type="datetime-local" id="permit-end">
-                        </div>
-                        
-                        <div class="checklist-section">
-                            <h3 class="checklist-header">Safety Precautions</h3>
-                            <div class="checklist-grid">
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="precaution-1">
-                                    <label for="precaution-1">Area barricaded and signs posted</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="precaution-2">
-                                    <label for="precaution-2">Fire extinguisher available</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="precaution-3">
-                                    <label for="precaution-3">Atmospheric testing completed</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="precaution-4">
-                                    <label for="precaution-4">Emergency procedures established</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="precaution-5">
-                                    <label for="precaution-5">Lockout/tagout procedures implemented</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="precaution-6">
-                                    <label for="precaution-6">Rescue equipment available</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="permit-issuer">Permit Issuer</label>
-                            <input type="text" id="permit-issuer" placeholder="Name of safety officer issuing permit">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="permit-receiver">Permit Receiver</label>
-                            <input type="text" id="permit-receiver" placeholder="Name of person receiving permit">
-                        </div>
-                        
-                        <button id="submit-permit">Issue Work Permit</button>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" required>
                     </div>
-                    
-                    <!-- Vehicle Permits Module -->
-                    <div id="vehicle-permits" class="module-content">
-                        <h2>Vehicle Permits</h2>
-                        <div class="form-group">
-                            <label for="vehicle-type">Vehicle Type</label>
-                            <select id="vehicle-type">
-                                <option value="light">Light Vehicle</option>
-                                <option value="heavy">Heavy Vehicle</option>
-                                <option value="mobile-plant">Mobile Plant</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vehicle-registration">Registration Number</label>
-                            <input type="text" id="vehicle-registration" placeholder="Vehicle registration number">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vehicle-make">Make & Model</label>
-                            <input type="text" id="vehicle-make" placeholder="Vehicle make and model">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vehicle-driver">Driver Name</label>
-                            <input type="text" id="vehicle-driver" placeholder="Name of driver">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vehicle-area">Operating Area</label>
-                            <input type="text" id="vehicle-area" placeholder="Area where vehicle will operate">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vehicle-purpose">Purpose of Operation</label>
-                            <textarea id="vehicle-purpose" rows="3" placeholder="Purpose of vehicle operation..."></textarea>
-                        </div>
-                        
-                        <div class="checklist-section">
-                            <h3 class="checklist-header">Vehicle Safety Checklist</h3>
-                            <div class="checklist-grid">
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="vehicle-check-1">
-                                    <label for="vehicle-check-1">Brakes functioning properly</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="vehicle-check-2">
-                                    <label for="vehicle-check-2">Lights and indicators working</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="vehicle-check-3">
-                                    <label for="vehicle-check-3">Fire extinguisher present</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="vehicle-check-4">
-                                    <label for="vehicle-check-4">Seat belts functional</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="vehicle-check-5">
-                                    <label for="vehicle-check-5">Reverse alarm working</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="vehicle-check-6">
-                                    <label for="vehicle-check-6">ROPS/FOPS certified</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="vehicle-check-7">
-                                    <label for="vehicle-check-7">No visible fluid leaks</label>
-                                </div>
-                                <div class="checklist-item">
-                                    <input type="checkbox" id="vehicle-check-8">
-                                    <label for="vehicle-check-8">Tires in good condition</label>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vehicle-issuer">Permit Issuer</label>
-                            <input type="text" id="vehicle-issuer" placeholder="Name of safety officer issuing permit">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vehicle-validfrom">Valid From</label>
-                            <input type="datetime-local" id="vehicle-validfrom">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="vehicle-validto">Valid To</label>
-                            <input type="datetime-local" id="vehicle-validto">
-                        </div>
-                        
-                        <button id="submit-vehicle-permit">Issue Vehicle Permit</button>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" required>
                     </div>
-                    
-                    <!-- Reports Module -->
-                    <div id="reports" class="module-content">
-                        <h2>Reports & Data</h2>
-                        
-                        <div class="card">
-                            <div class="card-title">Roll Call Records</div>
-                            <div id="rollcall-data">No data available</div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-title">Checklist Completions</div>
-                            <div id="checklist-data">No data available</div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-title">Hazard Reports</div>
-                            <div id="hazard-data">No data available</div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-title">Work Permits Issued</div>
-                            <div id="permit-data">No data available</div>
-                        </div>
-                        
-                        <div class="card">
-                            <div class="card-title">Vehicle Permits Issued</div>
-                            <div id="vehicle-permit-data">No data available</div>
-                        </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Confirm Password</label>
+                        <input type="password" id="register-confirm-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-mine">Mine/Company</label>
+                        <input type="text" id="register-mine" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-role">Role</label>
+                        <select id="register-role" required>
+                            <option value="">Select Role</option>
+                            <option value="operator">Operator</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="safety-officer">Safety Officer</option>
+                            <option value="manager">Manager</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+                <p style="margin-top: 1rem;">Already have an account? <a href="#" id="show-login">Login here</a></p>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard" class="page active">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Safety Compliance Dashboard</h2>
+                </div>
+                <div class="dashboard-cards">
+                    <div class="dashboard-card">
+                        <h3>Pending Checklists</h3>
+                        <div class="count" id="pending-count">0</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Completed Today</h3>
+                        <div class="count" id="completed-count">0</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Open Hazards</h3>
+                        <div class="count" id="hazards-count">0</div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Compliance Rate</h3>
+                        <div class="count" id="compliance-rate">0%</div>
                     </div>
                 </div>
             </div>
-            
-            <footer>
-                <p>Tech-Hubris Africa Pty Ltd &copy; 2025 | SafetyOfficer Web App Prototype</p>
-            </footer>
-        </div>
-    </div>
 
-    <script src="script.js"></script>
+            <div class="card">
+                <div class="card-header">
+                    <h3>Recent Activities</h3>
+                </div>
+                <div class="table-container">
+                    <table id="recent-activities">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pre-Shift Module -->
+        <div id="pre-shift" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Pre-Shift Safety Check</h2>
+                </div>
+                <form id="pre-shift-form">
+                    <div class="form-group">
+                        <label for="pre-shift-date">Date</label>
+                        <input type="date" id="pre-shift-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pre-shift-time">Time</label>
+                        <input type="time" id="pre-shift-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pre-shift-location">Location/GPS</label>
+                        <input type="text" id="pre-shift-location" placeholder="Click to get GPS coordinates" readonly>
+                        <button type="button" id="get-gps" class="btn btn-primary" style="margin-top: 5px;">Get Current Location</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="pre-shift-operator">Operator Name</label>
+                        <input type="text" id="pre-shift-operator" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pre-shift-department">Department/Contractor</label>
+                        <input type="text" id="pre-shift-department" required>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-header">
+                            <h3>Vehicle Inspection</h3>
+                            <span>+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label>Vehicle Condition</label>
+                                <div class="checkbox-group">
+                                    <input type="radio" id="vehicle-in-order" name="vehicle-condition" value="in-order" required>
+                                    <label for="vehicle-in-order">In Order</label>
+                                </div>
+                                <div class="checkbox-group">
+                                    <input type="radio" id="vehicle-out-order" name="vehicle-condition" value="out-of-order">
+                                    <label for="vehicle-out-order">Out of Order</label>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="last-brake-test">Last Brake Test Date</label>
+                                    <input type="date" id="last-brake-test">
+                                </div>
+                                <div class="form-group">
+                                    <label for="next-service">Next Service (Km)</label>
+                                    <input type="number" id="next-service">
+                                </div>
+                            </div>
+                            
+                            <h4>Vehicle Components</h4>
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Component</th>
+                                            <th>Status</th>
+                                            <th>Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="vehicle-components">
+                                        <!-- Will be populated by JavaScript -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="pre-shift-notes">Additional Notes</label>
+                        <textarea id="pre-shift-notes"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Operator Signature</label>
+                        <div id="signature-pad-1" class="signature-pad" style="height: 150px;"></div>
+                        <div class="signature-actions">
+                            <button type="button" class="btn btn-warning" id="clear-signature-1">Clear</button>
+                        </div>
+                        <input type="hidden" id="operator-signature" required>
+                    </div>
+                    
+                    <div class="workflow-nav">
+                        <button type="button" class="btn btn-outline" id="cancel-pre-shift">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit Pre-Shift Check</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Vehicle Checklist Page -->
+        <div id="vehicle-checklist" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Vehicle Pre-Use Checklist</h2>
+                </div>
+                <form id="vehicle-checklist-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="checklist-date">Date</label>
+                            <input type="date" id="checklist-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="checklist-time">Time</label>
+                            <input type="time" id="checklist-time" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="km-begin">Km Begin</label>
+                            <input type="number" id="km-begin" step="0.01">
+                        </div>
+                        <div class="form-group">
+                            <label for="km-end">Km End</label>
+                            <input type="number" id="km-end" step="0.01">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <h3>Vehicle Inspection Items</h3>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Status</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="checklist-items">
+                                    <!-- Will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="vehicle-notes">Additional Notes</label>
+                        <textarea id="vehicle-notes"></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Driver/Operator Signature</label>
+                            <div id="signature-pad-2" class="signature-pad" style="height: 150px;"></div>
+                            <div class="signature-actions">
+                                <button type="button" class="btn btn-warning" id="clear-signature-2">Clear</button>
+                            </div>
+                            <input type="hidden" id="driver-signature" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Foreman/Supervisor Signature</label>
+                            <div id="signature-pad-3" class="signature-pad" style="height: 150px;"></div>
+                            <div class="signature-actions">
+                                <button type="button" class="btn btn-warning" id="clear-signature-3">Clear</button>
+                            </div>
+                            <input type="hidden" id="supervisor-signature">
+                        </div>
+                    </div>
+                    
+                    <div class="workflow-nav">
+                        <button type="button" class="btn btn-outline" id="cancel-checklist">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit Checklist</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Safe Work Permit Page -->
+        <div id="safe-work-permit" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Safe Work Permit</h2>
+                </div>
+                <form id="safe-work-permit-form">
+                    <div class="form-group">
+                        <label for="permit-number">Permit Number</label>
+                        <input type="text" id="permit-number" required>
+                    </div>
+                    
+                    <div class="section">
+                        <div class="section-header">
+                            <h3>1. Permit Handover</h3>
+                            <span>+</span>
+                        </div>
+                        <div class="section-content">
+                            <div class="form-group">
+                                <label for="production-handover-name">Production Handover Name</label>
+                                <input type="text" id="production-handover-name">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="production-handover-date">Date</label>
+                                    <input type="date" id="production-handover-date">
+                                </div>
+                                <div class="form-group">
+                                    <label for="production-handover-time">Time</label>
+                                    <input type="time" id="production-handover-time">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="production-handover-signature">Signature</label>
+                                <div id="signature-pad-4" class="signature-pad" style="height: 150px;"></div>
+                                <div class="signature-actions">
+                                    <button type="button" class="btn btn-warning" id="clear-signature-4">Clear</button>
+                                </div>
+                                <input type="hidden" id="production-handover-signature">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional sections for the safe work permit would go here -->
+                    <!-- For brevity, I'm showing just one section -->
+                    
+                    <div class="workflow-nav">
+                        <button type="button" class="btn btn-outline" id="cancel-permit">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit Safe Work Permit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- HIRA Page -->
+        <div id="hira" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Hazard Identification and Risk Assessment (HIRA)</h2>
+                </div>
+                <form id="hira-form">
+                    <div class="form-group">
+                        <label for="hira-date">Assessment Date</label>
+                        <input type="date" id="hira-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hira-location">Work Area/Location</label>
+                        <input type="text" id="hira-location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hira-assessor">Assessor Name</label>
+                        <input type="text" id="hira-assessor" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <h3>Identified Hazards</h3>
+                        <div id="hazards-container">
+                            <div class="hazard-item">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Hazard Description</label>
+                                        <input type="text" class="hazard-description" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Risk Level</label>
+                                        <select class="hazard-risk" required>
+                                            <option value="">Select Risk</option>
+                                            <option value="low">Low</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
+                                            <option value="extreme">Extreme</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Control Measures</label>
+                                    <textarea class="hazard-controls" required></textarea>
+                                </div>
+                                <button type="button" class="btn btn-danger remove-hazard">Remove Hazard</button>
+                                <hr>
+                            </div>
+                        </div>
+                        <button type="button" id="add-hazard" class="btn btn-primary">Add Another Hazard</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hira-overall-risk">Overall Risk Assessment</label>
+                        <select id="hira-overall-risk" required>
+                            <option value="">Select Overall Risk</option>
+                            <option value="low">Low - Work can proceed</option>
+                            <option value="medium">Medium - Additional controls needed</option>
+                            <option value="high">High - Work requires management approval</option>
+                            <option value="extreme">Extreme - Work should not proceed</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="hira-approver">Approver Name</label>
+                        <input type="text" id="hira-approver">
+                    </div>
+                    
+                    <div class="workflow-nav">
+                        <button type="button" class="btn btn-outline" id="cancel-hira">Cancel</button>
+                        <button type="submit" class="btn btn-success">Submit HIRA</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Reports Page -->
+        <div id="reports" class="page">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Compliance Reports</h2>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="report-type">Report Type</label>
+                        <select id="report-type">
+                            <option value="pre-shift">Pre-Shift Checks</option>
+                            <option value="vehicle">Vehicle Checklists</option>
+                            <option value="permit">Safe Work Permits</option>
+                            <option value="hira">HIRA Assessments</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="report-start-date">Start Date</label>
+                        <input type="date" id="report-start-date">
+                    </div>
+                    <div class="form-group">
+                        <label for="report-end-date">End Date</label>
+                        <input type="date" id="report-end-date">
+                    </div>
+                </div>
+                <button id="generate-report" class="btn btn-primary">Generate Report</button>
+                <button id="export-json" class="btn btn-success" style="margin-left: 10px;">Export as JSON</button>
+                
+                <div class="table-container" style="margin-top: 2rem;">
+                    <table id="report-results">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Tech-Hubris Africa Pty Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Application state
+        const appState = {
+            currentUser: null,
+            currentPage: 'dashboard',
+            forms: {
+                preShift: [],
+                vehicleChecklist: [],
+                safeWorkPermit: [],
+                hira: []
+            }
+        };
+
+        // DOM Elements
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const loginPage = document.getElementById('login-page');
+        const registerPage = document.getElementById('register-page');
+        const dashboard = document.getElementById('dashboard');
+        const loginBtn = document.getElementById('login-btn');
+        const registerBtn = document.getElementById('register-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const showRegister = document.getElementById('show-register');
+        const showLogin = document.getElementById('show-login');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        
+        // Initialize the application
+        function initApp() {
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                appState.currentUser = JSON.parse(savedUser);
+                updateUIForUser();
+            }
+            
+            // Load saved forms data
+            loadFormsData();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Initialize signature pads
+            initSignaturePads();
+            
+            // Populate dynamic tables
+            populateVehicleComponents();
+            populateChecklistItems();
+            
+            // Update dashboard
+            updateDashboard();
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = link.getAttribute('data-page');
+                    showPage(page);
+                    
+                    // Update active nav link
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                });
+            });
+            
+            // Authentication
+            loginBtn.addEventListener('click', () => showPage('login'));
+            registerBtn.addEventListener('click', () => showPage('register'));
+            logoutBtn.addEventListener('click', handleLogout);
+            showRegister.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('register');
+            });
+            showLogin.addEventListener('click', (e) => {
+                e.preventDefault();
+                showPage('login');
+            });
+            
+            // Form submissions
+            loginForm.addEventListener('submit', handleLogin);
+            registerForm.addEventListener('submit', handleRegister);
+            
+            // Section toggles
+            document.querySelectorAll('.section-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const section = header.parentElement;
+                    section.classList.toggle('active');
+                    header.querySelector('span').textContent = section.classList.contains('active') ? '-' : '+';
+                });
+            });
+            
+            // GPS button
+            document.getElementById('get-gps').addEventListener('click', getCurrentLocation);
+            
+            // Hazard management
+            document.getElementById('add-hazard').addEventListener('click', addHazardField);
+            
+            // Report generation
+            document.getElementById('generate-report').addEventListener('click', generateReport);
+            document.getElementById('export-json').addEventListener('click', exportDataAsJSON);
+            
+            // Form cancellations
+            document.getElementById('cancel-pre-shift').addEventListener('click', () => showPage('dashboard'));
+            document.getElementById('cancel-checklist').addEventListener('click', () => showPage('dashboard'));
+            document.getElementById('cancel-permit').addEventListener('click', () => showPage('dashboard'));
+            document.getElementById('cancel-hira').addEventListener('click', () => showPage('dashboard'));
+            
+            // Form submissions for compliance forms
+            document.getElementById('pre-shift-form').addEventListener('submit', savePreShiftForm);
+            document.getElementById('vehicle-checklist-form').addEventListener('submit', saveVehicleChecklist);
+            document.getElementById('safe-work-permit-form').addEventListener('submit', saveSafeWorkPermit);
+            document.getElementById('hira-form').addEventListener('submit', saveHIRA);
+        }
+        
+        // Show specific page
+        function showPage(pageName) {
+            pages.forEach(page => page.classList.remove('active'));
+            
+            if (pageName === 'login' || pageName === 'register') {
+                document.getElementById(`${pageName}-page`).classList.add('active');
+            } else if (appState.currentUser) {
+                document.getElementById(pageName).classList.add('active');
+                appState.currentPage = pageName;
+                
+                // Update dashboard if needed
+                if (pageName === 'dashboard') {
+                    updateDashboard();
+                }
+            } else {
+                showPage('login');
+            }
+        }
+        
+        // Handle user login
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Simple validation - in a real app, this would check against a backend
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                appState.currentUser = user;
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                updateUIForUser();
+                showPage('dashboard');
+                loginForm.reset();
+            } else {
+                alert('Invalid email or password');
+            }
+        }
+        
+        // Handle user registration
+        function handleRegister(e) {
+            e.preventDefault();
+            const firstname = document.getElementById('register-firstname').value;
+            const lastname = document.getElementById('register-lastname').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            const mine = document.getElementById('register-mine').value;
+            const role = document.getElementById('register-role').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Save user to localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Check if user already exists
+            if (users.find(u => u.email === email)) {
+                alert('User with this email already exists');
+                return;
+            }
+            
+            const newUser = {
+                id: generateId(),
+                firstname,
+                lastname,
+                email,
+                password, // In a real app, this would be hashed
+                mine,
+                role,
+                registeredAt: new Date().toISOString()
+            };
+            
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            appState.currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            updateUIForUser();
+            showPage('dashboard');
+            registerForm.reset();
+            
+            alert('Registration successful!');
+        }
+        
+        // Handle user logout
+        function handleLogout() {
+            appState.currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateUIForUser();
+            showPage('login');
+        }
+        
+        // Update UI based on user authentication state
+        function updateUIForUser() {
+            if (appState.currentUser) {
+                loginBtn.style.display = 'none';
+                registerBtn.style.display = 'none';
+                logoutBtn.style.display = 'block';
+                showPage(appState.currentPage);
+            } else {
+                loginBtn.style.display = 'block';
+                registerBtn.style.display = 'block';
+                logoutBtn.style.display = 'none';
+                showPage('login');
+            }
+        }
+        
+        // Initialize signature pads
+        function initSignaturePads() {
+            // In a real implementation, you would use a library like signature_pad
+            // For this demo, we'll create simple canvas elements
+            for (let i = 1; i <= 4; i++) {
+                const canvas = document.getElementById(`signature-pad-${i}`);
+                const ctx = canvas.getContext('2d');
+                
+                // Set up canvas
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 2;
+                
+                // Set up drawing
+                let isDrawing = false;
+                let lastX = 0;
+                let lastY = 0;
+                
+                canvas.addEventListener('mousedown', startDrawing);
+                canvas.addEventListener('mousemove', draw);
+                canvas.addEventListener('mouseup', stopDrawing);
+                canvas.addEventListener('mouseout', stopDrawing);
+                
+                // Touch events for mobile
+                canvas.addEventListener('touchstart', handleTouch);
+                canvas.addEventListener('touchmove', handleTouch);
+                canvas.addEventListener('touchend', stopDrawing);
+                
+                function handleTouch(e) {
+                    e.preventDefault();
+                    const touch = e.touches[0];
+                    const mouseEvent = new MouseEvent('mousedown', {
+                        clientX: touch.clientX,
+                        clientY: touch.clientY
+                    });
+                    canvas.dispatchEvent(mouseEvent);
+                }
+                
+                function startDrawing(e) {
+                    isDrawing = true;
+                    [lastX, lastY] = [e.offsetX, e.offsetY];
+                }
+                
+                function draw(e) {
+                    if (!isDrawing) return;
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
+                    ctx.lineTo(e.offsetX, e.offsetY);
+                    ctx.stroke();
+                    [lastX, lastY] = [e.offsetX, e.offsetY];
+                    
+                    // Update the hidden input with the signature data
+                    const signatureInput = document.getElementById(canvas.id.replace('signature-pad', 'signature').replace('-', '-'));
+                    signatureInput.value = canvas.toDataURL();
+                }
+                
+                function stopDrawing() {
+                    isDrawing = false;
+                }
+                
+                // Clear button
+                document.getElementById(`clear-signature-${i}`).addEventListener('click', () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    const signatureInput = document.getElementById(canvas.id.replace('signature-pad', 'signature').replace('-', '-'));
+                    signatureInput.value = '';
+                });
+            }
+        }
+        
+        // Get current location
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        document.getElementById('pre-shift-location').value = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+                    },
+                    (error) => {
+                        alert('Unable to retrieve your location');
+                        console.error('Geolocation error:', error);
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by this browser');
+            }
+        }
+        
+        // Add hazard field
+        function addHazardField() {
+            const container = document.getElementById('hazards-container');
+            const newHazard = document.createElement('div');
+            newHazard.className = 'hazard-item';
+            newHazard.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Hazard Description</label>
+                        <input type="text" class="hazard-description" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Risk Level</label>
+                        <select class="hazard-risk" required>
+                            <option value="">Select Risk</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="extreme">Extreme</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Control Measures</label>
+                    <textarea class="hazard-controls" required></textarea>
+                </div>
+                <button type="button" class="btn btn-danger remove-hazard">Remove Hazard</button>
+                <hr>
+            `;
+            container.appendChild(newHazard);
+            
+            // Add event listener to the remove button
+            newHazard.querySelector('.remove-hazard').addEventListener('click', function() {
+                container.removeChild(newHazard);
+            });
+        }
+        
+        // Populate vehicle components table
+        function populateVehicleComponents() {
+            const components = [
+                'Brakes', 'Steering', 'Lights', 'Horn', 'Mirrors', 'Tires', 
+                'Fluid Levels', 'Seat Belts', 'Fire Extinguisher', 'First Aid Kit'
+            ];
+            
+            const tbody = document.getElementById('vehicle-components');
+            tbody.innerHTML = '';
+            
+            components.forEach(component => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${component}</td>
+                    <td>
+                        <select class="component-status">
+                            <option value="ok">OK</option>
+                            <option value="needs-attention">Needs Attention</option>
+                            <option value="not-applicable">N/A</option>
+                        </select>
+                    </td>
+                    <td><input type="text" class="component-notes" placeholder="Notes..."></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Populate checklist items table
+        function populateChecklistItems() {
+            const items = [
+                'Engine Oil Level', 'Coolant Level', 'Brake Fluid', 'Power Steering Fluid',
+                'Windshield Washer Fluid', 'Tire Pressure', 'Tire Condition', 'Lights Operation',
+                'Wipers Operation', 'Horn Operation', 'Seat Belts', 'Mirrors Adjustment',
+                'Brake Operation', 'Steering Operation', 'Parking Brake', 'Fluid Leaks'
+            ];
+            
+            const tbody = document.getElementById('checklist-items');
+            tbody.innerHTML = '';
+            
+            items.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item}</td>
+                    <td>
+                        <select class="item-status">
+                            <option value="satisfactory">Satisfactory</option>
+                            <option value="needs-attention">Needs Attention</option>
+                            <option value="not-checked">Not Checked</option>
+                        </select>
+                    </td>
+                    <td><input type="text" class="item-notes" placeholder="Notes..."></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Save pre-shift form
+        function savePreShiftForm(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = {
+                id: generateId(),
+                type: 'pre-shift',
+                date: document.getElementById('pre-shift-date').value,
+                time: document.getElementById('pre-shift-time').value,
+                location: document.getElementById('pre-shift-location').value,
+                operator: document.getElementById('pre-shift-operator').value,
+                department: document.getElementById('pre-shift-department').value,
+                vehicleCondition: document.querySelector('input[name="vehicle-condition"]:checked')?.value,
+                lastBrakeTest: document.getElementById('last-brake-test').value,
+                nextService: document.getElementById('next-service').value,
+                notes: document.getElementById('pre-shift-notes').value,
+                operatorSignature: document.getElementById('operator-signature').value,
+                submittedBy: appState.currentUser.email,
+                submittedAt: new Date().toISOString(),
+                status: 'completed'
+            };
+            
+            // Save to app state and localStorage
+            appState.forms.preShift.push(formData);
+            saveFormsData();
+            
+            alert('Pre-shift check submitted successfully!');
+            showPage('dashboard');
+            updateDashboard();
+        }
+        
+        // Save vehicle checklist
+        function saveVehicleChecklist(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = {
+                id: generateId(),
+                type: 'vehicle-checklist',
+                date: document.getElementById('checklist-date').value,
+                time: document.getElementById('checklist-time').value,
+                kmBegin: document.getElementById('km-begin').value,
+                kmEnd: document.getElementById('km-end').value,
+                notes: document.getElementById('vehicle-notes').value,
+                driverSignature: document.getElementById('driver-signature').value,
+                supervisorSignature: document.getElementById('supervisor-signature').value,
+                submittedBy: appState.currentUser.email,
+                submittedAt: new Date().toISOString(),
+                status: 'completed'
+            };
+            
+            // Save to app state and localStorage
+            appState.forms.vehicleChecklist.push(formData);
+            saveFormsData();
+            
+            alert('Vehicle checklist submitted successfully!');
+            showPage('dashboard');
+            updateDashboard();
+        }
+        
+        // Save safe work permit
+        function saveSafeWorkPermit(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = {
+                id: generateId(),
+                type: 'safe-work-permit',
+                permitNumber: document.getElementById('permit-number').value,
+                productionHandoverName: document.getElementById('production-handover-name').value,
+                productionHandoverDate: document.getElementById('production-handover-date').value,
+                productionHandoverTime: document.getElementById('production-handover-time').value,
+                productionHandoverSignature: document.getElementById('production-handover-signature').value,
+                submittedBy: appState.currentUser.email,
+                submittedAt: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            // Save to app state and localStorage
+            appState.forms.safeWorkPermit.push(formData);
+            saveFormsData();
+            
+            alert('Safe work permit submitted successfully!');
+            showPage('dashboard');
+            updateDashboard();
+        }
+        
+        // Save HIRA
+        function saveHIRA(e) {
+            e.preventDefault();
+            
+            // Collect hazards data
+            const hazards = [];
+            document.querySelectorAll('.hazard-item').forEach(item => {
+                const description = item.querySelector('.hazard-description').value;
+                const risk = item.querySelector('.hazard-risk').value;
+                const controls = item.querySelector('.hazard-controls').value;
+                
+                hazards.push({
+                    description,
+                    risk,
+                    controls
+                });
+            });
+            
+            // Collect form data
+            const formData = {
+                id: generateId(),
+                type: 'hira',
+                date: document.getElementById('hira-date').value,
+                location: document.getElementById('hira-location').value,
+                assessor: document.getElementById('hira-assessor').value,
+                hazards,
+                overallRisk: document.getElementById('hira-overall-risk').value,
+                approver: document.getElementById('hira-approver').value,
+                submittedBy: appState.currentUser.email,
+                submittedAt: new Date().toISOString(),
+                status: 'completed'
+            };
+            
+            // Save to app state and localStorage
+            appState.forms.hira.push(formData);
+            saveFormsData();
+            
+            alert('HIRA submitted successfully!');
+            showPage('dashboard');
+            updateDashboard();
+        }
+        
+        // Generate report
+        function generateReport() {
+            const reportType = document.getElementById('report-type').value;
+            const startDate = document.getElementById('report-start-date').value;
+            const endDate = document.getElementById('report-end-date').value;
+            
+            let data = [];
+            
+            // Filter data based on type and date range
+            if (reportType === 'pre-shift') {
+                data = appState.forms.preShift;
+            } else if (reportType === 'vehicle') {
+                data = appState.forms.vehicleChecklist;
+            } else if (reportType === 'permit') {
+                data = appState.forms.safeWorkPermit;
+            } else if (reportType === 'hira') {
+                data = appState.forms.hira;
+            }
+            
+            // Filter by date range if provided
+            if (startDate) {
+                data = data.filter(item => item.date >= startDate);
+            }
+            if (endDate) {
+                data = data.filter(item => item.date <= endDate);
+            }
+            
+            // Display results
+            const tbody = document.getElementById('report-results').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.id.substring(0, 8)}</td>
+                    <td>${item.date}</td>
+                    <td>${item.type}</td>
+                    <td>${item.status}</td>
+                    <td>
+                        <button class="btn btn-primary view-item" data-id="${item.id}" data-type="${item.type}">View</button>
+                        <button class="btn btn-success export-item" data-id="${item.id}" data-type="${item.type}">Export</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Add event listeners to view and export buttons
+            document.querySelectorAll('.view-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const type = this.getAttribute('data-type');
+                    viewFormItem(id, type);
+                });
+            });
+            
+            document.querySelectorAll('.export-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const type = this.getAttribute('data-type');
+                    exportFormItem(id, type);
+                });
+            });
+        }
+        
+        // View form item
+        function viewFormItem(id, type) {
+            let item;
+            
+            if (type === 'pre-shift') {
+                item = appState.forms.preShift.find(i => i.id === id);
+            } else if (type === 'vehicle-checklist') {
+                item = appState.forms.vehicleChecklist.find(i => i.id === id);
+            } else if (type === 'safe-work-permit') {
+                item = appState.forms.safeWorkPermit.find(i => i.id === id);
+            } else if (type === 'hira') {
+                item = appState.forms.hira.find(i => i.id === id);
+            }
+            
+            if (item) {
+                alert(`Viewing ${type} record:\n\n${JSON.stringify(item, null, 2)}`);
+            }
+        }
+        
+        // Export form item as JSON
+        function exportFormItem(id, type) {
+            let item;
+            
+            if (type === 'pre-shift') {
+                item = appState.forms.preShift.find(i => i.id === id);
+            } else if (type === 'vehicle-checklist') {
+                item = appState.forms.vehicleChecklist.find(i => i.id === id);
+            } else if (type === 'safe-work-permit') {
+                item = appState.forms.safeWorkPermit.find(i => i.id === id);
+            } else if (type === 'hira') {
+                item = appState.forms.hira.find(i => i.id === id);
+            }
+            
+            if (item) {
+                const dataStr = JSON.stringify(item, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = `${type}_${id}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+            }
+        }
+        
+        // Export all data as JSON
+        function exportDataAsJSON() {
+            const allData = {
+                preShift: appState.forms.preShift,
+                vehicleChecklist: appState.forms.vehicleChecklist,
+                safeWorkPermit: appState.forms.safeWorkPermit,
+                hira: appState.forms.hira
+            };
+            
+            const dataStr = JSON.stringify(allData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            
+            const exportFileDefaultName = `safety_data_${new Date().toISOString().split('T')[0]}.json`;
+            
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+        
+        // Update dashboard
+        function updateDashboard() {
+            // Update counts
+            const pendingCount = appState.forms.safeWorkPermit.filter(p => p.status === 'pending').length;
+            document.getElementById('pending-count').textContent = pendingCount;
+            
+            const today = new Date().toISOString().split('T')[0];
+            const completedToday = [
+                ...appState.forms.preShift.filter(f => f.date === today),
+                ...appState.forms.vehicleChecklist.filter(f => f.date === today),
+                ...appState.forms.hira.filter(f => f.date === today)
+            ].length;
+            document.getElementById('completed-count').textContent = completedToday;
+            
+            const hazardsCount = appState.forms.hira.reduce((count, hira) => count + hira.hazards.length, 0);
+            document.getElementById('hazards-count').textContent = hazardsCount;
+            
+            // Calculate compliance rate (simplified)
+            const totalForms = [
+                ...appState.forms.preShift,
+                ...appState.forms.vehicleChecklist,
+                ...appState.forms.safeWorkPermit,
+                ...appState.forms.hira
+            ].length;
+            
+            const completedForms = [
+                ...appState.forms.preShift,
+                ...appState.forms.vehicleChecklist,
+                ...appState.forms.hira
+            ].length;
+            
+            const complianceRate = totalForms > 0 ? Math.round((completedForms / totalForms) * 100) : 0;
+            document.getElementById('compliance-rate').textContent = `${complianceRate}%`;
+            
+            // Update recent activities
+            const tbody = document.getElementById('recent-activities').querySelector('tbody');
+            tbody.innerHTML = '';
+            
+            // Get all forms and sort by date (newest first)
+            const allForms = [
+                ...appState.forms.preShift.map(f => ({...f, displayType: 'Pre-Shift Check'})),
+                ...appState.forms.vehicleChecklist.map(f => ({...f, displayType: 'Vehicle Checklist'})),
+                ...appState.forms.safeWorkPermit.map(f => ({...f, displayType: 'Safe Work Permit'})),
+                ...appState.forms.hira.map(f => ({...f, displayType: 'HIRA'}))
+            ].sort((a, b) => new Date(b.submittedAt) - new Date(a.submittedAt)).slice(0, 5);
+            
+            allForms.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.date}</td>
+                    <td>${item.displayType}</td>
+                    <td>${item.status}</td>
+                    <td>
+                        <button class="btn btn-primary view-item" data-id="${item.id}" data-type="${item.type}">View</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Add event listeners to view buttons
+            document.querySelectorAll('#recent-activities .view-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    const type = this.getAttribute('data-type');
+                    viewFormItem(id, type);
+                });
+            });
+        }
+        
+        // Load forms data from localStorage
+        function loadFormsData() {
+            const savedForms = localStorage.getItem('safetyForms');
+            if (savedForms) {
+                const forms = JSON.parse(savedForms);
+                appState.forms.preShift = forms.preShift || [];
+                appState.forms.vehicleChecklist = forms.vehicleChecklist || [];
+                appState.forms.safeWorkPermit = forms.safeWorkPermit || [];
+                appState.forms.hira = forms.hira || [];
+            }
+        }
+        
+        // Save forms data to localStorage
+        function saveFormsData() {
+            localStorage.setItem('safetyForms', JSON.stringify(appState.forms));
+        }
+        
+        // Generate unique ID
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+        
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
 </body>
 </html>
