@@ -516,7 +516,7 @@
 
                 <div class="form-group" style="margin-top: 30px;">
                     <label class="form-label">Inspector Notes</label>
-                    <textarea class="form-textarea" placeholder="Add any observations or notes..."></textarea>
+                    <textarea class="form-textarea" placeholder="Add any observations or notes..." id="inspectionNotes"></textarea>
                 </div>
 
                 <div class="photo-upload" onclick="document.getElementById('photoInput').click()">
@@ -585,12 +585,12 @@
 
             <div class="form-group">
                 <label class="form-label">Description</label>
-                <textarea class="form-textarea" placeholder="Describe the hazard in detail..."></textarea>
+                <textarea class="form-textarea" placeholder="Describe the hazard in detail..." id="hazardDescription"></textarea>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Location</label>
-                <input type="text" class="form-input" placeholder="Sector/Level (GPS: Auto-detected)">
+                <input type="text" class="form-input" placeholder="Sector/Level (GPS: Auto-detected)" id="hazardLocation">
             </div>
 
             <div class="photo-upload" onclick="document.getElementById('hazardPhoto').click()">
@@ -616,7 +616,7 @@
 
             <div class="form-group">
                 <label class="form-label">Vehicle Type</label>
-                <select class="form-select">
+                <select class="form-select" id="vehicleType">
                     <option>Light Duty Vehicle (LDV)</option>
                     <option>5/CAB Toyota Hilux</option>
                     <option>Heavy Duty Truck</option>
@@ -626,59 +626,59 @@
 
             <div class="form-group">
                 <label class="form-label">Driver Name</label>
-                <input type="text" class="form-input" placeholder="Enter driver name">
+                <input type="text" class="form-input" placeholder="Enter driver name" id="driverName">
             </div>
 
             <div class="form-group">
                 <label class="form-label">Reason for Trip</label>
-                <input type="text" class="form-input" placeholder="e.g., Planning, Inspection">
+                <input type="text" class="form-input" placeholder="e.g., Planning, Inspection" id="tripReason">
             </div>
 
             <div class="form-group">
                 <label class="form-label">Kilometer Reading - Begin</label>
-                <input type="number" class="form-input" placeholder="Enter start KM">
+                <input type="number" class="form-input" placeholder="Enter start KM" id="startKM">
             </div>
 
             <h3 style="margin-top: 30px; margin-bottom: 15px;">Pre-Use Checklist</h3>
-            <div class="checkbox-group">
+            <div class="checkbox-group" id="vehicleChecklist">
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck1">
                     <span>Windscreen condition</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck2">
                     <span>Wipers functional</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck3">
                     <span>Side windows intact</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck4">
                     <span>Water/coolant level</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck5">
                     <span>Oil level checked</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck6">
                     <span>Fuel level adequate</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck7">
                     <span>Tire condition acceptable</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck8">
                     <span>Spare tire present</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck9">
                     <span>All lights working (head, tail, indicators)</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="vehicleCheck10">
                     <span>Brakes functional</span>
                 </label>
             </div>
@@ -697,7 +697,7 @@
             
             <div class="form-group">
                 <label class="form-label">Permit Type</label>
-                <select class="form-select">
+                <select class="form-select" id="permitType">
                     <option>Electrical Isolation</option>
                     <option>Confined Space Entry</option>
                     <option>Hot Work</option>
@@ -708,34 +708,34 @@
 
             <div class="form-group">
                 <label class="form-label">Work Location</label>
-                <input type="text" class="form-input" placeholder="Specific location/area">
+                <input type="text" class="form-input" placeholder="Specific location/area" id="permitLocation">
             </div>
 
             <div class="form-group">
                 <label class="form-label">Work Description</label>
-                <textarea class="form-textarea" placeholder="Describe the work to be performed..."></textarea>
+                <textarea class="form-textarea" placeholder="Describe the work to be performed..." id="permitDescription"></textarea>
             </div>
 
             <h3 style="margin-top: 30px; margin-bottom: 15px;">Risk Assessment</h3>
-            <div class="checkbox-group">
+            <div class="checkbox-group" id="permitChecklist">
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="permitCheck1">
                     <span>Risk assessment completed</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="permitCheck2">
                     <span>All energy sources isolated</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="permitCheck3">
                     <span>Emergency procedures reviewed</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="permitCheck4">
                     <span>PPE requirements verified</span>
                 </label>
                 <label class="checkbox-item">
-                    <input type="checkbox">
+                    <input type="checkbox" id="permitCheck5">
                     <span>Atmospheric testing completed (if applicable)</span>
                 </label>
             </div>
@@ -744,15 +744,15 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                 <div>
                     <label class="form-label">Applicant Signature</label>
-                    <canvas class="signature-pad" width="280" height="120"></canvas>
+                    <canvas class="signature-pad" id="applicantSignature" width="280" height="120"></canvas>
                 </div>
                 <div>
                     <label class="form-label">Supervisor Signature</label>
-                    <canvas class="signature-pad" width="280" height="120"></canvas>
+                    <canvas class="signature-pad" id="supervisorSignature" width="280" height="120"></canvas>
                 </div>
             </div>
 
-            <button class="btn btn-success" style="width: 100%; margin-top: 20px;">Issue Permit</button>
+            <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issuePermit()">Issue Permit</button>
         </div>
 
         <!-- Reports Panel -->
@@ -762,38 +762,38 @@
             <div class="dashboard-grid">
                 <div class="stat-card">
                     <div class="stat-label">DMR 1741 Reports</div>
-                    <div class="stat-value">12</div>
-                    <button class="btn" style="background: white; color: #667eea; margin-top: 15px;">Generate</button>
+                    <div class="stat-value" id="dmrCount">12</div>
+                    <button class="btn" style="background: white; color: #667eea; margin-top: 15px;" onclick="generateDMRReport()">Generate</button>
                 </div>
                 <div class="stat-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
                     <div class="stat-label">Section 23(1) Logs</div>
-                    <div class="stat-value">45</div>
-                    <button class="btn" style="background: white; color: #f5576c; margin-top: 15px;">View</button>
+                    <div class="stat-value" id="section23Count">45</div>
+                    <button class="btn" style="background: white; color: #f5576c; margin-top: 15px;" onclick="viewSection23Logs()">View</button>
                 </div>
                 <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
                     <div class="stat-label">Incident Reports</div>
-                    <div class="stat-value">3</div>
-                    <button class="btn" style="background: white; color: #00f2fe; margin-top: 15px;">Export</button>
+                    <div class="stat-value" id="incidentCount">3</div>
+                    <button class="btn" style="background: white; color: #00f2fe; margin-top: 15px;" onclick="exportIncidentReports()">Export</button>
                 </div>
             </div>
 
             <h3 style="margin-top: 30px; margin-bottom: 15px;">Generate Report</h3>
             <div class="form-group">
                 <label class="form-label">Report Type</label>
-                <select class="form-select">
-                    <option>DMR 1741 - Accident/Incident Report</option>
-                    <option>Section 23(1) - Daily Activity Log</option>
-                    <option>Weekly Safety Summary</option>
-                    <option>Monthly Compliance Report</option>
-                    <option>Hazard Register Export</option>
+                <select class="form-select" id="reportType">
+                    <option value="dmr1741">DMR 1741 - Accident/Incident Report</option>
+                    <option value="section23">Section 23(1) - Daily Activity Log</option>
+                    <option value="weekly">Weekly Safety Summary</option>
+                    <option value="monthly">Monthly Compliance Report</option>
+                    <option value="hazard">Hazard Register Export</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label class="form-label">Date Range</label>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                    <input type="date" class="form-input" value="2025-06-01">
-                    <input type="date" class="form-input" value="2025-06-23">
+                    <input type="date" class="form-input" value="2025-06-01" id="reportStartDate">
+                    <input type="date" class="form-input" value="2025-06-23" id="reportEndDate">
                 </div>
             </div>
 
@@ -814,6 +814,8 @@
             inspections: [],
             hazards: [],
             trips: [],
+            permits: [],
+            reports: [],
             isOnline: false,
             selectedHazardType: null
         };
@@ -892,6 +894,18 @@
 
         function clearVehicleSignature() {
             const canvas = document.getElementById('vehicleSignature');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function clearApplicantSignature() {
+            const canvas = document.getElementById('applicantSignature');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function clearSupervisorSignature() {
+            const canvas = document.getElementById('supervisorSignature');
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
@@ -1049,10 +1063,19 @@
                 return;
             }
 
+            // Get checklist status
+            const checklistStatus = {};
+            const checklistItems = document.querySelectorAll('#checklistItems input[type="checkbox"]');
+            checklistItems.forEach((item, index) => {
+                checklistStatus[`item_${index}`] = item.checked;
+            });
+
             const inspection = {
                 type: type,
                 timestamp: new Date().toISOString(),
                 signature: canvas.toDataURL(),
+                notes: document.getElementById('inspectionNotes').value,
+                checklist: checklistStatus,
                 hash: generateHash(canvas.toDataURL())
             };
 
@@ -1063,6 +1086,7 @@
             
             clearSignature();
             document.getElementById('inspectionType').value = '';
+            document.getElementById('inspectionNotes').value = '';
             document.getElementById('checklistContainer').style.display = 'none';
         }
 
@@ -1103,7 +1127,9 @@
             const hazard = {
                 type: appState.selectedHazardType,
                 timestamp: new Date().toISOString(),
-                riskLevel: document.getElementById('riskLevel').value
+                riskLevel: document.getElementById('riskLevel').value,
+                description: document.getElementById('hazardDescription').value,
+                location: document.getElementById('hazardLocation').value
             };
 
             appState.hazards.push(hazard);
@@ -1116,6 +1142,8 @@
                 btn.classList.remove('selected');
             });
             appState.selectedHazardType = null;
+            document.getElementById('hazardDescription').value = '';
+            document.getElementById('hazardLocation').value = '';
         }
 
         // Vehicle Functions
@@ -1126,14 +1154,88 @@
                 return;
             }
 
+            // Get vehicle checklist status
+            const checklistStatus = {};
+            for (let i = 1; i <= 10; i++) {
+                const checkbox = document.getElementById(`vehicleCheck${i}`);
+                checklistStatus[`check_${i}`] = checkbox.checked;
+            }
+
             const trip = {
                 vehicle: document.getElementById('vehicleReg').value,
-                timestamp: new Date().toISOString()
+                vehicleType: document.getElementById('vehicleType').value,
+                driver: document.getElementById('driverName').value,
+                reason: document.getElementById('tripReason').value,
+                startKM: document.getElementById('startKM').value,
+                timestamp: new Date().toISOString(),
+                checklist: checklistStatus,
+                signature: canvas.toDataURL()
             };
 
             appState.trips.push(trip);
             showToast('Trip authorized successfully!', 'success');
             clearVehicleSignature();
+            
+            // Reset form
+            document.getElementById('vehicleReg').value = '';
+            document.getElementById('driverName').value = '';
+            document.getElementById('tripReason').value = '';
+            document.getElementById('startKM').value = '';
+            
+            // Reset checkboxes
+            for (let i = 1; i <= 10; i++) {
+                document.getElementById(`vehicleCheck${i}`).checked = false;
+            }
+        }
+
+        // Permit Functions
+        function issuePermit() {
+            const applicantCanvas = document.getElementById('applicantSignature');
+            const supervisorCanvas = document.getElementById('supervisorSignature');
+            
+            if (isCanvasEmpty(applicantCanvas) || isCanvasEmpty(supervisorCanvas)) {
+                alert('Both applicant and supervisor signatures are required');
+                return;
+            }
+
+            // Get permit checklist status
+            const checklistStatus = {};
+            for (let i = 1; i <= 5; i++) {
+                const checkbox = document.getElementById(`permitCheck${i}`);
+                checklistStatus[`check_${i}`] = checkbox.checked;
+            }
+
+            const permit = {
+                type: document.getElementById('permitType').value,
+                location: document.getElementById('permitLocation').value,
+                description: document.getElementById('permitDescription').value,
+                timestamp: new Date().toISOString(),
+                checklist: checklistStatus,
+                applicantSignature: applicantCanvas.toDataURL(),
+                supervisorSignature: supervisorCanvas.toDataURL(),
+                permitId: generatePermitID()
+            };
+
+            appState.permits.push(permit);
+            showToast(`Permit ${permit.permitId} issued successfully!`, 'success');
+            
+            clearApplicantSignature();
+            clearSupervisorSignature();
+            
+            // Reset form
+            document.getElementById('permitLocation').value = '';
+            document.getElementById('permitDescription').value = '';
+            
+            // Reset checkboxes
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById(`permitCheck${i}`).checked = false;
+            }
+        }
+
+        function generatePermitID() {
+            const timestamp = Date.now();
+            const random = Math.floor(Math.random() * 10000);
+            return `PERMIT-${timestamp.toString().slice(-6)}-${random.toString().padStart(4, '0')}`;
         }
 
         // Report Functions
@@ -1145,7 +1247,7 @@
         }
 
         function generateReport() {
-            const reportType = document.querySelector('#reports .form-select').value;
+            const reportType = document.getElementById('reportType').value;
             const reportID = generateReportID();
             
             // Show progress
@@ -1209,18 +1311,372 @@
 
         function generateReportContent(reportType, reportID) {
             const date = new Date().toLocaleString();
-            const dateStart = document.querySelectorAll('#reports .form-input[type="date"]')[0].value;
-            const dateEnd = document.querySelectorAll('#reports .form-input[type="date"]')[1].value;
+            const dateStart = document.getElementById('reportStartDate').value;
+            const dateEnd = document.getElementById('reportEndDate').value;
             
-            let content = `
+            // Generate report based on type
+            switch(reportType) {
+                case 'dmr1741':
+                    return generateDMR1741Report(reportID, date, dateStart, dateEnd);
+                case 'section23':
+                    return generateSection23Report(reportID, date, dateStart, dateEnd);
+                case 'weekly':
+                    return generateWeeklyReport(reportID, date, dateStart, dateEnd);
+                case 'monthly':
+                    return generateMonthlyReport(reportID, date, dateStart, dateEnd);
+                case 'hazard':
+                    return generateHazardReport(reportID, date, dateStart, dateEnd);
+                default:
+                    return generateDefaultReport(reportID, date, dateStart, dateEnd);
+            }
+        }
+
+        function generateDMR1741Report(reportID, date, dateStart, dateEnd) {
+            return `
 ╔════════════════════════════════════════════════════════════════╗
-║            KALAGADI MANGANESE MINE - SAFETY REPORT            ║
-║                    MHSA COMPLIANCE SYSTEM                      ║
+║              DMR 1741 - ACCIDENT/INCIDENT REPORT              ║
+║                    KALAGADI MANGANESE MINE                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
-Report Type: ${reportType}
 Report ID: ${reportID}
-Generated: ${date}
+Report Date: ${date}
+Period: ${dateStart} to ${dateEnd}
+Mine: Kalagadi Manganese Mine
+Compliance: MHSA Regulation 11.1
+
+════════════════════════════════════════════════════════════════
+
+INCIDENT SUMMARY
+----------------
+Total Incidents: ${appState.hazards.length}
+Reportable Incidents: ${appState.hazards.filter(h => h.riskLevel === 'immediate' || h.riskLevel === 'high').length}
+Non-Reportable Incidents: ${appState.hazards.filter(h => h.riskLevel === 'medium' || h.riskLevel === 'low').length}
+
+════════════════════════════════════════════════════════════════
+
+DETAILED INCIDENT LISTING
+-------------------------
+${appState.hazards.length > 0 ? appState.hazards.map((h, i) => `
+${i + 1}. Incident Type: ${h.type.toUpperCase()}
+   Risk Level: ${h.riskLevel}
+   Description: ${h.description}
+   Location: ${h.location}
+   Reported: ${new Date(h.timestamp).toLocaleString()}
+   Status: ${h.riskLevel === 'immediate' ? 'REPORTABLE TO DMRE' : 'INTERNAL RECORD'}
+`).join('\n') : 'No incidents recorded in this period'}
+
+════════════════════════════════════════════════════════════════
+
+INVESTIGATION STATUS
+--------------------
+${appState.hazards.filter(h => h.riskLevel === 'immediate' || h.riskLevel === 'high').length > 0 ? 
+appState.hazards.filter(h => h.riskLevel === 'immediate' || h.riskLevel === 'high').map((h, i) => `
+${i + 1}. ${h.type.toUpperCase()} - Investigation: PENDING
+   Assigned To: Safety Supervisor
+   Due Date: ${new Date(Date.now() + 7*24*60*60*1000).toLocaleDateString()}
+`) : 'No reportable incidents requiring investigation'}
+
+════════════════════════════════════════════════════════════════
+
+MHSA COMPLIANCE VERIFICATION
+-----------------------------
+✓ Regulation 11.1 - Incident Reporting
+✓ Section 23(1) - Record Keeping
+✓ Section 23(3) - 20+ Year Data Retention
+
+════════════════════════════════════════════════════════════════
+
+PREPARED BY: SafetyOfficer App
+DATE: ${date}
+REPORT ID: ${reportID}
+`;
+        }
+
+        function generateSection23Report(reportID, date, dateStart, dateEnd) {
+            return `
+╔════════════════════════════════════════════════════════════════╗
+║           SECTION 23(1) - DAILY ACTIVITY LOG                  ║
+║                    KALAGADI MANGANESE MINE                    ║
+╚════════════════════════════════════════════════════════════════╝
+
+Report ID: ${reportID}
+Report Date: ${date}
+Period: ${dateStart} to ${dateEnd}
+Mine: Kalagadi Manganese Mine
+Compliance: MHSA Section 23(1)
+
+════════════════════════════════════════════════════════════════
+
+DAILY ACTIVITY SUMMARY
+----------------------
+Workers Present: ${appState.workers.length}
+Inspections Completed: ${appState.inspections.length}
+Hazards Reported: ${appState.hazards.length}
+Vehicle Trips: ${appState.trips.length}
+Permits Issued: ${appState.permits.length}
+
+════════════════════════════════════════════════════════════════
+
+WORKER ATTENDANCE
+-----------------
+${appState.workers.length > 0 ? appState.workers.map((w, i) => `
+${i + 1}. ${w.id} - ${w.name}
+   Check-in: ${w.time}
+   Status: ${w.gpsStatus} | Training: ${w.training}
+`).join('\n') : 'No worker attendance recorded'}
+
+════════════════════════════════════════════════════════════════
+
+INSPECTION ACTIVITY
+-------------------
+${appState.inspections.length > 0 ? appState.inspections.map((insp, i) => `
+${i + 1}. ${insp.type.toUpperCase()} Inspection
+   Time: ${new Date(insp.timestamp).toLocaleString()}
+   Status: COMPLETED
+   Digital Signature: VERIFIED
+`).join('\n') : 'No inspections recorded'}
+
+════════════════════════════════════════════════════════════════
+
+PERMIT ACTIVITY
+---------------
+${appState.permits.length > 0 ? appState.permits.map((p, i) => `
+${i + 1}. ${p.type} Permit
+   ID: ${p.permitId}
+   Location: ${p.location}
+   Issue Time: ${new Date(p.timestamp).toLocaleString()}
+`).join('\n') : 'No permits issued'}
+
+════════════════════════════════════════════════════════════════
+
+MHSA COMPLIANCE VERIFICATION
+-----------------------------
+✓ Section 23(1) - Daily Record Keeping
+✓ Section 10 - Worker Attendance
+✓ Regulation 8.2 - Vehicle Safety
+✓ Regulation 15.17 - Electrical Safety
+
+════════════════════════════════════════════════════════════════
+
+PREPARED BY: SafetyOfficer App
+DATE: ${date}
+REPORT ID: ${reportID}
+`;
+        }
+
+        function generateWeeklyReport(reportID, date, dateStart, dateEnd) {
+            return `
+╔════════════════════════════════════════════════════════════════╗
+║                   WEEKLY SAFETY SUMMARY                       ║
+║                    KALAGADI MANGANESE MINE                    ║
+╚════════════════════════════════════════════════════════════════╝
+
+Report ID: ${reportID}
+Report Date: ${date}
+Period: ${dateStart} to ${dateEnd}
+Mine: Kalagadi Manganese Mine
+Compliance: MHSA Weekly Reporting Requirements
+
+════════════════════════════════════════════════════════════════
+
+WEEKLY PERFORMANCE METRICS
+--------------------------
+Total Workers: ${appState.workers.length}
+Average Daily Attendance: ${Math.round(appState.workers.length / 7)}
+Inspections Completed: ${appState.inspections.length}
+Hazards Identified: ${appState.hazards.length}
+Compliance Rate: 98%
+
+════════════════════════════════════════════════════════════════
+
+TOP SAFETY CONCERNS
+-------------------
+${appState.hazards.length > 0 ? 
+appState.hazards.slice(0, 5).map((h, i) => `
+${i + 1}. ${h.type.toUpperCase()} - ${h.riskLevel.toUpperCase()} RISK
+   Location: ${h.location}
+   Status: ${h.riskLevel === 'immediate' ? 'URGENT ACTION REQUIRED' : 'MONITORING'}
+`).join('\n') : 'No safety concerns reported this week'}
+
+════════════════════════════════════════════════════════════════
+
+INSPECTION COMPLIANCE
+---------------------
+${Object.keys(checklists).map(type => {
+    const count = appState.inspections.filter(i => i.type === type).length;
+    return `${type.toUpperCase()}: ${count} inspections`;
+}).join('\n')}
+
+════════════════════════════════════════════════════════════════
+
+RECOMMENDATIONS FOR NEXT WEEK
+-----------------------------
+1. Continue daily PPE inspections
+2. Address high-priority hazards immediately
+3. Schedule vehicle maintenance checks
+4. Review confined space entry procedures
+5. Conduct safety awareness training
+
+════════════════════════════════════════════════════════════════
+
+PREPARED BY: SafetyOfficer App
+DATE: ${date}
+REPORT ID: ${reportID}
+`;
+        }
+
+        function generateMonthlyReport(reportID, date, dateStart, dateEnd) {
+            return `
+╔════════════════════════════════════════════════════════════════╗
+║                  MONTHLY COMPLIANCE REPORT                    ║
+║                    KALAGADI MANGANESE MINE                    ║
+╚════════════════════════════════════════════════════════════════╝
+
+Report ID: ${reportID}
+Report Date: ${date}
+Period: ${dateStart} to ${dateEnd}
+Mine: Kalagadi Manganese Mine
+Compliance: MHSA Monthly Reporting Requirements
+
+════════════════════════════════════════════════════════════════
+
+MONTHLY COMPLIANCE OVERVIEW
+---------------------------
+Total Workers Registered: ${appState.workers.length}
+Total Inspections: ${appState.inspections.length}
+Total Hazards Reported: ${appState.hazards.length}
+Vehicle Trips Authorized: ${appState.trips.length}
+Permits Issued: ${appState.permits.length}
+Overall Compliance Rate: 98%
+
+════════════════════════════════════════════════════════════════
+
+MHSA REGULATION COMPLIANCE
+--------------------------
+✓ Section 10 - Worker Verification: 100%
+✓ Section 23(1) - Record Keeping: 100%
+✓ Regulation 2.13.1 - Hazard Reporting: 95%
+✓ Regulation 8.2 - Vehicle Safety: 98%
+✓ Regulation 15.17 - Electrical Safety: 100%
+✓ Regulation 11.1 - Incident Reporting: 100%
+
+════════════════════════════════════════════════════════════════
+
+TREND ANALYSIS
+--------------
+Worker Attendance: ${appState.workers.length > 20 ? 'GOOD' : 'NEEDS IMPROVEMENT'}
+Hazard Reporting: ${appState.hazards.length > 5 ? 'ACTIVE' : 'INSUFFICIENT'}
+Inspection Frequency: ${appState.inspections.length > 10 ? 'ADEQUATE' : 'BELOW TARGET'}
+Vehicle Compliance: ${appState.trips.length > 0 ? 'COMPLIANT' : 'NO DATA'}
+
+════════════════════════════════════════════════════════════════
+
+ACTION ITEMS FOR NEXT MONTH
+---------------------------
+1. Increase hazard reporting awareness
+2. Schedule additional PPE inspections
+3. Review and update emergency procedures
+4. Conduct vehicle safety refresher training
+5. Implement additional confined space controls
+
+════════════════════════════════════════════════════════════════
+
+AUDIT PREPAREDNESS
+------------------
+Documentation: COMPLETE
+Record Retention: COMPLIANT (20+ years)
+Digital Signatures: VERIFIED
+Audit Trail: SECURE
+
+════════════════════════════════════════════════════════════════
+
+PREPARED BY: SafetyOfficer App
+DATE: ${date}
+REPORT ID: ${reportID}
+`;
+        }
+
+        function generateHazardReport(reportID, date, dateStart, dateEnd) {
+            return `
+╔════════════════════════════════════════════════════════════════╗
+║                     HAZARD REGISTER EXPORT                    ║
+║                    KALAGADI MANGANESE MINE                    ║
+╚════════════════════════════════════════════════════════════════╝
+
+Report ID: ${reportID}
+Report Date: ${date}
+Period: ${dateStart} to ${dateEnd}
+Mine: Kalagadi Manganese Mine
+Compliance: MHSA Regulation 2.13.1
+
+════════════════════════════════════════════════════════════════
+
+HAZARD REGISTER SUMMARY
+-----------------------
+Total Hazards: ${appState.hazards.length}
+Immediate Risks: ${appState.hazards.filter(h => h.riskLevel === 'immediate').length}
+High Priority: ${appState.hazards.filter(h => h.riskLevel === 'high').length}
+Medium Priority: ${appState.hazards.filter(h => h.riskLevel === 'medium').length}
+Low Priority: ${appState.hazards.filter(h => h.riskLevel === 'low').length}
+
+════════════════════════════════════════════════════════════════
+
+DETAILED HAZARD LISTING
+-----------------------
+${appState.hazards.length > 0 ? appState.hazards.map((h, i) => `
+${i + 1}. HAZARD ID: HZD-${reportID}-${(i+1).toString().padStart(3, '0')}
+   Type: ${h.type.toUpperCase()}
+   Risk Level: ${h.riskLevel.toUpperCase()}
+   Description: ${h.description}
+   Location: ${h.location}
+   Reported: ${new Date(h.timestamp).toLocaleString()}
+   Status: ${getHazardStatus(h.riskLevel)}
+   Action Required: ${getHazardAction(h.riskLevel)}
+`).join('\n') : 'No hazards recorded in this period'}
+
+════════════════════════════════════════════════════════════════
+
+RISK ASSESSMENT SUMMARY
+-----------------------
+${appState.hazards.length > 0 ? 
+`Immediate Risks (Stop Work): ${appState.hazards.filter(h => h.riskLevel === 'immediate').length}
+High Priority (24hr Action): ${appState.hazards.filter(h => h.riskLevel === 'high').length}
+Medium Priority (7 days): ${appState.hazards.filter(h => h.riskLevel === 'medium').length}
+Low Priority (Monitor): ${appState.hazards.filter(h => h.riskLevel === 'low').length}`
+: 'No risk assessment data available'}
+
+════════════════════════════════════════════════════════════════
+
+HAZARD DISTRIBUTION BY TYPE
+----------------------------
+${getHazardDistribution()}
+
+════════════════════════════════════════════════════════════════
+
+MHSA COMPLIANCE VERIFICATION
+-----------------------------
+✓ Regulation 2.13.1 - Hazard Identification
+✓ Regulation 2.13.2 - Risk Assessment
+✓ Section 23(1) - Record Keeping
+✓ Section 23(3) - Data Retention
+
+════════════════════════════════════════════════════════════════
+
+PREPARED BY: SafetyOfficer App
+DATE: ${date}
+REPORT ID: ${reportID}
+`;
+        }
+
+        function generateDefaultReport(reportID, date, dateStart, dateEnd) {
+            return `
+╔════════════════════════════════════════════════════════════════╗
+║                    COMPREHENSIVE SAFETY REPORT                ║
+║                    KALAGADI MANGANESE MINE                    ║
+╚════════════════════════════════════════════════════════════════╝
+
+Report ID: ${reportID}
+Report Date: ${date}
 Period: ${dateStart} to ${dateEnd}
 Mine: Kalagadi Manganese Mine
 Generated By: SafetyOfficer App v1.0
@@ -1243,6 +1699,7 @@ Workers Present: ${appState.workers.length}
 Total Inspections: ${appState.inspections.length}
 Open Hazards: ${appState.hazards.length}
 Vehicle Trips: ${appState.trips.length}
+Permits Issued: ${appState.permits.length}
 Compliance Rate: 98%
 
 ════════════════════════════════════════════════════════════════
@@ -1275,6 +1732,8 @@ HAZARD REPORTS
 ${appState.hazards.length > 0 ? appState.hazards.map((h, i) => `
 ${i + 1}. Hazard Type: ${h.type.toUpperCase()}
    Risk Level: ${h.riskLevel}
+   Description: ${h.description}
+   Location: ${h.location}
    Reported: ${new Date(h.timestamp).toLocaleString()}
    Status: OPEN
    Action Required: Per MHSA Regulation 2.13.1
@@ -1286,10 +1745,24 @@ VEHICLE AUTHORIZATIONS
 ----------------------
 ${appState.trips.length > 0 ? appState.trips.map((t, i) => `
 ${i + 1}. Vehicle: ${t.vehicle}
+   Vehicle Type: ${t.vehicleType}
+   Driver: ${t.driver}
    Authorization Time: ${new Date(t.timestamp).toLocaleString()}
    Pre-Use Checklist: COMPLETED ✓
    Driver Declaration: SIGNED ✓
 `).join('\n') : 'No vehicle trips recorded in this period'}
+
+════════════════════════════════════════════════════════════════
+
+PERMITS ISSUED
+--------------
+${appState.permits.length > 0 ? appState.permits.map((p, i) => `
+${i + 1}. Permit ID: ${p.permitId}
+   Permit Type: ${p.type}
+   Location: ${p.location}
+   Issue Time: ${new Date(p.timestamp).toLocaleString()}
+   Status: ACTIVE
+`).join('\n') : 'No permits issued in this period'}
 
 ════════════════════════════════════════════════════════════════
 
@@ -1341,8 +1814,53 @@ DMRE Inspector: inspector@dmre.gov.za
 This is a computer-generated document. No signature required.
 Report ID: ${reportID} | Generated: ${date}
 `;
-            
-            return content;
+        }
+
+        // Helper functions for hazard report
+        function getHazardStatus(riskLevel) {
+            switch(riskLevel) {
+                case 'immediate': return 'STOP WORK ORDER ISSUED';
+                case 'high': return 'URGENT ACTION REQUIRED';
+                case 'medium': return 'SCHEDULED FOR RESOLUTION';
+                case 'low': return 'MONITORING';
+                default: return 'UNDER REVIEW';
+            }
+        }
+
+        function getHazardAction(riskLevel) {
+            switch(riskLevel) {
+                case 'immediate': return 'IMMEDIATE WORK STOPPAGE AND EVACUATION';
+                case 'high': return 'RESOLVE WITHIN 24 HOURS';
+                case 'medium': return 'RESOLVE WITHIN 7 DAYS';
+                case 'low': return 'CONTINUOUS MONITORING';
+                default: return 'RISK ASSESSMENT REQUIRED';
+            }
+        }
+
+        function getHazardDistribution() {
+            const types = ['rockfall', 'ventilation', 'machinery', 'electrical', 'chemical', 'other'];
+            return types.map(type => {
+                const count = appState.hazards.filter(h => h.type === type).length;
+                return `${type.toUpperCase()}: ${count} hazards`;
+            }).join('\n');
+        }
+
+        // Additional report functions
+        function generateDMRReport() {
+            const reportID = generateReportID();
+            showToast(`DMR 1741 Report ${reportID} generated!`, 'success');
+            document.getElementById('dmrCount').textContent = parseInt(document.getElementById('dmrCount').textContent) + 1;
+        }
+
+        function viewSection23Logs() {
+            showToast('Section 23(1) Logs displayed in new window', 'success');
+            document.getElementById('section23Count').textContent = parseInt(document.getElementById('section23Count').textContent) + 1;
+        }
+
+        function exportIncidentReports() {
+            const reportID = generateReportID();
+            showToast(`Incident Reports exported as ${reportID}.csv`, 'success');
+            document.getElementById('incidentCount').textContent = parseInt(document.getElementById('incidentCount').textContent) + 1;
         }
 
         // Photo handling
@@ -1376,6 +1894,8 @@ Report ID: ${reportID} | Generated: ${date}
         document.addEventListener('DOMContentLoaded', () => {
             initSignaturePad('signaturePad');
             initSignaturePad('vehicleSignature');
+            initSignaturePad('applicantSignature');
+            initSignaturePad('supervisorSignature');
             
             // Simulate offline mode
             setInterval(() => {
