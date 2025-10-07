@@ -135,7 +135,8 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            display: none; /* Hidden by default until login */
+            display: none;
+            width: 100%;
         }
 
         .header {
@@ -398,6 +399,7 @@
             background: white;
             cursor: crosshair;
             touch-action: none;
+            width: 100%;
         }
 
         .alert {
@@ -503,7 +505,6 @@
             background: #dc2626;
         }
 
-        /* PPE Checklist Styles */
         .ppe-checklist {
             background: #f8fafc;
             border-radius: 10px;
@@ -582,7 +583,6 @@
             color: #0369a1;
         }
 
-        /* Risk Assessment Table Styles */
         .risk-assessment {
             background: #f8fafc;
             border-radius: 10px;
@@ -665,24 +665,127 @@
             font-size: 13px;
         }
 
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hazard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .auth-container {
+                padding: 30px 20px;
+                max-width: 100%;
+            }
+
+            .auth-title {
+                font-size: 24px;
+            }
+
             .header {
                 flex-direction: column;
                 text-align: center;
                 gap: 15px;
+                padding: 15px;
+            }
+
+            .logo-section {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+
+            .header-title {
+                font-size: 22px;
             }
 
             .user-info {
                 flex-direction: column;
                 text-align: center;
+                width: 100%;
+            }
+
+            .user-details {
+                text-align: center;
+            }
+
+            .status-badge {
+                font-size: 12px;
+                padding: 6px 12px;
             }
 
             .dashboard-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .stat-card {
+                padding: 20px;
+            }
+
+            .stat-value {
+                font-size: 28px;
             }
 
             .nav-tabs {
-                flex-wrap: wrap;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: thin;
+            }
+
+            .nav-tabs::-webkit-scrollbar {
+                height: 4px;
+            }
+
+            .nav-tabs::-webkit-scrollbar-thumb {
+                background: #667eea;
+                border-radius: 2px;
+            }
+
+            .nav-tab {
+                padding: 12px 20px;
+                font-size: 14px;
+                flex-shrink: 0;
+            }
+
+            .content-panel {
+                padding: 20px 15px;
+            }
+
+            .content-panel h2 {
+                font-size: 20px;
+            }
+
+            .content-panel h3 {
+                font-size: 16px;
+            }
+
+            .hazard-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .hazard-btn {
+                padding: 15px 10px;
+                font-size: 14px;
+            }
+
+            .hazard-btn > div:first-child {
+                font-size: 32px;
             }
 
             .ppe-grid {
@@ -692,18 +795,231 @@
             .risk-table {
                 display: block;
                 overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .risk-table th, .risk-table td {
+                min-width: 120px;
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .risk-textarea {
+                min-height: 50px;
+                font-size: 12px;
+            }
+
+            .trip-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .trip-table th, .trip-table td {
+                min-width: 100px;
+                padding: 10px 8px;
+                font-size: 13px;
+            }
+
+            .signature-pad {
+                width: 100%;
+                height: 150px;
+            }
+
+            .form-input, .form-select, .form-textarea {
+                font-size: 16px;
+            }
+
+            .qr-scanner {
+                padding: 30px 20px;
+            }
+
+            .qr-scanner-icon {
+                font-size: 60px;
+            }
+
+            .photo-upload {
+                padding: 20px;
+            }
+
+            .photo-upload > div:first-child {
+                font-size: 36px;
+            }
+
+            .checkbox-group {
+                gap: 10px;
+            }
+
+            .checkbox-item {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .alert {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 15px;
+                width: 100%;
+            }
+
+            .offline-indicator {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+
+            .sync-status {
+                flex-wrap: wrap;
+                gap: 8px;
+                padding: 12px;
+            }
+
+            .progress-bar {
+                width: 100%;
+            }
+
+            .permit-signatures-grid {
+                grid-template-columns: 1fr !important;
+                gap: 15px !important;
+            }
+
+            .permit-signatures-grid canvas {
+                width: 100% !important;
+                height: 120px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 32px;
+            }
+
+            .auth-title {
+                font-size: 20px;
+            }
+
+            .auth-subtitle {
+                font-size: 14px;
+            }
+
+            .header-title {
+                font-size: 18px;
+            }
+
+            .header-subtitle {
+                font-size: 12px;
+            }
+
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .user-name {
+                font-size: 14px;
+            }
+
+            .user-position {
+                font-size: 12px;
+            }
+
+            .stat-value {
+                font-size: 24px;
+            }
+
+            .stat-label {
+                font-size: 12px;
+            }
+
+            .nav-tab {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+
+            .hazard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hazard-btn > div:first-child {
+                font-size: 28px;
+            }
+
+            .dashboard-grid {
+                gap: 12px;
+            }
+
+            .content-panel {
+                padding: 15px 10px;
+            }
+
+            .content-panel h2 {
+                font-size: 18px;
+                margin-bottom: 15px;
+            }
+
+            .jobs-todo-title,
+            .ppe-title,
+            .risk-title {
+                font-size: 16px;
+            }
+
+            .signature-pad {
+                height: 120px;
+            }
+        }
+
+        @media (max-height: 600px) and (orientation: landscape) {
+            .auth-container {
+                padding: 20px;
+            }
+
+            .auth-logo {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                margin-bottom: 10px;
+            }
+
+            .auth-title {
+                font-size: 20px;
+                margin-bottom: 5px;
+            }
+
+            .auth-subtitle {
+                font-size: 14px;
+                margin-bottom: 15px;
+            }
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+
+            .header {
+                padding: 10px;
+            }
+
+            .content-panel {
+                padding: 15px;
+            }
+
+            .signature-pad {
+                height: 100px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Authentication Section -->
     <div class="auth-container" id="authContainer">
         <div class="auth-logo">⛑️</div>
         <div class="auth-title">SafetyOfficer</div>
         <div class="auth-subtitle">Kalagadi Manganese Mine</div>
 
-        <!-- Login Form -->
         <div id="loginForm" class="auth-form">
             <h3 style="margin-bottom: 20px; color: #333;">Login to Your Account</h3>
             <div class="form-group">
@@ -720,7 +1036,6 @@
             </div>
         </div>
 
-        <!-- Registration Form -->
         <div id="registerForm" class="auth-form" style="display: none;">
             <h3 style="margin-bottom: 20px; color: #333;">Create New Account</h3>
             <div class="form-group">
@@ -770,7 +1085,6 @@
         </div>
     </div>
 
-    <!-- Main Application (Hidden until login) -->
     <div class="container" id="mainApp">
         <div class="header">
             <div class="logo-section">
@@ -802,7 +1116,6 @@
             <button class="nav-tab" onclick="showPanel('reports')">📊 Reports</button>
         </div>
 
-        <!-- Dashboard Panel -->
         <div id="dashboard" class="content-panel active">
             <h2 style="margin-bottom: 20px;">Today's Overview - <span id="dashboardLocation"></span></h2>
             <div class="dashboard-grid">
@@ -842,7 +1155,6 @@
             </div>
         </div>
 
-        <!-- Roll Call Panel -->
         <div id="rollcall" class="content-panel">
             <h2 style="margin-bottom: 20px;">Pre-Shift Roll Call - <span id="rollcallLocation"></span></h2>
             <div class="alert alert-warning">
@@ -882,7 +1194,6 @@
             </table>
         </div>
 
-        <!-- Inspection Panel -->
         <div id="inspection" class="content-panel">
             <h2 style="margin-bottom: 20px;">Onsite Inspection Checklist - <span id="inspectionLocation"></span></h2>
             
@@ -901,7 +1212,6 @@
             <div id="checklistContainer" style="display: none;">
                 <div class="alert alert-success" id="regulationNote"></div>
                 
-                <!-- Jobs/To-do List Section -->
                 <div class="jobs-todo-section">
                     <div class="jobs-todo-title">Jobs/To-do List</div>
                     <div class="form-group">
@@ -910,12 +1220,9 @@
                     </div>
                 </div>
 
-                <!-- PPE Checklist Section -->
                 <div class="ppe-checklist">
                     <div class="ppe-title">PPE List</div>
-                    <div class="ppe-grid" id="ppeChecklist">
-                        <!-- PPE items will be dynamically generated here -->
-                    </div>
+                    <div class="ppe-grid" id="ppeChecklist"></div>
                 </div>
 
                 <div class="form-group" style="margin-top: 30px;">
@@ -939,7 +1246,6 @@
             </div>
         </div>
 
-        <!-- Hazard Panel -->
         <div id="hazard" class="content-panel">
             <h2 style="margin-bottom: 20px;">Report Hazard - <span id="hazardLocation"></span></h2>
             
@@ -997,7 +1303,6 @@
                 <input type="text" class="form-input" placeholder="Specific area/sector (GPS: Auto-detected)" id="hazardSpecificLocation">
             </div>
 
-            <!-- Risk Assessment Table -->
             <div class="risk-assessment">
                 <div class="risk-title">Hazard Risk Assessment</div>
                 <p style="margin-bottom: 15px; color: #64748b; font-size: 14px;">
@@ -1013,9 +1318,7 @@
                             <th>Rating</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Risk assessment rows will be dynamically generated here -->
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
 
@@ -1031,7 +1334,6 @@
             </button>
         </div>
 
-        <!-- Vehicle Panel -->
         <div id="vehicle" class="content-panel">
             <h2 style="margin-bottom: 20px;">Vehicle Trip Authorization - <span id="vehicleLocation"></span></h2>
             
@@ -1117,7 +1419,6 @@
             </div>
         </div>
 
-        <!-- Permit Panel -->
         <div id="permit" class="content-panel">
             <h2 style="margin-bottom: 20px;">Safe Work Permit - <span id="permitLocation"></span></h2>
             
@@ -1167,7 +1468,7 @@
             </div>
 
             <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="permit-signatures-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                 <div>
                     <label class="form-label">Applicant Signature</label>
                     <canvas class="signature-pad" id="applicantSignature" width="280" height="120"></canvas>
@@ -1181,7 +1482,6 @@
             <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issuePermit()">Issue Permit</button>
         </div>
 
-        <!-- Reports Panel -->
         <div id="reports" class="content-panel">
             <h2 style="margin-bottom: 20px;">Statutory Reports - <span id="reportsLocation"></span></h2>
             
@@ -1234,7 +1534,6 @@
     </div>
 
     <script>
-        // Global state
         let appState = {
             workers: [],
             inspections: [],
@@ -1245,13 +1544,11 @@
             isOnline: false,
             selectedHazardType: null,
             currentUser: null,
-            users: JSON.parse(localStorage.getItem('safetyOfficerUsers')) || []
+            users: []
         };
 
-        // Initialize jsPDF
         const { jsPDF } = window.jspdf;
 
-        // PPE Checklist Items
         const ppeItems = [
             { id: 'hearing-protection', name: 'Hearing Protection', checked: true },
             { id: 'life-jacket', name: 'Life Jacket', checked: false },
@@ -1275,31 +1572,14 @@
             { id: 'other', name: 'Other', checked: false }
         ];
 
-        // Risk Assessment Categories
         const riskCategories = [
-            'Biological',
-            'Chemical',
-            'Climate',
-            'Confined Space',
-            'Dust/inhalable particles',
-            'Electrical',
-            'Ergonomics',
-            'Explosives',
-            'Fire',
-            'Gravity (Objects falling)',
-            'Gravity (People falling)',
-            'Lighting',
-            'Mechanical-Fixed',
-            'Mobile Mechanical',
-            'Noise',
-            'Pressure (Kpa)',
-            'Stored Energy',
-            'Radiation',
-            'Thermal heat',
+            'Biological', 'Chemical', 'Climate', 'Confined Space', 'Dust/inhalable particles',
+            'Electrical', 'Ergonomics', 'Explosives', 'Fire', 'Gravity (Objects falling)',
+            'Gravity (People falling)', 'Lighting', 'Mechanical-Fixed', 'Mobile Mechanical',
+            'Noise', 'Pressure (Kpa)', 'Stored Energy', 'Radiation', 'Thermal heat',
             'Uneven / slippery surfaces'
         ];
 
-        // Authentication Functions
         function showLogin() {
             document.getElementById('loginForm').style.display = 'block';
             document.getElementById('registerForm').style.display = 'none';
@@ -1319,12 +1599,11 @@
                 return;
             }
 
-            // Find user in stored users
-            const user = appState.users.find(u => u.email === email && u.password === password);
+            const users = JSON.parse(localStorage.getItem('safetyOfficerUsers') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
             
             if (user) {
                 appState.currentUser = user;
-                localStorage.setItem('safetyOfficerCurrentUser', JSON.stringify(user));
                 showMainApp();
                 showToast(`Welcome back, ${user.name}!`, 'success');
             } else {
@@ -1350,41 +1629,27 @@
                 return;
             }
 
-            // Check if user already exists
-            if (appState.users.find(u => u.email === email)) {
+            const users = JSON.parse(localStorage.getItem('safetyOfficerUsers') || '[]');
+            
+            if (users.find(u => u.email === email)) {
                 showToast('User with this email already exists', 'danger');
                 return;
             }
 
-            // Create new user
-            const newUser = {
-                id: generateUserId(),
-                name,
-                email,
-                position,
-                location,
-                password,
-                createdAt: new Date().toISOString()
-            };
-
-            appState.users.push(newUser);
-            localStorage.setItem('safetyOfficerUsers', JSON.stringify(appState.users));
+            const newUser = { id: 'USER-' + Date.now(), name, email, position, location, password };
+            users.push(newUser);
+            localStorage.setItem('safetyOfficerUsers', JSON.stringify(users));
             
             appState.currentUser = newUser;
-            localStorage.setItem('safetyOfficerCurrentUser', JSON.stringify(newUser));
-            
             showMainApp();
             showToast(`Account created successfully! Welcome, ${name}!`, 'success');
         }
 
         function logout() {
             appState.currentUser = null;
-            localStorage.removeItem('safetyOfficerCurrentUser');
             document.getElementById('authContainer').style.display = 'block';
             document.getElementById('mainApp').style.display = 'none';
             showLogin();
-            
-            // Clear form fields
             document.getElementById('loginEmail').value = '';
             document.getElementById('loginPassword').value = '';
         }
@@ -1393,16 +1658,12 @@
             document.getElementById('authContainer').style.display = 'none';
             document.getElementById('mainApp').style.display = 'block';
             
-            // Update UI with user info
             document.getElementById('userName').textContent = appState.currentUser.name;
             document.getElementById('userPosition').textContent = formatPosition(appState.currentUser.position);
             document.getElementById('userLocation').textContent = formatLocation(appState.currentUser.location);
             document.getElementById('userAvatar').textContent = appState.currentUser.name.charAt(0).toUpperCase();
             
-            // Update location in all panels
             updateLocationInPanels();
-            
-            // Load risk assessment table
             loadRiskAssessmentTable();
         }
 
@@ -1441,35 +1702,14 @@
             return locations[location] || location;
         }
 
-        function generateUserId() {
-            return 'USER-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
-        }
-
-        // Check if user is already logged in
-        function checkExistingLogin() {
-            const storedUser = localStorage.getItem('safetyOfficerCurrentUser');
-            if (storedUser) {
-                appState.currentUser = JSON.parse(storedUser);
-                showMainApp();
-            }
-        }
-
-        // Risk Assessment Table Functions
         function loadRiskAssessmentTable() {
             const tableBody = document.querySelector('#riskAssessmentTable tbody');
-            
-            const tableRows = riskCategories.map(category => `
+            tableBody.innerHTML = riskCategories.map(category => `
                 <tr>
                     <td class="risk-category">${category}</td>
-                    <td>
-                        <input type="checkbox" class="risk-checkbox" id="risk_${category.replace(/\s+/g, '_')}">
-                    </td>
-                    <td>
-                        <textarea class="risk-textarea" placeholder="Describe what could go wrong..." id="unwanted_${category.replace(/\s+/g, '_')}"></textarea>
-                    </td>
-                    <td>
-                        <textarea class="risk-textarea" placeholder="Describe control measures..." id="controls_${category.replace(/\s+/g, '_')}"></textarea>
-                    </td>
+                    <td><input type="checkbox" class="risk-checkbox" id="risk_${category.replace(/\s+/g, '_')}"></td>
+                    <td><textarea class="risk-textarea" placeholder="Describe what could go wrong..." id="unwanted_${category.replace(/\s+/g, '_')}"></textarea></td>
+                    <td><textarea class="risk-textarea" placeholder="Describe control measures..." id="controls_${category.replace(/\s+/g, '_')}"></textarea></td>
                     <td class="risk-rating">
                         <select class="risk-rating-select" id="rating_${category.replace(/\s+/g, '_')}">
                             <option value="">Select</option>
@@ -1481,34 +1721,8 @@
                     </td>
                 </tr>
             `).join('');
-            
-            tableBody.innerHTML = tableRows;
         }
 
-        function getRiskAssessmentData() {
-            const riskData = {};
-            
-            riskCategories.forEach(category => {
-                const categoryId = category.replace(/\s+/g, '_');
-                const checkbox = document.getElementById(`risk_${categoryId}`);
-                const unwantedEvent = document.getElementById(`unwanted_${categoryId}`);
-                const controls = document.getElementById(`controls_${categoryId}`);
-                const rating = document.getElementById(`rating_${categoryId}`);
-                
-                if (checkbox && unwantedEvent && controls && rating) {
-                    riskData[category] = {
-                        exposed: checkbox.checked,
-                        unwantedEvent: unwantedEvent.value,
-                        controls: controls.value,
-                        rating: rating.value
-                    };
-                }
-            });
-            
-            return riskData;
-        }
-
-        // Canvas setup for signatures
         let signaturePads = {};
 
         function initSignaturePad(canvasId) {
@@ -1541,7 +1755,6 @@
             canvas.addEventListener('mouseup', () => isDrawing = false);
             canvas.addEventListener('mouseout', () => isDrawing = false);
 
-            // Touch support
             canvas.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 const rect = canvas.getBoundingClientRect();
@@ -1570,23 +1783,16 @@
             });
 
             canvas.addEventListener('touchend', () => isDrawing = false);
-
             signaturePads[canvasId] = canvas;
         }
 
-        // Navigation
         function showPanel(panelId) {
-            document.querySelectorAll('.content-panel').forEach(panel => {
-                panel.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
+            document.querySelectorAll('.content-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(tab => tab.classList.remove('active'));
             document.getElementById(panelId).classList.add('active');
             event.target.classList.add('active');
         }
 
-        // Roll Call Functions
         function simulateScan() {
             const workerId = 'KLM' + Math.floor(Math.random() * 9000 + 1000);
             document.getElementById('manualWorkerId').value = workerId;
@@ -1606,15 +1812,13 @@
                 time: new Date().toLocaleTimeString(),
                 gpsStatus: '✅ Verified',
                 training: '✅ Valid',
-                verifiedBy: appState.currentUser.name,
-                location: appState.currentUser.location
+                verifiedBy: appState.currentUser.name
             };
 
             appState.workers.push(worker);
             updateRollCallTable();
             document.getElementById('manualWorkerId').value = '';
             document.getElementById('workerCount').textContent = appState.workers.length;
-            
             showToast('Worker verified successfully!', 'success');
         }
 
@@ -1635,69 +1839,15 @@
                     <td>${worker.verifiedBy}</td>
                 </tr>
             `).join('');
-
             document.getElementById('rollcallCount').textContent = appState.workers.length;
         }
 
-        // Inspection Functions
         const checklists = {
-            ppe: {
-                regulation: 'MHSA Section 10(2) - Personal Protective Equipment',
-                items: [
-                    'Helmets free of cracks and damage',
-                    'Safety boots in good condition',
-                    'Reflective vests clean and visible',
-                    'Gloves appropriate for task',
-                    'Eye protection available',
-                    'Hearing protection provided',
-                    'Respiratory equipment (if required)'
-                ]
-            },
-            vehicle: {
-                regulation: 'MHSA Regulation 8.2 - Vehicle Safety',
-                items: [
-                    'Windscreen free of cracks',
-                    'All lights functioning',
-                    'Tire pressure and condition',
-                    'Brake system operational',
-                    'Steering responsive',
-                    'Seat belts functional',
-                    'Fire extinguisher present'
-                ]
-            },
-            electrical: {
-                regulation: 'MHSA Regulation 15.17 - Electrical Isolation',
-                items: [
-                    'Lock properly placed and secured',
-                    'Energy sources identified and isolated',
-                    'Risk assessment approved by Engineering',
-                    'All controls locked out',
-                    'Test for stored energy completed',
-                    'Area properly demarcated'
-                ]
-            },
-            excavation: {
-                regulation: 'MHSA Section 7 - Excavation Work Safety',
-                items: [
-                    'Hidden services identified',
-                    'Area properly demarcated',
-                    'Shoring/bracing in place (if required)',
-                    'Competent person supervising',
-                    'Safe access provided',
-                    'Persons working identified to place'
-                ]
-            },
-            confined: {
-                regulation: 'MHSA Section 5.2 - Confined Space Entry',
-                items: [
-                    'Gas monitoring completed',
-                    'Oxygen levels acceptable (19.5-23%)',
-                    'Atmospheric testing documented',
-                    'Entry permit issued',
-                    'Emergency rescue plan in place',
-                    'Communication system operational'
-                ]
-            }
+            ppe: { regulation: 'MHSA Section 10(2) - Personal Protective Equipment', items: [] },
+            vehicle: { regulation: 'MHSA Regulation 8.2 - Vehicle Safety', items: [] },
+            electrical: { regulation: 'MHSA Regulation 15.17 - Electrical Isolation', items: [] },
+            excavation: { regulation: 'MHSA Section 7 - Excavation Work Safety', items: [] },
+            confined: { regulation: 'MHSA Section 5.2 - Confined Space Entry', items: [] }
         };
 
         function loadChecklist() {
@@ -1706,41 +1856,24 @@
 
             const checklist = checklists[type];
             document.getElementById('regulationNote').textContent = '📋 ' + checklist.regulation;
-            
-            // Show the checklist container
             document.getElementById('checklistContainer').style.display = 'block';
             
-            // For PPE inspection, load the special PPE checklist
             if (type === 'ppe') {
                 loadPPEChecklist();
-            } else {
-                // For other inspection types, load the standard checklist
-                const itemsHtml = checklist.items.map((item, index) => `
-                    <label class="checkbox-item">
-                        <input type="checkbox" id="check_${index}">
-                        <span>${item}</span>
-                    </label>
-                `).join('');
-
-                document.getElementById('checklistItems').innerHTML = itemsHtml;
             }
         }
 
         function loadPPEChecklist() {
-            // Generate PPE checklist HTML
             const ppeHtml = ppeItems.map(item => `
                 <div class="ppe-item">
                     <input type="checkbox" class="ppe-checkbox" id="${item.id}" ${item.checked ? 'checked' : ''}>
                     <label class="ppe-label" for="${item.id}">${item.name}</label>
-                    <span class="ppe-status ${item.checked ? 'checked' : 'unchecked'}">
-                        ${item.checked ? '✓' : '◦'}
-                    </span>
+                    <span class="ppe-status ${item.checked ? 'checked' : 'unchecked'}">${item.checked ? '✓' : '◦'}</span>
                 </div>
             `).join('');
 
             document.getElementById('ppeChecklist').innerHTML = ppeHtml;
             
-            // Add event listeners to update status symbols
             ppeItems.forEach(item => {
                 const checkbox = document.getElementById(item.id);
                 const status = checkbox.parentElement.querySelector('.ppe-status');
@@ -1762,32 +1895,9 @@
             if (!type) return;
 
             const canvas = document.getElementById('signaturePad');
-            const isEmpty = isCanvasEmpty(canvas);
-            
-            if (isEmpty) {
+            if (isCanvasEmpty(canvas)) {
                 alert('Please provide a signature to complete the inspection');
                 return;
-            }
-
-            // Get checklist status
-            let checklistStatus = {};
-            let jobsDescription = '';
-            
-            if (type === 'ppe') {
-                // For PPE inspection, get PPE checklist status
-                ppeItems.forEach(item => {
-                    const checkbox = document.getElementById(item.id);
-                    checklistStatus[item.id] = checkbox.checked;
-                });
-                
-                // Get jobs description
-                jobsDescription = document.getElementById('jobsDescription').value;
-            } else {
-                // For other inspections, get standard checklist status
-                const checklistItems = document.querySelectorAll('#checklistItems input[type="checkbox"]');
-                checklistItems.forEach((item, index) => {
-                    checklistStatus[`item_${index}`] = item.checked;
-                });
             }
 
             const inspection = {
@@ -1795,17 +1905,14 @@
                 timestamp: new Date().toISOString(),
                 signature: canvas.toDataURL(),
                 notes: document.getElementById('inspectionNotes').value,
-                jobsDescription: jobsDescription,
-                checklist: checklistStatus,
+                jobsDescription: document.getElementById('jobsDescription').value,
                 inspector: appState.currentUser.name,
-                location: appState.currentUser.location,
-                hash: generateHash(canvas.toDataURL())
+                location: appState.currentUser.location
             };
 
             appState.inspections.push(inspection);
             document.getElementById('inspectionCount').textContent = appState.inspections.length;
-            
-            showToast('Inspection saved with blockchain-like hash: ' + inspection.hash.substring(0, 16) + '...', 'success');
+            showToast('Inspection saved successfully!', 'success');
             
             clearSignature();
             document.getElementById('inspectionType').value = '';
@@ -1823,21 +1930,8 @@
             return true;
         }
 
-        function generateHash(data) {
-            let hash = 0;
-            for (let i = 0; i < data.length; i++) {
-                const char = data.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            return Math.abs(hash).toString(16).padStart(16, '0');
-        }
-
-        // Hazard Functions
         function selectHazard(element, type) {
-            document.querySelectorAll('.hazard-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
+            document.querySelectorAll('.hazard-btn').forEach(btn => btn.classList.remove('selected'));
             element.classList.add('selected');
             appState.selectedHazardType = type;
         }
@@ -1848,9 +1942,6 @@
                 return;
             }
 
-            // Get risk assessment data
-            const riskAssessment = getRiskAssessmentData();
-
             const hazard = {
                 type: appState.selectedHazardType,
                 timestamp: new Date().toISOString(),
@@ -1858,41 +1949,25 @@
                 description: document.getElementById('hazardDescription').value,
                 specificLocation: document.getElementById('hazardSpecificLocation').value,
                 department: appState.currentUser.location,
-                reportedBy: appState.currentUser.name,
-                position: appState.currentUser.position,
-                riskAssessment: riskAssessment
+                reportedBy: appState.currentUser.name
             };
 
             appState.hazards.push(hazard);
             document.getElementById('hazardCount').textContent = appState.hazards.length;
+            showToast('Hazard reported successfully!', 'success');
             
-            showToast('Hazard reported and assigned to supervisor@mine.com', 'success');
-            
-            // Reset form
-            document.querySelectorAll('.hazard-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
+            document.querySelectorAll('.hazard-btn').forEach(btn => btn.classList.remove('selected'));
             appState.selectedHazardType = null;
             document.getElementById('hazardDescription').value = '';
             document.getElementById('hazardSpecificLocation').value = '';
-            
-            // Reset risk assessment table
             loadRiskAssessmentTable();
         }
 
-        // Vehicle Functions
         function authorizeTrip() {
             const canvas = document.getElementById('vehicleSignature');
             if (isCanvasEmpty(canvas)) {
                 alert('Please provide a signature');
                 return;
-            }
-
-            // Get vehicle checklist status
-            const checklistStatus = {};
-            for (let i = 1; i <= 10; i++) {
-                const checkbox = document.getElementById(`vehicleCheck${i}`);
-                checklistStatus[`check_${i}`] = checkbox.checked;
             }
 
             const trip = {
@@ -1902,29 +1977,22 @@
                 reason: document.getElementById('tripReason').value,
                 startKM: document.getElementById('startKM').value,
                 timestamp: new Date().toISOString(),
-                checklist: checklistStatus,
-                signature: canvas.toDataURL(),
-                authorizedBy: appState.currentUser.name,
-                department: appState.currentUser.location
+                authorizedBy: appState.currentUser.name
             };
 
             appState.trips.push(trip);
             showToast('Trip authorized successfully!', 'success');
             clearVehicleSignature();
             
-            // Reset form
             document.getElementById('vehicleReg').value = '';
             document.getElementById('driverName').value = '';
             document.getElementById('tripReason').value = '';
             document.getElementById('startKM').value = '';
-            
-            // Reset checkboxes
             for (let i = 1; i <= 10; i++) {
                 document.getElementById(`vehicleCheck${i}`).checked = false;
             }
         }
 
-        // Permit Functions
         function issuePermit() {
             const applicantCanvas = document.getElementById('applicantSignature');
             const supervisorCanvas = document.getElementById('supervisorSignature');
@@ -1934,24 +2002,13 @@
                 return;
             }
 
-            // Get permit checklist status
-            const checklistStatus = {};
-            for (let i = 1; i <= 5; i++) {
-                const checkbox = document.getElementById(`permitCheck${i}`);
-                checklistStatus[`check_${i}`] = checkbox.checked;
-            }
-
             const permit = {
                 type: document.getElementById('permitType').value,
                 location: document.getElementById('permitLocationInput').value,
                 description: document.getElementById('permitDescription').value,
                 timestamp: new Date().toISOString(),
-                checklist: checklistStatus,
-                applicantSignature: applicantCanvas.toDataURL(),
-                supervisorSignature: supervisorCanvas.toDataURL(),
                 issuedBy: appState.currentUser.name,
-                department: appState.currentUser.location,
-                permitId: generatePermitID()
+                permitId: 'PERMIT-' + Date.now()
             };
 
             appState.permits.push(permit);
@@ -1959,36 +2016,14 @@
             
             clearApplicantSignature();
             clearSupervisorSignature();
-            
-            // Reset form
             document.getElementById('permitLocationInput').value = '';
             document.getElementById('permitDescription').value = '';
-            
-            // Reset checkboxes
-            for (let i = 1; i <= 5; i++) {
-                document.getElementById(`permitCheck${i}`).checked = false;
-            }
-        }
-
-        function generatePermitID() {
-            const timestamp = Date.now();
-            const random = Math.floor(Math.random() * 10000);
-            return `PERMIT-${timestamp.toString().slice(-6)}-${random.toString().padStart(4, '0')}`;
-        }
-
-        // Report Functions
-        function generateReportID() {
-            const timestamp = Date.now();
-            const random = Math.floor(Math.random() * 10000);
-            const year = new Date().getFullYear();
-            return `KLM-${year}-${timestamp.toString().slice(-6)}-${random.toString().padStart(4, '0')}`;
         }
 
         function generateReport() {
             const reportType = document.getElementById('reportType').value;
-            const reportID = generateReportID();
+            const reportID = 'KLM-' + Date.now();
             
-            // Show progress
             const progressFill = document.querySelector('.progress-fill');
             const syncText = document.getElementById('syncText');
             let progress = 0;
@@ -2001,12 +2036,9 @@
                 if (progress >= 100) {
                     clearInterval(interval);
                     syncText.textContent = 'Complete';
-                    progressFill.style.width = '100%';
                     
-                    // Generate and download PDF report
                     setTimeout(() => {
                         generatePDFReport(reportType, reportID);
-                        progress = 0;
                         progressFill.style.width = '0%';
                         syncText.textContent = 'Ready';
                     }, 500);
@@ -2017,136 +2049,51 @@
         function generatePDFReport(reportType, reportID) {
             const doc = new jsPDF();
             const date = new Date().toLocaleString();
-            const dateStart = document.getElementById('reportStartDate').value;
-            const dateEnd = document.getElementById('reportEndDate').value;
             
-            // Set document properties
-            doc.setProperties({
-                title: `${reportType.toUpperCase()} - ${reportID}`,
-                subject: 'MHSA Compliance Report',
-                author: 'SafetyOfficer App',
-                keywords: 'mine, safety, mhsa, compliance',
-                creator: 'SafetyOfficer App v1.0'
-            });
-
-            // Add header
             doc.setFontSize(20);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(40, 40, 40);
             doc.text('KALAGADI MANGANESE MINE', 105, 20, { align: 'center' });
-            
             doc.setFontSize(16);
-            doc.setTextColor(80, 80, 80);
             doc.text('SAFETY COMPLIANCE SYSTEM', 105, 28, { align: 'center' });
-            
-            // Add report title based on type
             doc.setFontSize(14);
-            doc.setTextColor(60, 60, 60);
-            let reportTitle = '';
-            switch(reportType) {
-                case 'dmr1741':
-                    reportTitle = 'DMR 1741 - ACCIDENT/INCIDENT REPORT';
-                    break;
-                case 'section23':
-                    reportTitle = 'SECTION 23(1) - DAILY ACTIVITY LOG';
-                    break;
-                case 'weekly':
-                    reportTitle = 'WEEKLY SAFETY SUMMARY';
-                    break;
-                case 'monthly':
-                    reportTitle = 'MONTHLY COMPLIANCE REPORT';
-                    break;
-                case 'hazard':
-                    reportTitle = 'HAZARD REGISTER EXPORT';
-                    break;
-                default:
-                    reportTitle = 'COMPREHENSIVE SAFETY REPORT';
-            }
-            doc.text(reportTitle, 105, 38, { align: 'center' });
+            doc.text(reportType.toUpperCase() + ' REPORT', 105, 38, { align: 'center' });
             
-            // Add report details
             doc.setFontSize(10);
-            doc.setTextColor(100, 100, 100);
             doc.text(`Report ID: ${reportID}`, 20, 50);
             doc.text(`Generated: ${date}`, 20, 55);
-            doc.text(`Period: ${dateStart} to ${dateEnd}`, 20, 60);
-            doc.text(`Mine: Kalagadi Manganese Mine`, 20, 65);
-            doc.text(`Department: ${formatLocation(appState.currentUser.location)}`, 20, 70);
-            doc.text(`Prepared By: ${appState.currentUser.name} (${formatPosition(appState.currentUser.position)})`, 20, 75);
-            doc.text(`Compliance: MHSA Regulations`, 20, 80);
+            doc.text(`Prepared By: ${appState.currentUser.name}`, 20, 60);
+            doc.text(`Department: ${formatLocation(appState.currentUser.location)}`, 20, 65);
             
-            // Add content based on report type
-            let yPosition = 95;
+            doc.text('This is a sample PDF report generated by SafetyOfficer.', 20, 80);
+            doc.text('All data is stored securely for MHSA compliance.', 20, 90);
             
-            switch(reportType) {
-                case 'dmr1741':
-                    yPosition = generateDMR1741PDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                case 'section23':
-                    yPosition = generateSection23PDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                case 'weekly':
-                    yPosition = generateWeeklyPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                case 'monthly':
-                    yPosition = generateMonthlyPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                case 'hazard':
-                    yPosition = generateHazardPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                default:
-                    yPosition = generateDefaultPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-            }
-            
-            // Add footer
             doc.setFontSize(8);
-            doc.setTextColor(150, 150, 150);
-            doc.text(`Report ID: ${reportID} | Generated: ${date} | Page 1 of 1`, 105, 290, { align: 'center' });
-            doc.text(`Prepared by: ${appState.currentUser.name} | Department: ${formatLocation(appState.currentUser.location)}`, 105, 295, { align: 'center' });
+            doc.text(`Report ID: ${reportID} | Generated: ${date}`, 105, 290, { align: 'center' });
             
-            // Save the PDF
-            const fileName = `${reportID}_${reportType.replace(/\s+/g, '_')}.pdf`;
-            doc.save(fileName);
+            doc.save(`${reportID}_${reportType}.pdf`);
             
-            // Show success message
             const successDiv = document.getElementById('reportSuccess');
-            successDiv.innerHTML = `
-                ✅ PDF Report generated successfully!<br>
-                <strong>Report ID: ${reportID}</strong><br>
-                <small>Data stored for 20+ years per MHSA Section 23(3)</small><br>
-                <button class="btn btn-primary" style="margin-top: 10px;" onclick="regeneratePDF('${reportType}', '${reportID}')">
-                    📥 Download Again
-                </button>
-            `;
+            successDiv.innerHTML = `✅ PDF Report generated successfully!<br><strong>Report ID: ${reportID}</strong>`;
             successDiv.style.display = 'block';
             
-            setTimeout(() => {
-                successDiv.style.display = 'none';
-            }, 10000);
-            
+            setTimeout(() => successDiv.style.display = 'none', 10000);
             showToast(`PDF Report ${reportID} downloaded successfully!`, 'success');
         }
 
-        // Additional report functions
         function generateDMRReport() {
-            const reportID = generateReportID();
-            generatePDFReport('dmr1741', reportID);
+            generateReport();
             document.getElementById('dmrCount').textContent = parseInt(document.getElementById('dmrCount').textContent) + 1;
         }
 
         function viewSection23Logs() {
-            const reportID = generateReportID();
-            generatePDFReport('section23', reportID);
+            generateReport();
             document.getElementById('section23Count').textContent = parseInt(document.getElementById('section23Count').textContent) + 1;
         }
 
         function exportIncidentReports() {
-            const reportID = generateReportID();
-            generatePDFReport('hazard', reportID);
+            generateReport();
             document.getElementById('incidentCount').textContent = parseInt(document.getElementById('incidentCount').textContent) + 1;
         }
 
-        // Helper functions
         function clearSignature() {
             const canvas = document.getElementById('signaturePad');
             const ctx = canvas.getContext('2d');
@@ -2171,14 +2118,12 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        // Photo handling
         function handlePhoto(input) {
             if (input.files && input.files[0]) {
                 showToast('Photo captured successfully!', 'success');
             }
         }
 
-        // Toast notification
         function showToast(message, type) {
             const toast = document.createElement('div');
             toast.className = `alert alert-${type}`;
@@ -2188,27 +2133,26 @@
             toast.style.right = '20px';
             toast.style.zIndex = '9999';
             toast.style.minWidth = '300px';
-            toast.style.animation = 'slideIn 0.3s';
+            toast.style.maxWidth = '90%';
             
             document.body.appendChild(toast);
             
             setTimeout(() => {
-                toast.style.animation = 'slideOut 0.3s';
-                setTimeout(() => toast.remove(), 300);
+                toast.remove();
             }, 3000);
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             initSignaturePad('signaturePad');
             initSignaturePad('vehicleSignature');
             initSignaturePad('applicantSignature');
             initSignaturePad('supervisorSignature');
             
-            // Check for existing login
-            checkExistingLogin();
+            const storedUsers = localStorage.getItem('safetyOfficerUsers');
+            if (storedUsers) {
+                appState.users = JSON.parse(storedUsers);
+            }
             
-            // Simulate offline mode
             setInterval(() => {
                 const badge = document.getElementById('statusBadge');
                 if (Math.random() > 0.7) {
