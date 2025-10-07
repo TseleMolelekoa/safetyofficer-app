@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SafetyOfficer - MHSA Compliance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -16,11 +18,124 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .auth-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin: 0 auto 20px;
+        }
+
+        .auth-title {
+            font-size: 28px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .auth-subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #333;
+            width: 100%;
+        }
+
+        .auth-switch {
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .auth-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .auth-link:hover {
+            text-decoration: underline;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
+            display: none; /* Hidden by default until login */
         }
 
         .header {
@@ -60,6 +175,39 @@
         .header-subtitle {
             color: #666;
             font-size: 14px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .user-details {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .user-position {
+            font-size: 14px;
+            color: #666;
         }
 
         .status-badge {
@@ -150,34 +298,20 @@
             opacity: 0.9;
         }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .form-input, .form-select, .form-textarea {
+        .form-textarea {
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
             border-radius: 8px;
             font-size: 16px;
             transition: border-color 0.3s;
-        }
-
-        .form-input:focus, .form-select:focus, .form-textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .form-textarea {
             resize: vertical;
             min-height: 100px;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
         }
 
         .checkbox-group {
@@ -205,27 +339,6 @@
             width: 20px;
             height: 20px;
             cursor: pointer;
-        }
-
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-right: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(102, 126, 234, 0.4);
         }
 
         .btn-success {
@@ -375,8 +488,191 @@
             transition: width 0.3s;
         }
 
+        .logout-btn {
+            background: #ef4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+        }
+
+        /* PPE Checklist Styles */
+        .ppe-checklist {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .ppe-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .ppe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .ppe-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .ppe-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.1);
+        }
+
+        .ppe-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .ppe-label {
+            font-size: 14px;
+            color: #374151;
+            cursor: pointer;
+        }
+
+        .ppe-status {
+            margin-left: auto;
+            font-size: 18px;
+        }
+
+        .ppe-status.checked {
+            color: #10b981;
+        }
+
+        .ppe-status.unchecked {
+            color: #9ca3af;
+        }
+
+        .jobs-todo-section {
+            background: #f0f9ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .jobs-todo-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #0369a1;
+        }
+
+        /* Risk Assessment Table Styles */
+        .risk-assessment {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e2e8f0;
+        }
+
+        .risk-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .risk-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .risk-table th, .risk-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .risk-table th {
+            background: #f1f5f9;
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .risk-table td {
+            background: white;
+            font-size: 13px;
+        }
+
+        .risk-category {
+            font-weight: 600;
+            color: #334155;
+            width: 150px;
+        }
+
+        .risk-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .risk-textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 60px;
+            font-family: inherit;
+        }
+
+        .risk-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .risk-rating {
+            width: 80px;
+        }
+
+        .risk-rating-select {
+            width: 100%;
+            padding: 6px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
         @media (max-width: 768px) {
             .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+
+            .user-info {
                 flex-direction: column;
                 text-align: center;
             }
@@ -388,11 +684,94 @@
             .nav-tabs {
                 flex-wrap: wrap;
             }
+
+            .ppe-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .risk-table {
+                display: block;
+                overflow-x: auto;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Authentication Section -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-logo">⛑️</div>
+        <div class="auth-title">SafetyOfficer</div>
+        <div class="auth-subtitle">Kalagadi Manganese Mine</div>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-form">
+            <h3 style="margin-bottom: 20px; color: #333;">Login to Your Account</h3>
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="Enter your email" id="loginEmail">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="Enter your password" id="loginPassword">
+            </div>
+            <button class="btn btn-primary" onclick="login()">Login</button>
+            <div class="auth-switch">
+                Don't have an account? <span class="auth-link" onclick="showRegister()">Register here</span>
+            </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div id="registerForm" class="auth-form" style="display: none;">
+            <h3 style="margin-bottom: 20px; color: #333;">Create New Account</h3>
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input type="text" class="form-input" placeholder="Enter your full name" id="registerName">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input type="email" class="form-input" placeholder="Enter your email" id="registerEmail">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Position</label>
+                <select class="form-select" id="registerPosition">
+                    <option value="">Select your position</option>
+                    <option value="safety-officer">Safety Officer</option>
+                    <option value="mine-supervisor">Mine Supervisor</option>
+                    <option value="shift-boss">Shift Boss</option>
+                    <option value="miner">Miner</option>
+                    <option value="engineer">Engineer</option>
+                    <option value="admin">Administrator</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Location/Department</label>
+                <select class="form-select" id="registerLocation">
+                    <option value="">Select your location</option>
+                    <option value="surface">Surface Operations</option>
+                    <option value="underground">Underground Mining</option>
+                    <option value="processing">Mineral Processing</option>
+                    <option value="maintenance">Maintenance</option>
+                    <option value="engineering">Engineering</option>
+                    <option value="administration">Administration</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input type="password" class="form-input" placeholder="Create a password" id="registerPassword">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-input" placeholder="Confirm your password" id="registerConfirmPassword">
+            </div>
+            <button class="btn btn-primary" onclick="register()">Create Account</button>
+            <div class="auth-switch">
+                Already have an account? <span class="auth-link" onclick="showLogin()">Login here</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden until login) -->
+    <div class="container" id="mainApp">
         <div class="header">
             <div class="logo-section">
                 <div class="logo">⛑️</div>
@@ -400,6 +779,15 @@
                     <div class="header-title">SafetyOfficer</div>
                     <div class="header-subtitle">Kalagadi Manganese Mine</div>
                 </div>
+            </div>
+            <div class="user-info">
+                <div class="user-details">
+                    <div class="user-name" id="userName">User Name</div>
+                    <div class="user-position" id="userPosition">Position</div>
+                    <div class="user-position" id="userLocation">Location</div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+                <div class="user-avatar" id="userAvatar">U</div>
             </div>
             <div class="status-badge" id="statusBadge">📡 Offline Mode</div>
         </div>
@@ -416,7 +804,7 @@
 
         <!-- Dashboard Panel -->
         <div id="dashboard" class="content-panel active">
-            <h2 style="margin-bottom: 20px;">Today's Overview</h2>
+            <h2 style="margin-bottom: 20px;">Today's Overview - <span id="dashboardLocation"></span></h2>
             <div class="dashboard-grid">
                 <div class="stat-card">
                     <div class="stat-label">Workers Present</div>
@@ -456,7 +844,7 @@
 
         <!-- Roll Call Panel -->
         <div id="rollcall" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Pre-Shift Roll Call</h2>
+            <h2 style="margin-bottom: 20px;">Pre-Shift Roll Call - <span id="rollcallLocation"></span></h2>
             <div class="alert alert-warning">
                 ⚠️ MHSA Section 10 Compliance: All workers must be verified before shift start
             </div>
@@ -483,11 +871,12 @@
                         <th>Name</th>
                         <th>GPS Status</th>
                         <th>Training Valid</th>
+                        <th>Verified By</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td colspan="5" style="text-align: center; color: #999;">No workers checked in yet</td>
+                        <td colspan="6" style="text-align: center; color: #999;">No workers checked in yet</td>
                     </tr>
                 </tbody>
             </table>
@@ -495,7 +884,7 @@
 
         <!-- Inspection Panel -->
         <div id="inspection" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Onsite Inspection Checklist</h2>
+            <h2 style="margin-bottom: 20px;">Onsite Inspection Checklist - <span id="inspectionLocation"></span></h2>
             
             <div class="form-group">
                 <label class="form-label">Select Inspection Type</label>
@@ -512,10 +901,25 @@
             <div id="checklistContainer" style="display: none;">
                 <div class="alert alert-success" id="regulationNote"></div>
                 
-                <div class="checkbox-group" id="checklistItems"></div>
+                <!-- Jobs/To-do List Section -->
+                <div class="jobs-todo-section">
+                    <div class="jobs-todo-title">Jobs/To-do List</div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" placeholder="Describe the jobs or tasks to be completed..." id="jobsDescription"></textarea>
+                    </div>
+                </div>
+
+                <!-- PPE Checklist Section -->
+                <div class="ppe-checklist">
+                    <div class="ppe-title">PPE List</div>
+                    <div class="ppe-grid" id="ppeChecklist">
+                        <!-- PPE items will be dynamically generated here -->
+                    </div>
+                </div>
 
                 <div class="form-group" style="margin-top: 30px;">
-                    <label class="form-label">Inspector Notes</label>
+                    <label class="form-label">Additional Inspector Notes</label>
                     <textarea class="form-textarea" placeholder="Add any observations or notes..." id="inspectionNotes"></textarea>
                 </div>
 
@@ -537,7 +941,7 @@
 
         <!-- Hazard Panel -->
         <div id="hazard" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Report Hazard</h2>
+            <h2 style="margin-bottom: 20px;">Report Hazard - <span id="hazardLocation"></span></h2>
             
             <div class="alert alert-warning">
                 ⚠️ MHSA Regulation 2.13.1: All hazards must be reported immediately and risk-assessed
@@ -589,8 +993,30 @@
             </div>
 
             <div class="form-group">
-                <label class="form-label">Location</label>
-                <input type="text" class="form-input" placeholder="Sector/Level (GPS: Auto-detected)" id="hazardLocation">
+                <label class="form-label">Specific Location</label>
+                <input type="text" class="form-input" placeholder="Specific area/sector (GPS: Auto-detected)" id="hazardSpecificLocation">
+            </div>
+
+            <!-- Risk Assessment Table -->
+            <div class="risk-assessment">
+                <div class="risk-title">Hazard Risk Assessment</div>
+                <p style="margin-bottom: 15px; color: #64748b; font-size: 14px;">
+                    Complete the risk assessment table below to identify potential hazards and control measures.
+                </p>
+                <table class="risk-table" id="riskAssessmentTable">
+                    <thead>
+                        <tr>
+                            <th>We will be exposed to:</th>
+                            <th>Tick</th>
+                            <th>What can go wrong in the workplace/with tools/equipment? What is the unwanted event?</th>
+                            <th>What controls will be in place to prevent the unwanted event? (ALWAYS consider the cardinal control)</th>
+                            <th>Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Risk assessment rows will be dynamically generated here -->
+                    </tbody>
+                </table>
             </div>
 
             <div class="photo-upload" onclick="document.getElementById('hazardPhoto').click()">
@@ -607,7 +1033,7 @@
 
         <!-- Vehicle Panel -->
         <div id="vehicle" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Vehicle Trip Authorization</h2>
+            <h2 style="margin-bottom: 20px;">Vehicle Trip Authorization - <span id="vehicleLocation"></span></h2>
             
             <div class="form-group">
                 <label class="form-label">Vehicle Registration</label>
@@ -693,7 +1119,7 @@
 
         <!-- Permit Panel -->
         <div id="permit" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Safe Work Permit</h2>
+            <h2 style="margin-bottom: 20px;">Safe Work Permit - <span id="permitLocation"></span></h2>
             
             <div class="form-group">
                 <label class="form-label">Permit Type</label>
@@ -708,7 +1134,7 @@
 
             <div class="form-group">
                 <label class="form-label">Work Location</label>
-                <input type="text" class="form-input" placeholder="Specific location/area" id="permitLocation">
+                <input type="text" class="form-input" placeholder="Specific location/area" id="permitLocationInput">
             </div>
 
             <div class="form-group">
@@ -757,7 +1183,7 @@
 
         <!-- Reports Panel -->
         <div id="reports" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Statutory Reports</h2>
+            <h2 style="margin-bottom: 20px;">Statutory Reports - <span id="reportsLocation"></span></h2>
             
             <div class="dashboard-grid">
                 <div class="stat-card">
@@ -817,8 +1243,270 @@
             permits: [],
             reports: [],
             isOnline: false,
-            selectedHazardType: null
+            selectedHazardType: null,
+            currentUser: null,
+            users: JSON.parse(localStorage.getItem('safetyOfficerUsers')) || []
         };
+
+        // Initialize jsPDF
+        const { jsPDF } = window.jspdf;
+
+        // PPE Checklist Items
+        const ppeItems = [
+            { id: 'hearing-protection', name: 'Hearing Protection', checked: true },
+            { id: 'life-jacket', name: 'Life Jacket', checked: false },
+            { id: 'safety-harness', name: 'Safety Harness', checked: true },
+            { id: 'respirator', name: 'Respirator', checked: false },
+            { id: 'welding-apron', name: 'Welding Apron', checked: false },
+            { id: 'welding-helmet', name: 'Welding Helmet', checked: true },
+            { id: 'leather-gloves', name: 'Leather Gloves', checked: false },
+            { id: 'reflective-vest', name: 'Reflective Vest', checked: false },
+            { id: 'overalls', name: 'Overalls', checked: false },
+            { id: 'gum-boots', name: 'Gum Boots', checked: false },
+            { id: 'safety-boots', name: 'Safety Boots', checked: false },
+            { id: 'gloves', name: 'Gloves', checked: false },
+            { id: 'biff', name: 'Biff', checked: false },
+            { id: 'dust-mask', name: 'Dust Mask', checked: false },
+            { id: 'goggles', name: 'Goggles', checked: false },
+            { id: 'hard-hat', name: 'Hard Hat', checked: false },
+            { id: 'scsr', name: 'SCSR', checked: false },
+            { id: 'gdi-instrument', name: 'GDI Instrument', checked: false },
+            { id: 'lamp', name: 'Lamp', checked: false },
+            { id: 'other', name: 'Other', checked: false }
+        ];
+
+        // Risk Assessment Categories
+        const riskCategories = [
+            'Biological',
+            'Chemical',
+            'Climate',
+            'Confined Space',
+            'Dust/inhalable particles',
+            'Electrical',
+            'Ergonomics',
+            'Explosives',
+            'Fire',
+            'Gravity (Objects falling)',
+            'Gravity (People falling)',
+            'Lighting',
+            'Mechanical-Fixed',
+            'Mobile Mechanical',
+            'Noise',
+            'Pressure (Kpa)',
+            'Stored Energy',
+            'Radiation',
+            'Thermal heat',
+            'Uneven / slippery surfaces'
+        ];
+
+        // Authentication Functions
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+        }
+
+        function showRegister() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+        }
+
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (!email || !password) {
+                showToast('Please fill in all fields', 'danger');
+                return;
+            }
+
+            // Find user in stored users
+            const user = appState.users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                appState.currentUser = user;
+                localStorage.setItem('safetyOfficerCurrentUser', JSON.stringify(user));
+                showMainApp();
+                showToast(`Welcome back, ${user.name}!`, 'success');
+            } else {
+                showToast('Invalid email or password', 'danger');
+            }
+        }
+
+        function register() {
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const position = document.getElementById('registerPosition').value;
+            const location = document.getElementById('registerLocation').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (!name || !email || !position || !location || !password || !confirmPassword) {
+                showToast('Please fill in all fields', 'danger');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                showToast('Passwords do not match', 'danger');
+                return;
+            }
+
+            // Check if user already exists
+            if (appState.users.find(u => u.email === email)) {
+                showToast('User with this email already exists', 'danger');
+                return;
+            }
+
+            // Create new user
+            const newUser = {
+                id: generateUserId(),
+                name,
+                email,
+                position,
+                location,
+                password,
+                createdAt: new Date().toISOString()
+            };
+
+            appState.users.push(newUser);
+            localStorage.setItem('safetyOfficerUsers', JSON.stringify(appState.users));
+            
+            appState.currentUser = newUser;
+            localStorage.setItem('safetyOfficerCurrentUser', JSON.stringify(newUser));
+            
+            showMainApp();
+            showToast(`Account created successfully! Welcome, ${name}!`, 'success');
+        }
+
+        function logout() {
+            appState.currentUser = null;
+            localStorage.removeItem('safetyOfficerCurrentUser');
+            document.getElementById('authContainer').style.display = 'block';
+            document.getElementById('mainApp').style.display = 'none';
+            showLogin();
+            
+            // Clear form fields
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        function showMainApp() {
+            document.getElementById('authContainer').style.display = 'none';
+            document.getElementById('mainApp').style.display = 'block';
+            
+            // Update UI with user info
+            document.getElementById('userName').textContent = appState.currentUser.name;
+            document.getElementById('userPosition').textContent = formatPosition(appState.currentUser.position);
+            document.getElementById('userLocation').textContent = formatLocation(appState.currentUser.location);
+            document.getElementById('userAvatar').textContent = appState.currentUser.name.charAt(0).toUpperCase();
+            
+            // Update location in all panels
+            updateLocationInPanels();
+            
+            // Load risk assessment table
+            loadRiskAssessmentTable();
+        }
+
+        function updateLocationInPanels() {
+            const location = formatLocation(appState.currentUser.location);
+            document.getElementById('dashboardLocation').textContent = location;
+            document.getElementById('rollcallLocation').textContent = location;
+            document.getElementById('inspectionLocation').textContent = location;
+            document.getElementById('hazardLocation').textContent = location;
+            document.getElementById('vehicleLocation').textContent = location;
+            document.getElementById('permitLocation').textContent = location;
+            document.getElementById('reportsLocation').textContent = location;
+        }
+
+        function formatPosition(position) {
+            const positions = {
+                'safety-officer': 'Safety Officer',
+                'mine-supervisor': 'Mine Supervisor',
+                'shift-boss': 'Shift Boss',
+                'miner': 'Miner',
+                'engineer': 'Engineer',
+                'admin': 'Administrator'
+            };
+            return positions[position] || position;
+        }
+
+        function formatLocation(location) {
+            const locations = {
+                'surface': 'Surface Operations',
+                'underground': 'Underground Mining',
+                'processing': 'Mineral Processing',
+                'maintenance': 'Maintenance',
+                'engineering': 'Engineering',
+                'administration': 'Administration'
+            };
+            return locations[location] || location;
+        }
+
+        function generateUserId() {
+            return 'USER-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+        }
+
+        // Check if user is already logged in
+        function checkExistingLogin() {
+            const storedUser = localStorage.getItem('safetyOfficerCurrentUser');
+            if (storedUser) {
+                appState.currentUser = JSON.parse(storedUser);
+                showMainApp();
+            }
+        }
+
+        // Risk Assessment Table Functions
+        function loadRiskAssessmentTable() {
+            const tableBody = document.querySelector('#riskAssessmentTable tbody');
+            
+            const tableRows = riskCategories.map(category => `
+                <tr>
+                    <td class="risk-category">${category}</td>
+                    <td>
+                        <input type="checkbox" class="risk-checkbox" id="risk_${category.replace(/\s+/g, '_')}">
+                    </td>
+                    <td>
+                        <textarea class="risk-textarea" placeholder="Describe what could go wrong..." id="unwanted_${category.replace(/\s+/g, '_')}"></textarea>
+                    </td>
+                    <td>
+                        <textarea class="risk-textarea" placeholder="Describe control measures..." id="controls_${category.replace(/\s+/g, '_')}"></textarea>
+                    </td>
+                    <td class="risk-rating">
+                        <select class="risk-rating-select" id="rating_${category.replace(/\s+/g, '_')}">
+                            <option value="">Select</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                            <option value="extreme">Extreme</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+            
+            tableBody.innerHTML = tableRows;
+        }
+
+        function getRiskAssessmentData() {
+            const riskData = {};
+            
+            riskCategories.forEach(category => {
+                const categoryId = category.replace(/\s+/g, '_');
+                const checkbox = document.getElementById(`risk_${categoryId}`);
+                const unwantedEvent = document.getElementById(`unwanted_${categoryId}`);
+                const controls = document.getElementById(`controls_${categoryId}`);
+                const rating = document.getElementById(`rating_${categoryId}`);
+                
+                if (checkbox && unwantedEvent && controls && rating) {
+                    riskData[category] = {
+                        exposed: checkbox.checked,
+                        unwantedEvent: unwantedEvent.value,
+                        controls: controls.value,
+                        rating: rating.value
+                    };
+                }
+            });
+            
+            return riskData;
+        }
 
         // Canvas setup for signatures
         let signaturePads = {};
@@ -886,30 +1574,6 @@
             signaturePads[canvasId] = canvas;
         }
 
-        function clearSignature() {
-            const canvas = document.getElementById('signaturePad');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function clearVehicleSignature() {
-            const canvas = document.getElementById('vehicleSignature');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function clearApplicantSignature() {
-            const canvas = document.getElementById('applicantSignature');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function clearSupervisorSignature() {
-            const canvas = document.getElementById('supervisorSignature');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
         // Navigation
         function showPanel(panelId) {
             document.querySelectorAll('.content-panel').forEach(panel => {
@@ -941,7 +1605,9 @@
                 name: 'Worker ' + workerId.substring(3),
                 time: new Date().toLocaleTimeString(),
                 gpsStatus: '✅ Verified',
-                training: '✅ Valid'
+                training: '✅ Valid',
+                verifiedBy: appState.currentUser.name,
+                location: appState.currentUser.location
             };
 
             appState.workers.push(worker);
@@ -955,7 +1621,7 @@
         function updateRollCallTable() {
             const tbody = document.querySelector('#rollcallTable tbody');
             if (appState.workers.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: #999;">No workers checked in yet</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">No workers checked in yet</td></tr>';
                 return;
             }
 
@@ -966,6 +1632,7 @@
                     <td>${worker.name}</td>
                     <td>${worker.gpsStatus}</td>
                     <td>${worker.training}</td>
+                    <td>${worker.verifiedBy}</td>
                 </tr>
             `).join('');
 
@@ -1040,15 +1707,54 @@
             const checklist = checklists[type];
             document.getElementById('regulationNote').textContent = '📋 ' + checklist.regulation;
             
-            const itemsHtml = checklist.items.map((item, index) => `
-                <label class="checkbox-item">
-                    <input type="checkbox" id="check_${index}">
-                    <span>${item}</span>
-                </label>
+            // Show the checklist container
+            document.getElementById('checklistContainer').style.display = 'block';
+            
+            // For PPE inspection, load the special PPE checklist
+            if (type === 'ppe') {
+                loadPPEChecklist();
+            } else {
+                // For other inspection types, load the standard checklist
+                const itemsHtml = checklist.items.map((item, index) => `
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="check_${index}">
+                        <span>${item}</span>
+                    </label>
+                `).join('');
+
+                document.getElementById('checklistItems').innerHTML = itemsHtml;
+            }
+        }
+
+        function loadPPEChecklist() {
+            // Generate PPE checklist HTML
+            const ppeHtml = ppeItems.map(item => `
+                <div class="ppe-item">
+                    <input type="checkbox" class="ppe-checkbox" id="${item.id}" ${item.checked ? 'checked' : ''}>
+                    <label class="ppe-label" for="${item.id}">${item.name}</label>
+                    <span class="ppe-status ${item.checked ? 'checked' : 'unchecked'}">
+                        ${item.checked ? '✓' : '◦'}
+                    </span>
+                </div>
             `).join('');
 
-            document.getElementById('checklistItems').innerHTML = itemsHtml;
-            document.getElementById('checklistContainer').style.display = 'block';
+            document.getElementById('ppeChecklist').innerHTML = ppeHtml;
+            
+            // Add event listeners to update status symbols
+            ppeItems.forEach(item => {
+                const checkbox = document.getElementById(item.id);
+                const status = checkbox.parentElement.querySelector('.ppe-status');
+                
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        status.textContent = '✓';
+                        status.className = 'ppe-status checked';
+                    } else {
+                        status.textContent = '◦';
+                        status.className = 'ppe-status unchecked';
+                    }
+                });
+            });
         }
 
         function saveInspection() {
@@ -1064,18 +1770,35 @@
             }
 
             // Get checklist status
-            const checklistStatus = {};
-            const checklistItems = document.querySelectorAll('#checklistItems input[type="checkbox"]');
-            checklistItems.forEach((item, index) => {
-                checklistStatus[`item_${index}`] = item.checked;
-            });
+            let checklistStatus = {};
+            let jobsDescription = '';
+            
+            if (type === 'ppe') {
+                // For PPE inspection, get PPE checklist status
+                ppeItems.forEach(item => {
+                    const checkbox = document.getElementById(item.id);
+                    checklistStatus[item.id] = checkbox.checked;
+                });
+                
+                // Get jobs description
+                jobsDescription = document.getElementById('jobsDescription').value;
+            } else {
+                // For other inspections, get standard checklist status
+                const checklistItems = document.querySelectorAll('#checklistItems input[type="checkbox"]');
+                checklistItems.forEach((item, index) => {
+                    checklistStatus[`item_${index}`] = item.checked;
+                });
+            }
 
             const inspection = {
                 type: type,
                 timestamp: new Date().toISOString(),
                 signature: canvas.toDataURL(),
                 notes: document.getElementById('inspectionNotes').value,
+                jobsDescription: jobsDescription,
                 checklist: checklistStatus,
+                inspector: appState.currentUser.name,
+                location: appState.currentUser.location,
                 hash: generateHash(canvas.toDataURL())
             };
 
@@ -1087,6 +1810,7 @@
             clearSignature();
             document.getElementById('inspectionType').value = '';
             document.getElementById('inspectionNotes').value = '';
+            document.getElementById('jobsDescription').value = '';
             document.getElementById('checklistContainer').style.display = 'none';
         }
 
@@ -1124,12 +1848,19 @@
                 return;
             }
 
+            // Get risk assessment data
+            const riskAssessment = getRiskAssessmentData();
+
             const hazard = {
                 type: appState.selectedHazardType,
                 timestamp: new Date().toISOString(),
                 riskLevel: document.getElementById('riskLevel').value,
                 description: document.getElementById('hazardDescription').value,
-                location: document.getElementById('hazardLocation').value
+                specificLocation: document.getElementById('hazardSpecificLocation').value,
+                department: appState.currentUser.location,
+                reportedBy: appState.currentUser.name,
+                position: appState.currentUser.position,
+                riskAssessment: riskAssessment
             };
 
             appState.hazards.push(hazard);
@@ -1143,7 +1874,10 @@
             });
             appState.selectedHazardType = null;
             document.getElementById('hazardDescription').value = '';
-            document.getElementById('hazardLocation').value = '';
+            document.getElementById('hazardSpecificLocation').value = '';
+            
+            // Reset risk assessment table
+            loadRiskAssessmentTable();
         }
 
         // Vehicle Functions
@@ -1169,7 +1903,9 @@
                 startKM: document.getElementById('startKM').value,
                 timestamp: new Date().toISOString(),
                 checklist: checklistStatus,
-                signature: canvas.toDataURL()
+                signature: canvas.toDataURL(),
+                authorizedBy: appState.currentUser.name,
+                department: appState.currentUser.location
             };
 
             appState.trips.push(trip);
@@ -1207,12 +1943,14 @@
 
             const permit = {
                 type: document.getElementById('permitType').value,
-                location: document.getElementById('permitLocation').value,
+                location: document.getElementById('permitLocationInput').value,
                 description: document.getElementById('permitDescription').value,
                 timestamp: new Date().toISOString(),
                 checklist: checklistStatus,
                 applicantSignature: applicantCanvas.toDataURL(),
                 supervisorSignature: supervisorCanvas.toDataURL(),
+                issuedBy: appState.currentUser.name,
+                department: appState.currentUser.location,
                 permitId: generatePermitID()
             };
 
@@ -1223,7 +1961,7 @@
             clearSupervisorSignature();
             
             // Reset form
-            document.getElementById('permitLocation').value = '';
+            document.getElementById('permitLocationInput').value = '';
             document.getElementById('permitDescription').value = '';
             
             // Reset checkboxes
@@ -1265,9 +2003,9 @@
                     syncText.textContent = 'Complete';
                     progressFill.style.width = '100%';
                     
-                    // Generate and download report
+                    // Generate and download PDF report
                     setTimeout(() => {
-                        downloadReport(reportType, reportID);
+                        generatePDFReport(reportType, reportID);
                         progress = 0;
                         progressFill.style.width = '0%';
                         syncText.textContent = 'Ready';
@@ -1276,27 +2014,107 @@
             }, 200);
         }
 
-        function downloadReport(reportType, reportID) {
-            const reportData = generateReportContent(reportType, reportID);
+        function generatePDFReport(reportType, reportID) {
+            const doc = new jsPDF();
+            const date = new Date().toLocaleString();
+            const dateStart = document.getElementById('reportStartDate').value;
+            const dateEnd = document.getElementById('reportEndDate').value;
             
-            // Create downloadable text file
-            const blob = new Blob([reportData], { type: 'text/plain' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `${reportID}_${reportType.replace(/\s+/g, '_')}.txt`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
+            // Set document properties
+            doc.setProperties({
+                title: `${reportType.toUpperCase()} - ${reportID}`,
+                subject: 'MHSA Compliance Report',
+                author: 'SafetyOfficer App',
+                keywords: 'mine, safety, mhsa, compliance',
+                creator: 'SafetyOfficer App v1.0'
+            });
+
+            // Add header
+            doc.setFontSize(20);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(40, 40, 40);
+            doc.text('KALAGADI MANGANESE MINE', 105, 20, { align: 'center' });
             
-            // Show success message with download link
+            doc.setFontSize(16);
+            doc.setTextColor(80, 80, 80);
+            doc.text('SAFETY COMPLIANCE SYSTEM', 105, 28, { align: 'center' });
+            
+            // Add report title based on type
+            doc.setFontSize(14);
+            doc.setTextColor(60, 60, 60);
+            let reportTitle = '';
+            switch(reportType) {
+                case 'dmr1741':
+                    reportTitle = 'DMR 1741 - ACCIDENT/INCIDENT REPORT';
+                    break;
+                case 'section23':
+                    reportTitle = 'SECTION 23(1) - DAILY ACTIVITY LOG';
+                    break;
+                case 'weekly':
+                    reportTitle = 'WEEKLY SAFETY SUMMARY';
+                    break;
+                case 'monthly':
+                    reportTitle = 'MONTHLY COMPLIANCE REPORT';
+                    break;
+                case 'hazard':
+                    reportTitle = 'HAZARD REGISTER EXPORT';
+                    break;
+                default:
+                    reportTitle = 'COMPREHENSIVE SAFETY REPORT';
+            }
+            doc.text(reportTitle, 105, 38, { align: 'center' });
+            
+            // Add report details
+            doc.setFontSize(10);
+            doc.setTextColor(100, 100, 100);
+            doc.text(`Report ID: ${reportID}`, 20, 50);
+            doc.text(`Generated: ${date}`, 20, 55);
+            doc.text(`Period: ${dateStart} to ${dateEnd}`, 20, 60);
+            doc.text(`Mine: Kalagadi Manganese Mine`, 20, 65);
+            doc.text(`Department: ${formatLocation(appState.currentUser.location)}`, 20, 70);
+            doc.text(`Prepared By: ${appState.currentUser.name} (${formatPosition(appState.currentUser.position)})`, 20, 75);
+            doc.text(`Compliance: MHSA Regulations`, 20, 80);
+            
+            // Add content based on report type
+            let yPosition = 95;
+            
+            switch(reportType) {
+                case 'dmr1741':
+                    yPosition = generateDMR1741PDF(doc, reportID, date, dateStart, dateEnd, yPosition);
+                    break;
+                case 'section23':
+                    yPosition = generateSection23PDF(doc, reportID, date, dateStart, dateEnd, yPosition);
+                    break;
+                case 'weekly':
+                    yPosition = generateWeeklyPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
+                    break;
+                case 'monthly':
+                    yPosition = generateMonthlyPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
+                    break;
+                case 'hazard':
+                    yPosition = generateHazardPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
+                    break;
+                default:
+                    yPosition = generateDefaultPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
+            }
+            
+            // Add footer
+            doc.setFontSize(8);
+            doc.setTextColor(150, 150, 150);
+            doc.text(`Report ID: ${reportID} | Generated: ${date} | Page 1 of 1`, 105, 290, { align: 'center' });
+            doc.text(`Prepared by: ${appState.currentUser.name} | Department: ${formatLocation(appState.currentUser.location)}`, 105, 295, { align: 'center' });
+            
+            // Save the PDF
+            const fileName = `${reportID}_${reportType.replace(/\s+/g, '_')}.pdf`;
+            doc.save(fileName);
+            
+            // Show success message
             const successDiv = document.getElementById('reportSuccess');
             successDiv.innerHTML = `
-                ✅ Report generated successfully!<br>
+                ✅ PDF Report generated successfully!<br>
                 <strong>Report ID: ${reportID}</strong><br>
                 <small>Data stored for 20+ years per MHSA Section 23(3)</small><br>
-                <button class="btn btn-primary" style="margin-top: 10px;" onclick="downloadReport('${reportType}', '${reportID}')">
+                <button class="btn btn-primary" style="margin-top: 10px;" onclick="regeneratePDF('${reportType}', '${reportID}')">
                     📥 Download Again
                 </button>
             `;
@@ -1306,561 +2124,51 @@
                 successDiv.style.display = 'none';
             }, 10000);
             
-            showToast(`Report ${reportID} downloaded successfully!`, 'success');
-        }
-
-        function generateReportContent(reportType, reportID) {
-            const date = new Date().toLocaleString();
-            const dateStart = document.getElementById('reportStartDate').value;
-            const dateEnd = document.getElementById('reportEndDate').value;
-            
-            // Generate report based on type
-            switch(reportType) {
-                case 'dmr1741':
-                    return generateDMR1741Report(reportID, date, dateStart, dateEnd);
-                case 'section23':
-                    return generateSection23Report(reportID, date, dateStart, dateEnd);
-                case 'weekly':
-                    return generateWeeklyReport(reportID, date, dateStart, dateEnd);
-                case 'monthly':
-                    return generateMonthlyReport(reportID, date, dateStart, dateEnd);
-                case 'hazard':
-                    return generateHazardReport(reportID, date, dateStart, dateEnd);
-                default:
-                    return generateDefaultReport(reportID, date, dateStart, dateEnd);
-            }
-        }
-
-        function generateDMR1741Report(reportID, date, dateStart, dateEnd) {
-            return `
-╔════════════════════════════════════════════════════════════════╗
-║              DMR 1741 - ACCIDENT/INCIDENT REPORT              ║
-║                    KALAGADI MANGANESE MINE                    ║
-╚════════════════════════════════════════════════════════════════╝
-
-Report ID: ${reportID}
-Report Date: ${date}
-Period: ${dateStart} to ${dateEnd}
-Mine: Kalagadi Manganese Mine
-Compliance: MHSA Regulation 11.1
-
-════════════════════════════════════════════════════════════════
-
-INCIDENT SUMMARY
-----------------
-Total Incidents: ${appState.hazards.length}
-Reportable Incidents: ${appState.hazards.filter(h => h.riskLevel === 'immediate' || h.riskLevel === 'high').length}
-Non-Reportable Incidents: ${appState.hazards.filter(h => h.riskLevel === 'medium' || h.riskLevel === 'low').length}
-
-════════════════════════════════════════════════════════════════
-
-DETAILED INCIDENT LISTING
--------------------------
-${appState.hazards.length > 0 ? appState.hazards.map((h, i) => `
-${i + 1}. Incident Type: ${h.type.toUpperCase()}
-   Risk Level: ${h.riskLevel}
-   Description: ${h.description}
-   Location: ${h.location}
-   Reported: ${new Date(h.timestamp).toLocaleString()}
-   Status: ${h.riskLevel === 'immediate' ? 'REPORTABLE TO DMRE' : 'INTERNAL RECORD'}
-`).join('\n') : 'No incidents recorded in this period'}
-
-════════════════════════════════════════════════════════════════
-
-INVESTIGATION STATUS
---------------------
-${appState.hazards.filter(h => h.riskLevel === 'immediate' || h.riskLevel === 'high').length > 0 ? 
-appState.hazards.filter(h => h.riskLevel === 'immediate' || h.riskLevel === 'high').map((h, i) => `
-${i + 1}. ${h.type.toUpperCase()} - Investigation: PENDING
-   Assigned To: Safety Supervisor
-   Due Date: ${new Date(Date.now() + 7*24*60*60*1000).toLocaleDateString()}
-`) : 'No reportable incidents requiring investigation'}
-
-════════════════════════════════════════════════════════════════
-
-MHSA COMPLIANCE VERIFICATION
------------------------------
-✓ Regulation 11.1 - Incident Reporting
-✓ Section 23(1) - Record Keeping
-✓ Section 23(3) - 20+ Year Data Retention
-
-════════════════════════════════════════════════════════════════
-
-PREPARED BY: SafetyOfficer App
-DATE: ${date}
-REPORT ID: ${reportID}
-`;
-        }
-
-        function generateSection23Report(reportID, date, dateStart, dateEnd) {
-            return `
-╔════════════════════════════════════════════════════════════════╗
-║           SECTION 23(1) - DAILY ACTIVITY LOG                  ║
-║                    KALAGADI MANGANESE MINE                    ║
-╚════════════════════════════════════════════════════════════════╝
-
-Report ID: ${reportID}
-Report Date: ${date}
-Period: ${dateStart} to ${dateEnd}
-Mine: Kalagadi Manganese Mine
-Compliance: MHSA Section 23(1)
-
-════════════════════════════════════════════════════════════════
-
-DAILY ACTIVITY SUMMARY
-----------------------
-Workers Present: ${appState.workers.length}
-Inspections Completed: ${appState.inspections.length}
-Hazards Reported: ${appState.hazards.length}
-Vehicle Trips: ${appState.trips.length}
-Permits Issued: ${appState.permits.length}
-
-════════════════════════════════════════════════════════════════
-
-WORKER ATTENDANCE
------------------
-${appState.workers.length > 0 ? appState.workers.map((w, i) => `
-${i + 1}. ${w.id} - ${w.name}
-   Check-in: ${w.time}
-   Status: ${w.gpsStatus} | Training: ${w.training}
-`).join('\n') : 'No worker attendance recorded'}
-
-════════════════════════════════════════════════════════════════
-
-INSPECTION ACTIVITY
--------------------
-${appState.inspections.length > 0 ? appState.inspections.map((insp, i) => `
-${i + 1}. ${insp.type.toUpperCase()} Inspection
-   Time: ${new Date(insp.timestamp).toLocaleString()}
-   Status: COMPLETED
-   Digital Signature: VERIFIED
-`).join('\n') : 'No inspections recorded'}
-
-════════════════════════════════════════════════════════════════
-
-PERMIT ACTIVITY
----------------
-${appState.permits.length > 0 ? appState.permits.map((p, i) => `
-${i + 1}. ${p.type} Permit
-   ID: ${p.permitId}
-   Location: ${p.location}
-   Issue Time: ${new Date(p.timestamp).toLocaleString()}
-`).join('\n') : 'No permits issued'}
-
-════════════════════════════════════════════════════════════════
-
-MHSA COMPLIANCE VERIFICATION
------------------------------
-✓ Section 23(1) - Daily Record Keeping
-✓ Section 10 - Worker Attendance
-✓ Regulation 8.2 - Vehicle Safety
-✓ Regulation 15.17 - Electrical Safety
-
-════════════════════════════════════════════════════════════════
-
-PREPARED BY: SafetyOfficer App
-DATE: ${date}
-REPORT ID: ${reportID}
-`;
-        }
-
-        function generateWeeklyReport(reportID, date, dateStart, dateEnd) {
-            return `
-╔════════════════════════════════════════════════════════════════╗
-║                   WEEKLY SAFETY SUMMARY                       ║
-║                    KALAGADI MANGANESE MINE                    ║
-╚════════════════════════════════════════════════════════════════╝
-
-Report ID: ${reportID}
-Report Date: ${date}
-Period: ${dateStart} to ${dateEnd}
-Mine: Kalagadi Manganese Mine
-Compliance: MHSA Weekly Reporting Requirements
-
-════════════════════════════════════════════════════════════════
-
-WEEKLY PERFORMANCE METRICS
---------------------------
-Total Workers: ${appState.workers.length}
-Average Daily Attendance: ${Math.round(appState.workers.length / 7)}
-Inspections Completed: ${appState.inspections.length}
-Hazards Identified: ${appState.hazards.length}
-Compliance Rate: 98%
-
-════════════════════════════════════════════════════════════════
-
-TOP SAFETY CONCERNS
--------------------
-${appState.hazards.length > 0 ? 
-appState.hazards.slice(0, 5).map((h, i) => `
-${i + 1}. ${h.type.toUpperCase()} - ${h.riskLevel.toUpperCase()} RISK
-   Location: ${h.location}
-   Status: ${h.riskLevel === 'immediate' ? 'URGENT ACTION REQUIRED' : 'MONITORING'}
-`).join('\n') : 'No safety concerns reported this week'}
-
-════════════════════════════════════════════════════════════════
-
-INSPECTION COMPLIANCE
----------------------
-${Object.keys(checklists).map(type => {
-    const count = appState.inspections.filter(i => i.type === type).length;
-    return `${type.toUpperCase()}: ${count} inspections`;
-}).join('\n')}
-
-════════════════════════════════════════════════════════════════
-
-RECOMMENDATIONS FOR NEXT WEEK
------------------------------
-1. Continue daily PPE inspections
-2. Address high-priority hazards immediately
-3. Schedule vehicle maintenance checks
-4. Review confined space entry procedures
-5. Conduct safety awareness training
-
-════════════════════════════════════════════════════════════════
-
-PREPARED BY: SafetyOfficer App
-DATE: ${date}
-REPORT ID: ${reportID}
-`;
-        }
-
-        function generateMonthlyReport(reportID, date, dateStart, dateEnd) {
-            return `
-╔════════════════════════════════════════════════════════════════╗
-║                  MONTHLY COMPLIANCE REPORT                    ║
-║                    KALAGADI MANGANESE MINE                    ║
-╚════════════════════════════════════════════════════════════════╝
-
-Report ID: ${reportID}
-Report Date: ${date}
-Period: ${dateStart} to ${dateEnd}
-Mine: Kalagadi Manganese Mine
-Compliance: MHSA Monthly Reporting Requirements
-
-════════════════════════════════════════════════════════════════
-
-MONTHLY COMPLIANCE OVERVIEW
----------------------------
-Total Workers Registered: ${appState.workers.length}
-Total Inspections: ${appState.inspections.length}
-Total Hazards Reported: ${appState.hazards.length}
-Vehicle Trips Authorized: ${appState.trips.length}
-Permits Issued: ${appState.permits.length}
-Overall Compliance Rate: 98%
-
-════════════════════════════════════════════════════════════════
-
-MHSA REGULATION COMPLIANCE
---------------------------
-✓ Section 10 - Worker Verification: 100%
-✓ Section 23(1) - Record Keeping: 100%
-✓ Regulation 2.13.1 - Hazard Reporting: 95%
-✓ Regulation 8.2 - Vehicle Safety: 98%
-✓ Regulation 15.17 - Electrical Safety: 100%
-✓ Regulation 11.1 - Incident Reporting: 100%
-
-════════════════════════════════════════════════════════════════
-
-TREND ANALYSIS
---------------
-Worker Attendance: ${appState.workers.length > 20 ? 'GOOD' : 'NEEDS IMPROVEMENT'}
-Hazard Reporting: ${appState.hazards.length > 5 ? 'ACTIVE' : 'INSUFFICIENT'}
-Inspection Frequency: ${appState.inspections.length > 10 ? 'ADEQUATE' : 'BELOW TARGET'}
-Vehicle Compliance: ${appState.trips.length > 0 ? 'COMPLIANT' : 'NO DATA'}
-
-════════════════════════════════════════════════════════════════
-
-ACTION ITEMS FOR NEXT MONTH
----------------------------
-1. Increase hazard reporting awareness
-2. Schedule additional PPE inspections
-3. Review and update emergency procedures
-4. Conduct vehicle safety refresher training
-5. Implement additional confined space controls
-
-════════════════════════════════════════════════════════════════
-
-AUDIT PREPAREDNESS
-------------------
-Documentation: COMPLETE
-Record Retention: COMPLIANT (20+ years)
-Digital Signatures: VERIFIED
-Audit Trail: SECURE
-
-════════════════════════════════════════════════════════════════
-
-PREPARED BY: SafetyOfficer App
-DATE: ${date}
-REPORT ID: ${reportID}
-`;
-        }
-
-        function generateHazardReport(reportID, date, dateStart, dateEnd) {
-            return `
-╔════════════════════════════════════════════════════════════════╗
-║                     HAZARD REGISTER EXPORT                    ║
-║                    KALAGADI MANGANESE MINE                    ║
-╚════════════════════════════════════════════════════════════════╝
-
-Report ID: ${reportID}
-Report Date: ${date}
-Period: ${dateStart} to ${dateEnd}
-Mine: Kalagadi Manganese Mine
-Compliance: MHSA Regulation 2.13.1
-
-════════════════════════════════════════════════════════════════
-
-HAZARD REGISTER SUMMARY
------------------------
-Total Hazards: ${appState.hazards.length}
-Immediate Risks: ${appState.hazards.filter(h => h.riskLevel === 'immediate').length}
-High Priority: ${appState.hazards.filter(h => h.riskLevel === 'high').length}
-Medium Priority: ${appState.hazards.filter(h => h.riskLevel === 'medium').length}
-Low Priority: ${appState.hazards.filter(h => h.riskLevel === 'low').length}
-
-════════════════════════════════════════════════════════════════
-
-DETAILED HAZARD LISTING
------------------------
-${appState.hazards.length > 0 ? appState.hazards.map((h, i) => `
-${i + 1}. HAZARD ID: HZD-${reportID}-${(i+1).toString().padStart(3, '0')}
-   Type: ${h.type.toUpperCase()}
-   Risk Level: ${h.riskLevel.toUpperCase()}
-   Description: ${h.description}
-   Location: ${h.location}
-   Reported: ${new Date(h.timestamp).toLocaleString()}
-   Status: ${getHazardStatus(h.riskLevel)}
-   Action Required: ${getHazardAction(h.riskLevel)}
-`).join('\n') : 'No hazards recorded in this period'}
-
-════════════════════════════════════════════════════════════════
-
-RISK ASSESSMENT SUMMARY
------------------------
-${appState.hazards.length > 0 ? 
-`Immediate Risks (Stop Work): ${appState.hazards.filter(h => h.riskLevel === 'immediate').length}
-High Priority (24hr Action): ${appState.hazards.filter(h => h.riskLevel === 'high').length}
-Medium Priority (7 days): ${appState.hazards.filter(h => h.riskLevel === 'medium').length}
-Low Priority (Monitor): ${appState.hazards.filter(h => h.riskLevel === 'low').length}`
-: 'No risk assessment data available'}
-
-════════════════════════════════════════════════════════════════
-
-HAZARD DISTRIBUTION BY TYPE
-----------------------------
-${getHazardDistribution()}
-
-════════════════════════════════════════════════════════════════
-
-MHSA COMPLIANCE VERIFICATION
------------------------------
-✓ Regulation 2.13.1 - Hazard Identification
-✓ Regulation 2.13.2 - Risk Assessment
-✓ Section 23(1) - Record Keeping
-✓ Section 23(3) - Data Retention
-
-════════════════════════════════════════════════════════════════
-
-PREPARED BY: SafetyOfficer App
-DATE: ${date}
-REPORT ID: ${reportID}
-`;
-        }
-
-        function generateDefaultReport(reportID, date, dateStart, dateEnd) {
-            return `
-╔════════════════════════════════════════════════════════════════╗
-║                    COMPREHENSIVE SAFETY REPORT                ║
-║                    KALAGADI MANGANESE MINE                    ║
-╚════════════════════════════════════════════════════════════════╝
-
-Report ID: ${reportID}
-Report Date: ${date}
-Period: ${dateStart} to ${dateEnd}
-Mine: Kalagadi Manganese Mine
-Generated By: SafetyOfficer App v1.0
-Compliance: MHSA 2025 Regulations
-
-════════════════════════════════════════════════════════════════
-
-REPORT VERIFICATION
--------------------
-SHA-256 Hash: ${generateHash(reportID + date)}
-Blockchain Timestamp: ${Date.now()}
-Digital Signature: VERIFIED ✓
-Audit Trail: COMPLETE ✓
-
-════════════════════════════════════════════════════════════════
-
-SUMMARY STATISTICS
-------------------
-Workers Present: ${appState.workers.length}
-Total Inspections: ${appState.inspections.length}
-Open Hazards: ${appState.hazards.length}
-Vehicle Trips: ${appState.trips.length}
-Permits Issued: ${appState.permits.length}
-Compliance Rate: 98%
-
-════════════════════════════════════════════════════════════════
-
-WORKER ROLL CALL RECORDS
-------------------------
-${appState.workers.length > 0 ? appState.workers.map((w, i) => `
-${i + 1}. Worker ID: ${w.id}
-   Name: ${w.name}
-   Check-in Time: ${w.time}
-   GPS Status: ${w.gpsStatus}
-   Training Valid: ${w.training}
-`).join('\n') : 'No workers recorded in this period'}
-
-════════════════════════════════════════════════════════════════
-
-INSPECTION RECORDS
-------------------
-${appState.inspections.length > 0 ? appState.inspections.map((insp, i) => `
-${i + 1}. Inspection Type: ${insp.type.toUpperCase()}
-   Timestamp: ${new Date(insp.timestamp).toLocaleString()}
-   Digital Signature Hash: ${insp.hash}
-   Status: COMPLETED ✓
-`).join('\n') : 'No inspections recorded in this period'}
-
-════════════════════════════════════════════════════════════════
-
-HAZARD REPORTS
---------------
-${appState.hazards.length > 0 ? appState.hazards.map((h, i) => `
-${i + 1}. Hazard Type: ${h.type.toUpperCase()}
-   Risk Level: ${h.riskLevel}
-   Description: ${h.description}
-   Location: ${h.location}
-   Reported: ${new Date(h.timestamp).toLocaleString()}
-   Status: OPEN
-   Action Required: Per MHSA Regulation 2.13.1
-`).join('\n') : 'No hazards recorded in this period'}
-
-════════════════════════════════════════════════════════════════
-
-VEHICLE AUTHORIZATIONS
-----------------------
-${appState.trips.length > 0 ? appState.trips.map((t, i) => `
-${i + 1}. Vehicle: ${t.vehicle}
-   Vehicle Type: ${t.vehicleType}
-   Driver: ${t.driver}
-   Authorization Time: ${new Date(t.timestamp).toLocaleString()}
-   Pre-Use Checklist: COMPLETED ✓
-   Driver Declaration: SIGNED ✓
-`).join('\n') : 'No vehicle trips recorded in this period'}
-
-════════════════════════════════════════════════════════════════
-
-PERMITS ISSUED
---------------
-${appState.permits.length > 0 ? appState.permits.map((p, i) => `
-${i + 1}. Permit ID: ${p.permitId}
-   Permit Type: ${p.type}
-   Location: ${p.location}
-   Issue Time: ${new Date(p.timestamp).toLocaleString()}
-   Status: ACTIVE
-`).join('\n') : 'No permits issued in this period'}
-
-════════════════════════════════════════════════════════════════
-
-MHSA COMPLIANCE VERIFICATION
------------------------------
-✓ Section 10 - Worker Attendance Records
-✓ Section 23(1) - Daily Activity Logs
-✓ Section 23(3) - 20+ Year Data Retention
-✓ Regulation 2.13.1 - Hazard Risk Assessment
-✓ Regulation 8.2 - Vehicle Safety Standards
-✓ Regulation 15.17 - Electrical Isolation
-
-════════════════════════════════════════════════════════════════
-
-STATUTORY DECLARATIONS
-----------------------
-This report is generated in compliance with the Mine Health and 
-Safety Act (MHSA) 29 of 1996 and all applicable regulations.
-
-All digital signatures are secured with SHA-256 cryptographic 
-hashing and are legally binding under South African law.
-
-This document must be retained for a minimum of 20 years as per
-MHSA Section 23(3) requirements.
-
-Report Prepared By: SafetyOfficer App
-Tech-Hubris Africa Pty Ltd
-Date: ${date}
-
-════════════════════════════════════════════════════════════════
-
-DOCUMENT CONTROL
-----------------
-Report ID: ${reportID}
-Version: 1.0
-Classification: CONFIDENTIAL
-Distribution: Mine Management, DMRE Inspector
-Next Review: ${new Date(Date.now() + 30*24*60*60*1000).toLocaleDateString()}
-
-════════════════════════════════════════════════════════════════
-END OF REPORT
-════════════════════════════════════════════════════════════════
-
-For queries regarding this report, contact:
-SafetyOfficer Support: support@tech-hubris.co.za
-Emergency Line: +27 (0)11 XXX-XXXX
-DMRE Inspector: inspector@dmre.gov.za
-
-This is a computer-generated document. No signature required.
-Report ID: ${reportID} | Generated: ${date}
-`;
-        }
-
-        // Helper functions for hazard report
-        function getHazardStatus(riskLevel) {
-            switch(riskLevel) {
-                case 'immediate': return 'STOP WORK ORDER ISSUED';
-                case 'high': return 'URGENT ACTION REQUIRED';
-                case 'medium': return 'SCHEDULED FOR RESOLUTION';
-                case 'low': return 'MONITORING';
-                default: return 'UNDER REVIEW';
-            }
-        }
-
-        function getHazardAction(riskLevel) {
-            switch(riskLevel) {
-                case 'immediate': return 'IMMEDIATE WORK STOPPAGE AND EVACUATION';
-                case 'high': return 'RESOLVE WITHIN 24 HOURS';
-                case 'medium': return 'RESOLVE WITHIN 7 DAYS';
-                case 'low': return 'CONTINUOUS MONITORING';
-                default: return 'RISK ASSESSMENT REQUIRED';
-            }
-        }
-
-        function getHazardDistribution() {
-            const types = ['rockfall', 'ventilation', 'machinery', 'electrical', 'chemical', 'other'];
-            return types.map(type => {
-                const count = appState.hazards.filter(h => h.type === type).length;
-                return `${type.toUpperCase()}: ${count} hazards`;
-            }).join('\n');
+            showToast(`PDF Report ${reportID} downloaded successfully!`, 'success');
         }
 
         // Additional report functions
         function generateDMRReport() {
             const reportID = generateReportID();
-            showToast(`DMR 1741 Report ${reportID} generated!`, 'success');
+            generatePDFReport('dmr1741', reportID);
             document.getElementById('dmrCount').textContent = parseInt(document.getElementById('dmrCount').textContent) + 1;
         }
 
         function viewSection23Logs() {
-            showToast('Section 23(1) Logs displayed in new window', 'success');
+            const reportID = generateReportID();
+            generatePDFReport('section23', reportID);
             document.getElementById('section23Count').textContent = parseInt(document.getElementById('section23Count').textContent) + 1;
         }
 
         function exportIncidentReports() {
             const reportID = generateReportID();
-            showToast(`Incident Reports exported as ${reportID}.csv`, 'success');
+            generatePDFReport('hazard', reportID);
             document.getElementById('incidentCount').textContent = parseInt(document.getElementById('incidentCount').textContent) + 1;
+        }
+
+        // Helper functions
+        function clearSignature() {
+            const canvas = document.getElementById('signaturePad');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function clearVehicleSignature() {
+            const canvas = document.getElementById('vehicleSignature');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function clearApplicantSignature() {
+            const canvas = document.getElementById('applicantSignature');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function clearSupervisorSignature() {
+            const canvas = document.getElementById('supervisorSignature');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
         // Photo handling
@@ -1896,6 +2204,9 @@ Report ID: ${reportID} | Generated: ${date}
             initSignaturePad('vehicleSignature');
             initSignaturePad('applicantSignature');
             initSignaturePad('supervisorSignature');
+            
+            // Check for existing login
+            checkExistingLogin();
             
             // Simulate offline mode
             setInterval(() => {
