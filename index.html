@@ -45,14 +45,9 @@
         }
 
         .auth-logo {
-            width: 312px;
-            height: 312px;
-            background: var(--secondary-gradient);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
+            width: 100%;
+            max-width: 200px;
+            height: 200px;
             margin: 0 auto 20px;
             overflow: hidden;
             padding: 10px;
@@ -61,13 +56,11 @@
         .auth-logo img {
             width: 100%;
             height: 100%;
-            width: 412px;
-            height: 412px;
             object-fit: contain;
         }
 
         .auth-title {
-            font-size: 28px;
+            font-size: clamp(24px, 5vw, 28px);
             color: #333;
             font-weight: bold;
             margin-bottom: 10px;
@@ -75,7 +68,7 @@
 
         .auth-subtitle {
             color: #666;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             margin-bottom: 30px;
         }
 
@@ -181,9 +174,8 @@
         }
 
         .logo {
-            width: 250px;
-            height: 250px;
-            /* background: var(--secondary-gradient); */
+            width: 80px;
+            height: 80px;
             border-radius: 5px;
             display: flex;
             align-items: center;
@@ -200,14 +192,14 @@
         }
 
         .header-title {
-            font-size: 28px;
+            font-size: clamp(20px, 4vw, 28px);
             color: #333;
             font-weight: bold;
         }
 
         .header-subtitle {
             color: #666;
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
         }
 
         .user-info {
@@ -236,10 +228,11 @@
         .user-name {
             font-weight: 600;
             color: #333;
+            font-size: clamp(14px, 3vw, 16px);
         }
 
         .user-position {
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
             color: #666;
         }
 
@@ -248,7 +241,7 @@
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
             font-weight: 600;
             white-space: nowrap;
         }
@@ -277,7 +270,7 @@
             padding: 15px 20px;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: clamp(14px, 3vw, 16px);
             font-weight: 600;
             transition: var(--transition);
             white-space: nowrap;
@@ -330,13 +323,13 @@
         }
 
         .stat-value {
-            font-size: 36px;
+            font-size: clamp(28px, 6vw, 36px);
             font-weight: bold;
             margin: 10px 0;
         }
 
         .stat-label {
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
             opacity: 0.9;
         }
 
@@ -403,7 +396,7 @@
         }
 
         .qr-scanner-icon {
-            font-size: 80px;
+            font-size: clamp(60px, 12vw, 80px);
             margin-bottom: 20px;
         }
 
@@ -447,6 +440,7 @@
             touch-action: none;
             width: 100%;
             max-width: 600px;
+            height: 150px;
         }
 
         .alert {
@@ -563,7 +557,7 @@
         }
 
         .ppe-title {
-            font-size: 18px;
+            font-size: clamp(16px, 3.5vw, 18px);
             font-weight: 600;
             margin-bottom: 15px;
             color: #1e293b;
@@ -600,7 +594,7 @@
         }
 
         .ppe-label {
-            font-size: 14px;
+            font-size: clamp(13px, 2.5vw, 14px);
             color: #374151;
             cursor: pointer;
         }
@@ -627,7 +621,7 @@
         }
 
         .jobs-todo-title {
-            font-size: 18px;
+            font-size: clamp(16px, 3.5vw, 18px);
             font-weight: 600;
             margin-bottom: 15px;
             color: #0369a1;
@@ -643,7 +637,7 @@
         }
 
         .risk-title {
-            font-size: 18px;
+            font-size: clamp(16px, 3.5vw, 18px);
             font-weight: 600;
             margin-bottom: 15px;
             color: #1e293b;
@@ -669,12 +663,12 @@
             background: #f1f5f9;
             font-weight: 600;
             color: #475569;
-            font-size: 14px;
+            font-size: clamp(12px, 2.5vw, 14px);
         }
 
         .risk-table td {
             background: white;
-            font-size: 13px;
+            font-size: clamp(12px, 2.5vw, 13px);
         }
 
         .risk-category {
@@ -694,7 +688,7 @@
             padding: 8px;
             border: 1px solid #e2e8f0;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: clamp(12px, 2.5vw, 13px);
             resize: vertical;
             min-height: 60px;
             font-family: inherit;
@@ -714,7 +708,7 @@
             padding: 6px;
             border: 1px solid #e2e8f0;
             border-radius: 4px;
-            font-size: 13px;
+            font-size: clamp(12px, 2.5vw, 13px);
         }
 
         .signature-grid {
@@ -732,6 +726,30 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+        }
+
+        /* Responsive improvements */
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .table-responsive table {
+            min-width: 600px;
+        }
+
+        .mobile-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mobile-hide {
+            display: block;
+        }
+
+        .mobile-show {
+            display: none;
         }
 
         @media (max-width: 768px) {
@@ -821,6 +839,14 @@
             
             .date-range {
                 grid-template-columns: 1fr;
+            }
+
+            .mobile-hide {
+                display: none;
+            }
+
+            .mobile-show {
+                display: block;
             }
         }
 
@@ -1074,7 +1100,7 @@
             </div>
 
             <h3 style="margin-top: 30px; margin-bottom: 15px;">Today's Roll Call (<span id="rollcallCount">0</span>)</h3>
-            <div style="overflow-x: auto;">
+            <div class="table-responsive">
                 <table class="trip-table" id="rollcallTable">
                     <thead>
                         <tr>
@@ -1216,20 +1242,22 @@
                 <p style="margin-bottom: 15px; color: #64748b; font-size: 14px;">
                     Complete the risk assessment table below to identify potential hazards and control measures.
                 </p>
-                <table class="risk-table" id="riskAssessmentTable">
-                    <thead>
-                        <tr>
-                            <th>We will be exposed to:</th>
-                            <th>Tick</th>
-                            <th>What can go wrong in the workplace/with tools/equipment? What is the unwanted event?</th>
-                            <th>What controls will be in place to prevent the unwanted event? (ALWAYS consider the cardinal control)</th>
-                            <th>Rating</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Risk assessment rows will be dynamically generated here -->
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="risk-table" id="riskAssessmentTable">
+                        <thead>
+                            <tr>
+                                <th>We will be exposed to:</th>
+                                <th>Tick</th>
+                                <th>What can go wrong in the workplace/with tools/equipment? What is the unwanted event?</th>
+                                <th>What controls will be in place to prevent the unwanted event? (ALWAYS consider the cardinal control)</th>
+                                <th>Rating</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Risk assessment rows will be dynamically generated here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div class="photo-upload" onclick="document.getElementById('hazardPhoto').click()">
@@ -2478,17 +2506,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
