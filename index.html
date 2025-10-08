@@ -728,6 +728,28 @@
             gap: 15px;
         }
 
+        .km-readings {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .distance-summary {
+            background: #f0f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            text-align: center;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .distance-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #0369a1;
+            margin: 5px 0;
+        }
+
         /* Responsive improvements */
         .table-responsive {
             overflow-x: auto;
@@ -838,6 +860,10 @@
             }
             
             .date-range {
+                grid-template-columns: 1fr;
+            }
+
+            .km-readings {
                 grid-template-columns: 1fr;
             }
 
@@ -1079,6 +1105,106 @@
             </div>
         </div>
 
+        <!-- Vehicle Panel -->
+        <div id="vehicle" class="content-panel">
+            <h2 style="margin-bottom: 20px;">Vehicle Trip Authorization - <span id="vehicleLocation"></span></h2>
+            
+            <div class="form-group">
+                <label class="form-label">Vehicle Registration</label>
+                <input type="text" class="form-input" placeholder="e.g., KLM 3837" id="vehicleReg">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Vehicle Type</label>
+                <select class="form-select" id="vehicleType">
+                    <option>Light Duty Vehicle (LDV)</option>
+                    <option>5/CAB Toyota Hilux</option>
+                    <option>Heavy Duty Truck</option>
+                    <option>Loader</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Driver Name</label>
+                <input type="text" class="form-input" placeholder="Enter driver name" id="driverName">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Reason for Trip</label>
+                <input type="text" class="form-input" placeholder="e.g., Planning, Inspection" id="tripReason">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Kilometer Readings</label>
+                <div class="km-readings">
+                    <div>
+                        <label class="form-label">Start KM</label>
+                        <input type="number" class="form-input" placeholder="Enter start KM" id="startKM" onchange="calculateDistance()">
+                    </div>
+                    <div>
+                        <label class="form-label">End KM</label>
+                        <input type="number" class="form-input" placeholder="Enter end KM" id="endKM" onchange="calculateDistance()">
+                    </div>
+                </div>
+                <div id="distanceSummary" class="distance-summary" style="display: none;">
+                    <div>Total Distance Traveled</div>
+                    <div class="distance-value" id="distanceValue">0 km</div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Pre-Use Checklist</h3>
+            <div class="checkbox-group" id="vehicleChecklist">
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck1">
+                    <span>Windscreen condition</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck2">
+                    <span>Wipers functional</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck3">
+                    <span>Side windows intact</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck4">
+                    <span>Water/coolant level</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck5">
+                    <span>Oil level checked</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck6">
+                    <span>Fuel level adequate</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck7">
+                    <span>Tire condition acceptable</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck8">
+                    <span>Spare tire present</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck9">
+                    <span>All lights working (head, tail, indicators)</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck10">
+                    <span>Brakes functional</span>
+                </label>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Driver Declaration</h3>
+            <canvas class="signature-pad" id="vehicleSignature" width="600" height="150"></canvas>
+            <div style="margin-top: 10px;">
+                <button class="btn btn-danger" onclick="clearVehicleSignature()">Clear</button>
+                <button class="btn btn-success" onclick="authorizeTrip()">Authorize Trip</button>
+            </div>
+        </div>
+
+        <!-- Other panels remain the same -->
         <!-- Roll Call Panel -->
         <div id="rollcall" class="content-panel">
             <h2 style="margin-bottom: 20px;">Pre-Shift Roll Call - <span id="rollcallLocation"></span></h2>
@@ -1270,92 +1396,6 @@
             <button class="btn btn-danger" style="width: 100%; margin-top: 20px;" onclick="submitHazard()">
                 Submit Hazard Report
             </button>
-        </div>
-
-        <!-- Vehicle Panel -->
-        <div id="vehicle" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Vehicle Trip Authorization - <span id="vehicleLocation"></span></h2>
-            
-            <div class="form-group">
-                <label class="form-label">Vehicle Registration</label>
-                <input type="text" class="form-input" placeholder="e.g., KLM 3837" id="vehicleReg">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Vehicle Type</label>
-                <select class="form-select" id="vehicleType">
-                    <option>Light Duty Vehicle (LDV)</option>
-                    <option>5/CAB Toyota Hilux</option>
-                    <option>Heavy Duty Truck</option>
-                    <option>Loader</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Driver Name</label>
-                <input type="text" class="form-input" placeholder="Enter driver name" id="driverName">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Reason for Trip</label>
-                <input type="text" class="form-input" placeholder="e.g., Planning, Inspection" id="tripReason">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Kilometer Reading - Begin</label>
-                <input type="number" class="form-input" placeholder="Enter start KM" id="startKM">
-            </div>
-
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">Pre-Use Checklist</h3>
-            <div class="checkbox-group" id="vehicleChecklist">
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck1">
-                    <span>Windscreen condition</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck2">
-                    <span>Wipers functional</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck3">
-                    <span>Side windows intact</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck4">
-                    <span>Water/coolant level</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck5">
-                    <span>Oil level checked</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck6">
-                    <span>Fuel level adequate</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck7">
-                    <span>Tire condition acceptable</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck8">
-                    <span>Spare tire present</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck9">
-                    <span>All lights working (head, tail, indicators)</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck10">
-                    <span>Brakes functional</span>
-                </label>
-            </div>
-
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">Driver Declaration</h3>
-            <canvas class="signature-pad" id="vehicleSignature" width="600" height="150"></canvas>
-            <div style="margin-top: 10px;">
-                <button class="btn btn-danger" onclick="clearVehicleSignature()">Clear</button>
-                <button class="btn btn-success" onclick="authorizeTrip()">Authorize Trip</button>
-            </div>
         </div>
 
         <!-- Permit Panel -->
@@ -1846,6 +1886,86 @@
             event.target.classList.add('active');
         }
 
+        // Vehicle Functions
+        function calculateDistance() {
+            const startKM = parseFloat(document.getElementById('startKM').value) || 0;
+            const endKM = parseFloat(document.getElementById('endKM').value) || 0;
+            
+            if (startKM > 0 && endKM > 0) {
+                const distance = endKM - startKM;
+                if (distance >= 0) {
+                    document.getElementById('distanceValue').textContent = distance.toFixed(1) + ' km';
+                    document.getElementById('distanceSummary').style.display = 'block';
+                } else {
+                    document.getElementById('distanceSummary').style.display = 'none';
+                    showToast('End KM must be greater than Start KM', 'warning');
+                }
+            } else {
+                document.getElementById('distanceSummary').style.display = 'none';
+            }
+        }
+
+        function authorizeTrip() {
+            const canvas = document.getElementById('vehicleSignature');
+            if (isCanvasEmpty(canvas)) {
+                alert('Please provide a signature');
+                return;
+            }
+
+            const startKM = document.getElementById('startKM').value;
+            const endKM = document.getElementById('endKM').value;
+            
+            if (!startKM || !endKM) {
+                alert('Please enter both start and end kilometer readings');
+                return;
+            }
+            
+            if (parseFloat(endKM) <= parseFloat(startKM)) {
+                alert('End KM must be greater than Start KM');
+                return;
+            }
+
+            // Get vehicle checklist status
+            const checklistStatus = {};
+            for (let i = 1; i <= 10; i++) {
+                const checkbox = document.getElementById(`vehicleCheck${i}`);
+                checklistStatus[`check_${i}`] = checkbox.checked;
+            }
+
+            const trip = {
+                vehicle: document.getElementById('vehicleReg').value,
+                vehicleType: document.getElementById('vehicleType').value,
+                driver: document.getElementById('driverName').value,
+                reason: document.getElementById('tripReason').value,
+                startKM: startKM,
+                endKM: endKM,
+                distance: (parseFloat(endKM) - parseFloat(startKM)).toFixed(1),
+                timestamp: new Date().toISOString(),
+                checklist: checklistStatus,
+                signature: canvas.toDataURL(),
+                authorizedBy: appState.currentUser.name,
+                department: appState.currentUser.location
+            };
+
+            appState.trips.push(trip);
+            showToast('Trip authorized successfully! Distance: ' + trip.distance + ' km', 'success');
+            clearVehicleSignature();
+            
+            // Reset form
+            document.getElementById('vehicleReg').value = '';
+            document.getElementById('driverName').value = '';
+            document.getElementById('tripReason').value = '';
+            document.getElementById('startKM').value = '';
+            document.getElementById('endKM').value = '';
+            document.getElementById('distanceSummary').style.display = 'none';
+            
+            // Reset checkboxes
+            for (let i = 1; i <= 10; i++) {
+                document.getElementById(`vehicleCheck${i}`).checked = false;
+            }
+        }
+
+        // Other functions remain the same
         // Roll Call Functions
         function simulateScan() {
             const workerId = 'KLM' + Math.floor(Math.random() * 9000 + 1000);
@@ -2138,50 +2258,6 @@
             
             // Reset risk assessment table
             loadRiskAssessmentTable();
-        }
-
-        // Vehicle Functions
-        function authorizeTrip() {
-            const canvas = document.getElementById('vehicleSignature');
-            if (isCanvasEmpty(canvas)) {
-                alert('Please provide a signature');
-                return;
-            }
-
-            // Get vehicle checklist status
-            const checklistStatus = {};
-            for (let i = 1; i <= 10; i++) {
-                const checkbox = document.getElementById(`vehicleCheck${i}`);
-                checklistStatus[`check_${i}`] = checkbox.checked;
-            }
-
-            const trip = {
-                vehicle: document.getElementById('vehicleReg').value,
-                vehicleType: document.getElementById('vehicleType').value,
-                driver: document.getElementById('driverName').value,
-                reason: document.getElementById('tripReason').value,
-                startKM: document.getElementById('startKM').value,
-                timestamp: new Date().toISOString(),
-                checklist: checklistStatus,
-                signature: canvas.toDataURL(),
-                authorizedBy: appState.currentUser.name,
-                department: appState.currentUser.location
-            };
-
-            appState.trips.push(trip);
-            showToast('Trip authorized successfully!', 'success');
-            clearVehicleSignature();
-            
-            // Reset form
-            document.getElementById('vehicleReg').value = '';
-            document.getElementById('driverName').value = '';
-            document.getElementById('tripReason').value = '';
-            document.getElementById('startKM').value = '';
-            
-            // Reset checkboxes
-            for (let i = 1; i <= 10; i++) {
-                document.getElementById(`vehicleCheck${i}`).checked = false;
-            }
         }
 
         // Permit Functions
