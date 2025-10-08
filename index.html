@@ -54,6 +54,14 @@
             justify-content: center;
             font-size: 40px;
             margin: 0 auto 20px;
+            overflow: hidden;
+            padding: 10px;
+        }
+
+        .auth-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .auth-title {
@@ -108,7 +116,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-            min-height: 48px; /* Better touch target */
+            min-height: 48px;
         }
 
         .btn-primary {
@@ -147,7 +155,7 @@
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            display: none; /* Hidden by default until login */
+            display: none;
             width: 100%;
         }
 
@@ -179,6 +187,14 @@
             align-items: center;
             justify-content: center;
             font-size: 30px;
+            overflow: hidden;
+            padding: 8px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .header-title {
@@ -245,12 +261,12 @@
             margin-bottom: 20px;
             overflow-x: auto;
             padding-bottom: 5px;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
         }
 
         .nav-tabs::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+            display: none;
         }
 
         .nav-tab {
@@ -264,8 +280,8 @@
             transition: var(--transition);
             white-space: nowrap;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            min-height: 54px; /* Better touch target */
-            flex-shrink: 0; /* Prevent tabs from shrinking */
+            min-height: 54px;
+            flex-shrink: 0;
         }
 
         .nav-tab:hover {
@@ -404,7 +420,7 @@
             cursor: pointer;
             transition: var(--transition);
             text-align: center;
-            min-height: 120px; /* Better touch target */
+            min-height: 120px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -530,14 +546,13 @@
             cursor: pointer;
             font-size: 14px;
             margin-top: 5px;
-            min-height: 36px; /* Better touch target */
+            min-height: 36px;
         }
 
         .logout-btn:hover {
             background: #dc2626;
         }
 
-        /* PPE Checklist Styles */
         .ppe-checklist {
             background: #f8fafc;
             border-radius: 10px;
@@ -616,7 +631,6 @@
             color: #0369a1;
         }
 
-        /* Risk Assessment Table Styles */
         .risk-assessment {
             background: #f8fafc;
             border-radius: 10px;
@@ -639,7 +653,7 @@
             width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
-            min-width: 800px; /* Ensure table has minimum width for scrolling */
+            min-width: 800px;
         }
 
         .risk-table th, .risk-table td {
@@ -701,7 +715,23 @@
             font-size: 13px;
         }
 
-        /* Mobile-specific styles */
+        .signature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .signature-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .date-range {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -782,6 +812,14 @@
             .progress-bar {
                 width: 100%;
             }
+
+            .signature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .date-range {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -823,7 +861,6 @@
             }
         }
 
-        /* Toast notification styles */
         .toast-container {
             position: fixed;
             top: 20px;
@@ -2439,6 +2476,7 @@
     </script>
 </body>
 </html>
+
 
 
 
