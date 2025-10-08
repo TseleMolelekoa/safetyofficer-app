@@ -30,8 +30,10 @@
             min-height: 100vh;
             padding: 20px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
         .auth-container {
@@ -42,6 +44,7 @@
             width: 100%;
             max-width: 450px;
             text-align: center;
+            position: relative;
         }
 
         .auth-logo {
@@ -112,6 +115,8 @@
             cursor: pointer;
             transition: var(--transition);
             min-height: 48px;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn-primary {
@@ -750,6 +755,95 @@
             margin: 5px 0;
         }
 
+        /* Footer Styles */
+        .app-footer {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            color: white;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Loading Spinner Styles */
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: var(--border-radius);
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        .loading-text {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-loading .btn-text {
+            opacity: 0;
+        }
+
+        .btn-loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s ease infinite;
+        }
+
         /* Responsive improvements */
         .table-responsive {
             overflow-x: auto;
@@ -874,6 +968,10 @@
             .mobile-show {
                 display: block;
             }
+
+            .app-footer {
+                padding: 15px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -962,6 +1060,11 @@
 <body>
     <!-- Authentication Section -->
     <div class="auth-container" id="authContainer">
+        <div class="loading-overlay" id="loginLoading">
+            <div class="spinner"></div>
+            <div class="loading-text">Logging in...</div>
+        </div>
+        
         <div class="auth-logo"><img src="https://raw.githubusercontent.com/TseleMolelekoa/safetyofficer-app/main/logo.png"></div>
         <div class="auth-title">SafetyOfficer</div>
         <div class="auth-subtitle">Tech-hubris Africa</div>
@@ -977,7 +1080,9 @@
                 <label class="form-label">Password</label>
                 <input type="password" class="form-input" placeholder="Enter your password" id="loginPassword">
             </div>
-            <button class="btn btn-primary" onclick="login()">Login</button>
+            <button class="btn btn-primary" id="loginButton" onclick="login()">
+                <span class="btn-text">Login</span>
+            </button>
             <div class="auth-switch">
                 Don't have an account? <span class="auth-link" onclick="showRegister()">Register here</span>
             </div>
@@ -1514,6 +1619,14 @@
         </div>
     </div>
 
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <span>© 2025 SafetyOfficer -</span>
+            <span class="footer-logo">Tech-hubris Africa</span>
+        </div>
+    </footer>
+
     <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
@@ -1603,17 +1716,36 @@
                 return;
             }
 
-            // Find user in stored users
-            const user = appState.users.find(u => u.email === email && u.password === password);
+            // Show loading spinner
+            const loginButton = document.getElementById('loginButton');
+            const loadingOverlay = document.getElementById('loginLoading');
             
-            if (user) {
-                appState.currentUser = user;
-                localStorage.setItem('safetyOfficerCurrentUser', JSON.stringify(user));
-                showMainApp();
-                showToast(`Welcome back, ${user.name}!`, 'success');
-            } else {
-                showToast('Invalid email or password', 'danger');
-            }
+            loginButton.classList.add('btn-loading');
+            loadingOverlay.classList.add('active');
+
+            // Simulate API call delay
+            setTimeout(() => {
+                // Find user in stored users
+                const user = appState.users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    appState.currentUser = user;
+                    localStorage.setItem('safetyOfficerCurrentUser', JSON.stringify(user));
+                    
+                    // Hide loading spinner
+                    loginButton.classList.remove('btn-loading');
+                    loadingOverlay.classList.remove('active');
+                    
+                    showMainApp();
+                    showToast(`Welcome back, ${user.name}!`, 'success');
+                } else {
+                    // Hide loading spinner
+                    loginButton.classList.remove('btn-loading');
+                    loadingOverlay.classList.remove('active');
+                    
+                    showToast('Invalid email or password', 'danger');
+                }
+            }, 2000); // 2 second delay to simulate API call
         }
 
         function register() {
