@@ -992,6 +992,119 @@
             border: 1px solid #e2e8f0;
         }
 
+        /* Permit Styles */
+        .permit-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .permit-tab {
+            background: white;
+            border: 2px solid #e0e0e0;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: clamp(14px, 2.5vw, 15px);
+            font-weight: 600;
+            transition: var(--transition);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .permit-tab:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .permit-tab.active {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .permit-form {
+            display: none;
+        }
+
+        .permit-form.active {
+            display: block;
+        }
+
+        .permit-section {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .permit-section-title {
+            font-size: clamp(16px, 3.5vw, 18px);
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #1e293b;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+
+        .gas-reading-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .gas-reading-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .gas-reading-label {
+            font-size: clamp(13px, 2.5vw, 14px);
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+
+        .gas-reading-value {
+            font-size: clamp(16px, 3vw, 18px);
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .isolation-points {
+            background: #fef3c7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .isolation-title {
+            font-size: clamp(14px, 2.5vw, 16px);
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #92400e;
+        }
+
+        .permit-duration {
+            background: #f0f9ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .duration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -1098,6 +1211,24 @@
             }
 
             .incident-contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .permit-tabs {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+            }
+
+            .permit-tab {
+                padding: 10px 15px;
+                font-size: 13px;
+            }
+
+            .gas-reading-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .duration-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -1339,228 +1470,6 @@
             </div>
         </div>
 
-        <!-- Incident Reporting Panel -->
-        <div id="incident" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Incident Reporting - <span id="incidentLocation"></span></h2>
-            
-            <div class="alert alert-warning">
-                ⚠️ MHSA Compliance: All incidents must be reported immediately as per company policy
-            </div>
-
-            <!-- Process Flow Section -->
-            <div class="incident-process">
-                <div class="incident-process-title">Process Flow Incident Reporting</div>
-                <ul class="incident-process-list">
-                    <li class="incident-process-item">
-                        <strong>Flagstaff</strong>
-                        <div class="incident-process-subitem">Management</div>
-                        <div class="incident-process-subitem">Incident / Friend</div>
-                    </li>
-                    <li class="incident-process-item">
-                        <strong>Albania Indices / Safety</strong>
-                        <div class="incident-process-subitem">Incident / Friend Supported for Supervision</div>
-                    </li>
-                    <li class="incident-process-item">
-                        <strong>The Federal Legal Insider, Hospital & Insurance Supporter</strong>
-                        <div class="incident-process-subitem">Supervisor / Finance and Emergency Control (TST)</div>
-                    </li>
-                    <li class="incident-process-item">
-                        <strong>The Secretary / Chief Executive of the United States Department of Health (UNH)</strong>
-                    </li>
-                    <li class="incident-process-item">
-                        <strong>Fever Energy Control Facility (FEV) / FEV CTR (FEV) Quality Policy and Risk Compliance (FEV)</strong>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- What to Report Section -->
-            <div class="incident-reporting-list">
-                <div class="incident-reporting-title">What to Report</div>
-                <ol>
-                    <li><strong>Explain what happened</strong> - Provide a clear description of the incident</li>
-                    <li><strong>Indicate where it happened</strong> - Specify the exact location</li>
-                    <li><strong>Indicate when it happened</strong> - Provide date and time of the incident</li>
-                    <li><strong>Explain who is / was involved</strong> - Identify all persons involved</li>
-                    <li><strong>Explain how it happened</strong> - Describe the sequence of events</li>
-                </ol>
-            </div>
-
-            <!-- Contact Information Section -->
-            <div class="incident-contact">
-                <div class="incident-contact-title">Emergency Contact Numbers</div>
-                <div class="incident-contact-grid">
-                    <div class="incident-contact-item">
-                        <div class="incident-contact-label">Calling from an internal extension</div>
-                        <div class="incident-contact-value">3333</div>
-                    </div>
-                    <div class="incident-contact-item">
-                        <div class="incident-contact-label">Calling from a cellular phone or external line</div>
-                        <div class="incident-contact-value">039-654-5555</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Document Information -->
-            <div class="incident-document-info">
-                <p><strong>Doc No.:</strong> KMM-HSE-SEY-CHT-001</p>
-                <p><strong>Annexure 1</strong> – Incident Reporting Notice Board</p>
-            </div>
-
-            <!-- Incident Reporting Form -->
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">Report an Incident</h3>
-            <div class="form-group">
-                <label class="form-label">Incident Type</label>
-                <select class="form-select" id="incidentType">
-                    <option value="">Select incident type</option>
-                    <option value="injury">Injury</option>
-                    <option value="near-miss">Near Miss</option>
-                    <option value="property-damage">Property Damage</option>
-                    <option value="environmental">Environmental Incident</option>
-                    <option value="security">Security Breach</option>
-                    <option value="other">Other</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Incident Description</label>
-                <textarea class="form-textarea" placeholder="Explain what happened..." id="incidentDescription"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Location</label>
-                <input type="text" class="form-input" placeholder="Indicate where it happened..." id="incidentLocationInput">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Date and Time</label>
-                <input type="datetime-local" class="form-input" id="incidentDateTime">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Persons Involved</label>
-                <textarea class="form-textarea" placeholder="Explain who is/was involved..." id="incidentPersons"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">How It Happened</label>
-                <textarea class="form-textarea" placeholder="Explain how it happened..." id="incidentHow"></textarea>
-            </div>
-
-            <div class="photo-upload" onclick="document.getElementById('incidentPhoto').click()">
-                <input type="file" id="incidentPhoto" accept="image/*" style="display: none;">
-                <div style="font-size: 48px; margin-bottom: 10px;">📷</div>
-                <div><strong>Add Incident Photos</strong></div>
-                <div style="color: #666; font-size: 14px;">Required for documentation</div>
-            </div>
-
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">Reporting Officer Signature</h3>
-            <canvas class="signature-pad" id="incidentSignature" width="600" height="150"></canvas>
-            <div style="margin-top: 10px;">
-                <button class="btn btn-danger" onclick="clearIncidentSignature()">Clear</button>
-                <button class="btn btn-success" onclick="submitIncident()">Submit Incident Report</button>
-            </div>
-        </div>
-
-        <!-- Vehicle Panel -->
-        <div id="vehicle" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Vehicle Trip Authorization - <span id="vehicleLocation"></span></h2>
-            
-            <div class="form-group">
-                <label class="form-label">Vehicle Registration</label>
-                <input type="text" class="form-input" placeholder="e.g., KLM 3837" id="vehicleReg">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Vehicle Type</label>
-                <select class="form-select" id="vehicleType">
-                    <option>Light Duty Vehicle (LDV)</option>
-                    <option>5/CAB Toyota Hilux</option>
-                    <option>Heavy Duty Truck</option>
-                    <option>Loader</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Driver Name</label>
-                <input type="text" class="form-input" placeholder="Enter driver name" id="driverName">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Reason for Trip</label>
-                <input type="text" class="form-input" placeholder="e.g., Planning, Inspection" id="tripReason">
-            </div>
-
-            <div class="form-group">
-                <label class="form-label">Kilometer Readings</label>
-                <div class="km-readings">
-                    <div>
-                        <label class="form-label">Start KM</label>
-                        <input type="number" class="form-input" placeholder="Enter start KM" id="startKM" onchange="calculateDistance()">
-                    </div>
-                    <div>
-                        <label class="form-label">End KM</label>
-                        <input type="number" class="form-input" placeholder="Enter end KM" id="endKM" onchange="calculateDistance()">
-                    </div>
-                </div>
-                <div id="distanceSummary" class="distance-summary" style="display: none;">
-                    <div>Total Distance Traveled</div>
-                    <div class="distance-value" id="distanceValue">0 km</div>
-                </div>
-            </div>
-
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">Pre-Use Checklist</h3>
-            <div class="checkbox-group" id="vehicleChecklist">
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck1">
-                    <span>Windscreen condition</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck2">
-                    <span>Wipers functional</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck3">
-                    <span>Side windows intact</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck4">
-                    <span>Water/coolant level</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck5">
-                    <span>Oil level checked</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck6">
-                    <span>Fuel level adequate</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck7">
-                    <span>Tire condition acceptable</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck8">
-                    <span>Spare tire present</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck9">
-                    <span>All lights working (head, tail, indicators)</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="vehicleCheck10">
-                    <span>Brakes functional</span>
-                </label>
-            </div>
-
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">Driver Declaration</h3>
-            <canvas class="signature-pad" id="vehicleSignature" width="600" height="150"></canvas>
-            <div style="margin-top: 10px;">
-                <button class="btn btn-danger" onclick="clearVehicleSignature()">Clear</button>
-                <button class="btn btn-success" onclick="authorizeTrip()">Authorize Trip</button>
-            </div>
-        </div>
-
-        <!-- Other panels remain the same -->
         <!-- Roll Call Panel -->
         <div id="rollcall" class="content-panel">
             <h2 style="margin-bottom: 20px;">Pre-Shift Roll Call - <span id="rollcallLocation"></span></h2>
@@ -1612,10 +1521,6 @@
                 <select class="form-select" id="inspectionType" onchange="loadChecklist()">
                     <option value="">Choose inspection...</option>
                     <option value="ppe">Pre-Shift PPE Inspection</option>
-                    <option value="vehicle">Vehicle Pre-Use Checklist</option>
-                    <option value="electrical">Electrical Isolation</option>
-                    <option value="excavation">Excavation Work</option>
-                    <option value="confined">Confined Space Entry</option>
                 </select>
             </div>
 
@@ -1754,68 +1659,836 @@
             </button>
         </div>
 
-        <!-- Permit Panel -->
-        <div id="permit" class="content-panel">
-            <h2 style="margin-bottom: 20px;">Safe Work Permit - <span id="permitLocation"></span></h2>
+        <!-- Vehicle Panel -->
+        <div id="vehicle" class="content-panel">
+            <h2 style="margin-bottom: 20px;">Vehicle Trip Authorization - <span id="vehicleLocation"></span></h2>
             
             <div class="form-group">
-                <label class="form-label">Permit Type</label>
-                <select class="form-select" id="permitType">
-                    <option>Electrical Isolation</option>
-                    <option>Confined Space Entry</option>
-                    <option>Hot Work</option>
-                    <option>Excavation</option>
-                    <option>Working at Heights</option>
+                <label class="form-label">Vehicle Registration</label>
+                <input type="text" class="form-input" placeholder="e.g., KLM 3837" id="vehicleReg">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Vehicle Type</label>
+                <select class="form-select" id="vehicleType">
+                    <option>Light Duty Vehicle (LDV)</option>
+                    <option>5/CAB Toyota Hilux</option>
+                    <option>Heavy Duty Truck</option>
+                    <option>Loader</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Work Location</label>
-                <input type="text" class="form-input" placeholder="Specific location/area" id="permitLocationInput">
+                <label class="form-label">Driver Name</label>
+                <input type="text" class="form-input" placeholder="Enter driver name" id="driverName">
             </div>
 
             <div class="form-group">
-                <label class="form-label">Work Description</label>
-                <textarea class="form-textarea" placeholder="Describe the work to be performed..." id="permitDescription"></textarea>
+                <label class="form-label">Reason for Trip</label>
+                <input type="text" class="form-input" placeholder="e.g., Planning, Inspection" id="tripReason">
             </div>
 
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">Risk Assessment</h3>
-            <div class="checkbox-group" id="permitChecklist">
-                <label class="checkbox-item">
-                    <input type="checkbox" id="permitCheck1">
-                    <span>Risk assessment completed</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="permitCheck2">
-                    <span>All energy sources isolated</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="permitCheck3">
-                    <span>Emergency procedures reviewed</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="permitCheck4">
-                    <span>PPE requirements verified</span>
-                </label>
-                <label class="checkbox-item">
-                    <input type="checkbox" id="permitCheck5">
-                    <span>Atmospheric testing completed (if applicable)</span>
-                </label>
-            </div>
-
-            <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
-            <div class="signature-grid">
-                <div class="signature-item">
-                    <label class="form-label">Applicant Signature</label>
-                    <canvas class="signature-pad" id="applicantSignature" width="280" height="120"></canvas>
+            <div class="form-group">
+                <label class="form-label">Kilometer Readings</label>
+                <div class="km-readings">
+                    <div>
+                        <label class="form-label">Start KM</label>
+                        <input type="number" class="form-input" placeholder="Enter start KM" id="startKM" onchange="calculateDistance()">
+                    </div>
+                    <div>
+                        <label class="form-label">End KM</label>
+                        <input type="number" class="form-input" placeholder="Enter end KM" id="endKM" onchange="calculateDistance()">
+                    </div>
                 </div>
-                <div class="signature-item">
-                    <label class="form-label">Supervisor Signature</label>
-                    <canvas class="signature-pad" id="supervisorSignature" width="280" height="120"></canvas>
+                <div id="distanceSummary" class="distance-summary" style="display: none;">
+                    <div>Total Distance Traveled</div>
+                    <div class="distance-value" id="distanceValue">0 km</div>
                 </div>
             </div>
 
-            <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issuePermit()">Issue Permit</button>
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Pre-Use Checklist</h3>
+            <div class="checkbox-group" id="vehicleChecklist">
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck1">
+                    <span>Windscreen condition</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck2">
+                    <span>Wipers functional</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck3">
+                    <span>Side windows intact</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck4">
+                    <span>Water/coolant level</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck5">
+                    <span>Oil level checked</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck6">
+                    <span>Fuel level adequate</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck7">
+                    <span>Tire condition acceptable</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck8">
+                    <span>Spare tire present</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck9">
+                    <span>All lights working (head, tail, indicators)</span>
+                </label>
+                <label class="checkbox-item">
+                    <input type="checkbox" id="vehicleCheck10">
+                    <span>Brakes functional</span>
+                </label>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Driver Declaration</h3>
+            <canvas class="signature-pad" id="vehicleSignature" width="600" height="150"></canvas>
+            <div style="margin-top: 10px;">
+                <button class="btn btn-danger" onclick="clearVehicleSignature()">Clear</button>
+                <button class="btn btn-success" onclick="authorizeTrip()">Authorize Trip</button>
+            </div>
+        </div>
+
+        <!-- Permit Panel -->
+        <div id="permit" class="content-panel">
+            <h2 style="margin-bottom: 20px;">Safe Work Permits - <span id="permitLocation"></span></h2>
+            
+            <div class="alert alert-warning">
+                ⚠️ MHSA Compliance: All high-risk work requires appropriate permits with risk assessments
+            </div>
+
+            <div class="permit-tabs">
+                <button class="permit-tab active" onclick="showPermitForm('electrical')">⚡ Electrical</button>
+                <button class="permit-tab" onclick="showPermitForm('confined')">🔒 Confined Space</button>
+                <button class="permit-tab" onclick="showPermitForm('hotwork')">🔥 Hot Work</button>
+                <button class="permit-tab" onclick="showPermitForm('excavation')">⛏️ Excavation</button>
+                <button class="permit-tab" onclick="showPermitForm('heights')">🪜 Working at Heights</button>
+                <button class="permit-tab" onclick="showPermitForm('blasting')">💥 Blasting</button>
+                <button class="permit-tab" onclick="showPermitForm('lifting')">🏗️ Lifting Operations</button>
+            </div>
+
+            <!-- Electrical Isolation Permit -->
+            <div id="electrical-permit" class="permit-form active">
+                <h3 style="margin-bottom: 20px;">Electrical Isolation Permit</h3>
+                
+                <div class="permit-section">
+                    <div class="permit-section-title">Work Details</div>
+                    <div class="form-group">
+                        <label class="form-label">Equipment/System to be Isolated</label>
+                        <input type="text" class="form-input" placeholder="Enter equipment/system name" id="electricalEquipment">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-input" placeholder="Specific location/area" id="electricalLocation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Work Description</label>
+                        <textarea class="form-textarea" placeholder="Describe the work to be performed..." id="electricalDescription"></textarea>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Isolation Points</div>
+                    <div class="isolation-points">
+                        <div class="isolation-title">Isolation Checklist</div>
+                        <div class="checkbox-group">
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="electricalCheck1">
+                                <span>Power source identified and isolated</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="electricalCheck2">
+                                <span>Lockout devices applied</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="electricalCheck3">
+                                <span>Test for dead conducted</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="electricalCheck4">
+                                <span>Area properly demarcated</span>
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" id="electricalCheck5">
+                                <span>Emergency procedures reviewed</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Permit Duration</div>
+                    <div class="permit-duration">
+                        <div class="duration-grid">
+                            <div>
+                                <label class="form-label">Start Date & Time</label>
+                                <input type="datetime-local" class="form-input" id="electricalStart">
+                            </div>
+                            <div>
+                                <label class="form-label">End Date & Time</label>
+                                <input type="datetime-local" class="form-input" id="electricalEnd">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
+                <div class="signature-grid">
+                    <div class="signature-item">
+                        <label class="form-label">Electrician Signature</label>
+                        <canvas class="signature-pad" id="electricalElectricianSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Supervisor Signature</label>
+                        <canvas class="signature-pad" id="electricalSupervisorSignature" width="280" height="120"></canvas>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issueElectricalPermit()">Issue Electrical Permit</button>
+            </div>
+
+            <!-- Confined Space Entry Permit -->
+            <div id="confined-permit" class="permit-form">
+                <h3 style="margin-bottom: 20px;">Confined Space Entry Permit</h3>
+                
+                <div class="permit-section">
+                    <div class="permit-section-title">Space Details</div>
+                    <div class="form-group">
+                        <label class="form-label">Confined Space Identification</label>
+                        <input type="text" class="form-input" placeholder="Enter space identification" id="confinedSpace">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-input" placeholder="Specific location/area" id="confinedLocation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Work Description</label>
+                        <textarea class="form-textarea" placeholder="Describe the work to be performed..." id="confinedDescription"></textarea>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Atmospheric Testing</div>
+                    <div class="gas-reading-grid">
+                        <div class="gas-reading-item">
+                            <div class="gas-reading-label">Oxygen Level</div>
+                            <div class="gas-reading-value">
+                                <input type="text" class="form-input" placeholder="%" id="confinedOxygen">
+                            </div>
+                        </div>
+                        <div class="gas-reading-item">
+                            <div class="gas-reading-label">LEL (Lower Explosive Limit)</div>
+                            <div class="gas-reading-value">
+                                <input type="text" class="form-input" placeholder="%" id="confinedLEL">
+                            </div>
+                        </div>
+                        <div class="gas-reading-item">
+                            <div class="gas-reading-label">CO (Carbon Monoxide)</div>
+                            <div class="gas-reading-value">
+                                <input type="text" class="form-input" placeholder="ppm" id="confinedCO">
+                            </div>
+                        </div>
+                        <div class="gas-reading-item">
+                            <div class="gas-reading-label">H2S (Hydrogen Sulfide)</div>
+                            <div class="gas-reading-value">
+                                <input type="text" class="form-input" placeholder="ppm" id="confinedH2S">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Safety Precautions</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="confinedCheck1">
+                            <span>Atmospheric testing completed and safe</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="confinedCheck2">
+                            <span>Ventilation established</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="confinedCheck3">
+                            <span>Rescue equipment available</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="confinedCheck4">
+                            <span>Communications established</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="confinedCheck5">
+                            <span>Standby person appointed</span>
+                        </label>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
+                <div class="signature-grid">
+                    <div class="signature-item">
+                        <label class="form-label">Entrant Signature</label>
+                        <canvas class="signature-pad" id="confinedEntrantSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Safety Watch Signature</label>
+                        <canvas class="signature-pad" id="confinedWatchSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Supervisor Signature</label>
+                        <canvas class="signature-pad" id="confinedSupervisorSignature" width="280" height="120"></canvas>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issueConfinedPermit()">Issue Confined Space Permit</button>
+            </div>
+
+            <!-- Hot Work Permit -->
+            <div id="hotwork-permit" class="permit-form">
+                <h3 style="margin-bottom: 20px;">Hot Work Permit</h3>
+                
+                <div class="permit-section">
+                    <div class="permit-section-title">Work Details</div>
+                    <div class="form-group">
+                        <label class="form-label">Type of Hot Work</label>
+                        <select class="form-select" id="hotworkType">
+                            <option>Welding</option>
+                            <option>Grinding</option>
+                            <option>Cutting</option>
+                            <option>Brazing</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Location</label>
+                        <input type="text" class="form-input" placeholder="Specific location/area" id="hotworkLocation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Work Description</label>
+                        <textarea class="form-textarea" placeholder="Describe the hot work to be performed..." id="hotworkDescription"></textarea>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Fire Prevention Measures</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="hotworkCheck1">
+                            <span>Area cleared of combustibles</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="hotworkCheck2">
+                            <span>Fire extinguisher available</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="hotworkCheck3">
+                            <span>Fire watch appointed</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="hotworkCheck4">
+                            <span>Spark containment in place</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="hotworkCheck5">
+                            <span>Atmospheric testing completed</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Permit Duration</div>
+                    <div class="permit-duration">
+                        <div class="duration-grid">
+                            <div>
+                                <label class="form-label">Start Date & Time</label>
+                                <input type="datetime-local" class="form-input" id="hotworkStart">
+                            </div>
+                            <div>
+                                <label class="form-label">End Date & Time</label>
+                                <input type="datetime-local" class="form-input" id="hotworkEnd">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
+                <div class="signature-grid">
+                    <div class="signature-item">
+                        <label class="form-label">Worker Signature</label>
+                        <canvas class="signature-pad" id="hotworkWorkerSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Fire Watch Signature</label>
+                        <canvas class="signature-pad" id="hotworkFireWatchSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Supervisor Signature</label>
+                        <canvas class="signature-pad" id="hotworkSupervisorSignature" width="280" height="120"></canvas>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issueHotWorkPermit()">Issue Hot Work Permit</button>
+            </div>
+
+            <!-- Excavation Permit -->
+            <div id="excavation-permit" class="permit-form">
+                <h3 style="margin-bottom: 20px;">Excavation Work Permit</h3>
+                
+                <div class="permit-section">
+                    <div class="permit-section-title">Excavation Details</div>
+                    <div class="form-group">
+                        <label class="form-label">Excavation Location</label>
+                        <input type="text" class="form-input" placeholder="Specific location/area" id="excavationLocation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Depth of Excavation (meters)</label>
+                        <input type="number" class="form-input" placeholder="Enter depth" id="excavationDepth">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Work Description</label>
+                        <textarea class="form-textarea" placeholder="Describe the excavation work..." id="excavationDescription"></textarea>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Underground Services Check</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationCheck1">
+                            <span>Services located and marked</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationCheck2">
+                            <span>Dial before you dig completed</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationCheck3">
+                            <span>Shoring requirements assessed</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationCheck4">
+                            <span>Access and egress established</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationCheck5">
+                            <span>Atmospheric testing (if required)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Safety Measures</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationSafety1">
+                            <span>Barricades and signage in place</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationSafety2">
+                            <span>Spoil pile at safe distance</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationSafety3">
+                            <span>Competent person supervising</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="excavationSafety4">
+                            <span>Emergency procedures established</span>
+                        </label>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
+                <div class="signature-grid">
+                    <div class="signature-item">
+                        <label class="form-label">Excavator Signature</label>
+                        <canvas class="signature-pad" id="excavationWorkerSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Competent Person Signature</label>
+                        <canvas class="signature-pad" id="excavationCompetentSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Supervisor Signature</label>
+                        <canvas class="signature-pad" id="excavationSupervisorSignature" width="280" height="120"></canvas>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issueExcavationPermit()">Issue Excavation Permit</button>
+            </div>
+
+            <!-- Working at Heights Permit -->
+            <div id="heights-permit" class="permit-form">
+                <h3 style="margin-bottom: 20px;">Working at Heights Permit</h3>
+                
+                <div class="permit-section">
+                    <div class="permit-section-title">Work Details</div>
+                    <div class="form-group">
+                        <label class="form-label">Work Location</label>
+                        <input type="text" class="form-input" placeholder="Specific location/area" id="heightsLocation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Height (meters)</label>
+                        <input type="number" class="form-input" placeholder="Enter height" id="heightsHeight">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Work Description</label>
+                        <textarea class="form-textarea" placeholder="Describe the work at height..." id="heightsDescription"></textarea>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Fall Protection System</div>
+                    <div class="form-group">
+                        <label class="form-label">Primary Fall Protection</label>
+                        <select class="form-select" id="heightsPrimaryProtection">
+                            <option>Full Body Harness with Lanyard</option>
+                            <option>Safety Net</option>
+                            <option>Scaffold with Guardrails</option>
+                            <option>Mobile Elevated Work Platform</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Anchor Points</label>
+                        <input type="text" class="form-input" placeholder="Describe anchor points" id="heightsAnchors">
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Safety Checks</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="heightsCheck1">
+                            <span>Harness inspection completed</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="heightsCheck2">
+                            <span>Anchor points certified</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="heightsCheck3">
+                            <span>Rescue plan established</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="heightsCheck4">
+                            <span>Weather conditions suitable</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="heightsCheck5">
+                            <span>Tool tethering in place</span>
+                        </label>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
+                <div class="signature-grid">
+                    <div class="signature-item">
+                        <label class="form-label">Worker Signature</label>
+                        <canvas class="signature-pad" id="heightsWorkerSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Spotter Signature</label>
+                        <canvas class="signature-pad" id="heightsSpotterSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Supervisor Signature</label>
+                        <canvas class="signature-pad" id="heightsSupervisorSignature" width="280" height="120"></canvas>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issueHeightsPermit()">Issue Working at Heights Permit</button>
+            </div>
+
+            <!-- Blasting Permit -->
+            <div id="blasting-permit" class="permit-form">
+                <h3 style="margin-bottom: 20px;">Blasting Operations Permit</h3>
+                
+                <div class="permit-section">
+                    <div class="permit-section-title">Blast Details</div>
+                    <div class="form-group">
+                        <label class="form-label">Blast Location</label>
+                        <input type="text" class="form-input" placeholder="Specific location/area" id="blastLocation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Blast Pattern</label>
+                        <input type="text" class="form-input" placeholder="Describe blast pattern" id="blastPattern">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Explosives Quantity (kg)</label>
+                        <input type="number" class="form-input" placeholder="Enter quantity" id="blastQuantity">
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Safety Perimeter</div>
+                    <div class="form-group">
+                        <label class="form-label">Exclusion Zone Radius (meters)</label>
+                        <input type="number" class="form-input" placeholder="Enter radius" id="blastExclusion">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Guard Posts Established</label>
+                        <input type="text" class="form-input" placeholder="List guard post locations" id="blastGuards">
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Pre-Blast Checks</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="blastCheck1">
+                            <span>Area evacuated and secured</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="blastCheck2">
+                            <span>Communication established</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="blastCheck3">
+                            <span>Weather conditions suitable</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="blastCheck4">
+                            <span>Firing circuit tested</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="blastCheck5">
+                            <span>Emergency services notified</span>
+                        </label>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
+                <div class="signature-grid">
+                    <div class="signature-item">
+                        <label class="form-label">Shot Firer Signature</label>
+                        <canvas class="signature-pad" id="blastFirerSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Blast Engineer Signature</label>
+                        <canvas class="signature-pad" id="blastEngineerSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Mine Manager Signature</label>
+                        <canvas class="signature-pad" id="blastManagerSignature" width="280" height="120"></canvas>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issueBlastingPermit()">Issue Blasting Permit</button>
+            </div>
+
+            <!-- Lifting Operations Permit -->
+            <div id="lifting-permit" class="permit-form">
+                <h3 style="margin-bottom: 20px;">Lifting Operations Permit</h3>
+                
+                <div class="permit-section">
+                    <div class="permit-section-title">Lift Details</div>
+                    <div class="form-group">
+                        <label class="form-label">Lift Location</label>
+                        <input type="text" class="form-input" placeholder="Specific location/area" id="liftLocation">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Load Weight (kg)</label>
+                        <input type="number" class="form-input" placeholder="Enter weight" id="liftWeight">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Lifting Equipment</label>
+                        <select class="form-select" id="liftEquipment">
+                            <option>Crane</option>
+                            <option>Forklift</option>
+                            <option>Hoist</option>
+                            <option>Chain Block</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Lift Planning</div>
+                    <div class="form-group">
+                        <label class="form-label">Lift Radius (meters)</label>
+                        <input type="number" class="form-input" placeholder="Enter radius" id="liftRadius">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Lift Path Description</label>
+                        <textarea class="form-textarea" placeholder="Describe the lift path..." id="liftPath"></textarea>
+                    </div>
+                </div>
+
+                <div class="permit-section">
+                    <div class="permit-section-title">Safety Checks</div>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="liftCheck1">
+                            <span>Lifting equipment certified</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="liftCheck2">
+                            <span>Slings and rigging inspected</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="liftCheck3">
+                            <span>Exclusion zone established</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="liftCheck4">
+                            <span>Communication established</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" id="liftCheck5">
+                            <span>Competent operator assigned</span>
+                        </label>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 30px; margin-bottom: 15px;">Approvals Required</h3>
+                <div class="signature-grid">
+                    <div class="signature-item">
+                        <label class="form-label">Operator Signature</label>
+                        <canvas class="signature-pad" id="liftOperatorSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Rigger Signature</label>
+                        <canvas class="signature-pad" id="liftRiggerSignature" width="280" height="120"></canvas>
+                    </div>
+                    <div class="signature-item">
+                        <label class="form-label">Supervisor Signature</label>
+                        <canvas class="signature-pad" id="liftSupervisorSignature" width="280" height="120"></canvas>
+                    </div>
+                </div>
+
+                <button class="btn btn-success" style="width: 100%; margin-top: 20px;" onclick="issueLiftingPermit()">Issue Lifting Permit</button>
+            </div>
+        </div>
+
+        <!-- Incident Reporting Panel -->
+        <div id="incident" class="content-panel">
+            <h2 style="margin-bottom: 20px;">Incident Reporting - <span id="incidentLocation"></span></h2>
+            
+            <div class="alert alert-warning">
+                ⚠️ MHSA Compliance: All incidents must be reported immediately as per company policy
+            </div>
+
+            <!-- Process Flow Section -->
+            <div class="incident-process">
+                <div class="incident-process-title">Process Flow Incident Reporting</div>
+                <ul class="incident-process-list">
+                    <li class="incident-process-item">
+                        <strong>Flagstaff</strong>
+                        <div class="incident-process-subitem">Management</div>
+                        <div class="incident-process-subitem">Incident / Friend</div>
+                    </li>
+                    <li class="incident-process-item">
+                        <strong>Albania Indices / Safety</strong>
+                        <div class="incident-process-subitem">Incident / Friend Supported for Supervision</div>
+                    </li>
+                    <li class="incident-process-item">
+                        <strong>The Federal Legal Insider, Hospital & Insurance Supporter</strong>
+                        <div class="incident-process-subitem">Supervisor / Finance and Emergency Control (TST)</div>
+                    </li>
+                    <li class="incident-process-item">
+                        <strong>The Secretary / Chief Executive of the United States Department of Health (UNH)</strong>
+                    </li>
+                    <li class="incident-process-item">
+                        <strong>Fever Energy Control Facility (FEV) / FEV CTR (FEV) Quality Policy and Risk Compliance (FEV)</strong>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- What to Report Section -->
+            <div class="incident-reporting-list">
+                <div class="incident-reporting-title">What to Report</div>
+                <ol>
+                    <li><strong>Explain what happened</strong> - Provide a clear description of the incident</li>
+                    <li><strong>Indicate where it happened</strong> - Specify the exact location</li>
+                    <li><strong>Indicate when it happened</strong> - Provide date and time of the incident</li>
+                    <li><strong>Explain who is / was involved</strong> - Identify all persons involved</li>
+                    <li><strong>Explain how it happened</strong> - Describe the sequence of events</li>
+                </ol>
+            </div>
+
+            <!-- Contact Information Section -->
+            <div class="incident-contact">
+                <div class="incident-contact-title">Emergency Contact Numbers</div>
+                <div class="incident-contact-grid">
+                    <div class="incident-contact-item">
+                        <div class="incident-contact-label">Calling from an internal extension</div>
+                        <div class="incident-contact-value">3333</div>
+                    </div>
+                    <div class="incident-contact-item">
+                        <div class="incident-contact-label">Calling from a cellular phone or external line</div>
+                        <div class="incident-contact-value">053-742 3333</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Information -->
+            <div class="incident-document-info">
+                <p><strong>Doc No.:</strong> KMM-HSE-SEY-CHT-001</p>
+                <p><strong>Annexure 1</strong> – Incident Reporting Notice Board</p>
+            </div>
+
+            <!-- Incident Reporting Form -->
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Report an Incident</h3>
+            <div class="form-group">
+                <label class="form-label">Incident Type</label>
+                <select class="form-select" id="incidentType">
+                    <option value="">Select incident type</option>
+                    <option value="injury">Injury</option>
+                    <option value="near-miss">Near Miss</option>
+                    <option value="property-damage">Property Damage</option>
+                    <option value="environmental">Environmental Incident</option>
+                    <option value="security">Security Breach</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Incident Description</label>
+                <textarea class="form-textarea" placeholder="Explain what happened..." id="incidentDescription"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-input" placeholder="Indicate where it happened..." id="incidentLocationInput">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Date and Time</label>
+                <input type="datetime-local" class="form-input" id="incidentDateTime">
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Persons Involved</label>
+                <textarea class="form-textarea" placeholder="Explain who is/was involved..." id="incidentPersons"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">How It Happened</label>
+                <textarea class="form-textarea" placeholder="Explain how it happened..." id="incidentHow"></textarea>
+            </div>
+
+            <div class="photo-upload" onclick="document.getElementById('incidentPhoto').click()">
+                <input type="file" id="incidentPhoto" accept="image/*" style="display: none;">
+                <div style="font-size: 48px; margin-bottom: 10px;">📷</div>
+                <div><strong>Add Incident Photos</strong></div>
+                <div style="color: #666; font-size: 14px;">Required for documentation</div>
+            </div>
+
+            <h3 style="margin-top: 30px; margin-bottom: 15px;">Reporting Officer Signature</h3>
+            <canvas class="signature-pad" id="incidentSignature" width="600" height="150"></canvas>
+            <div style="margin-top: 10px;">
+                <button class="btn btn-danger" onclick="clearIncidentSignature()">Clear</button>
+                <button class="btn btn-success" onclick="submitIncident()">Submit Incident Report</button>
+            </div>
         </div>
 
         <!-- Reports Panel -->
@@ -2189,6 +2862,28 @@
             initSignaturePad('applicantSignature');
             initSignaturePad('supervisorSignature');
             initSignaturePad('incidentSignature');
+            
+            // Permit signature pads
+            initSignaturePad('electricalElectricianSignature');
+            initSignaturePad('electricalSupervisorSignature');
+            initSignaturePad('confinedEntrantSignature');
+            initSignaturePad('confinedWatchSignature');
+            initSignaturePad('confinedSupervisorSignature');
+            initSignaturePad('hotworkWorkerSignature');
+            initSignaturePad('hotworkFireWatchSignature');
+            initSignaturePad('hotworkSupervisorSignature');
+            initSignaturePad('excavationWorkerSignature');
+            initSignaturePad('excavationCompetentSignature');
+            initSignaturePad('excavationSupervisorSignature');
+            initSignaturePad('heightsWorkerSignature');
+            initSignaturePad('heightsSpotterSignature');
+            initSignaturePad('heightsSupervisorSignature');
+            initSignaturePad('blastFirerSignature');
+            initSignaturePad('blastEngineerSignature');
+            initSignaturePad('blastManagerSignature');
+            initSignaturePad('liftOperatorSignature');
+            initSignaturePad('liftRiggerSignature');
+            initSignaturePad('liftSupervisorSignature');
         }
 
         function initSignaturePad(canvasId) {
@@ -2230,8 +2925,8 @@
             // Touch support
             canvas.addEventListener('touchstart', (e) => {
                 e.preventDefault();
-                const rect = canvas.getBoundingClientRect();
                 const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
                 isDrawing = true;
                 lastX = touch.clientX - rect.left;
                 lastY = touch.clientY - rect.top;
@@ -2240,691 +2935,29 @@
             canvas.addEventListener('touchmove', (e) => {
                 e.preventDefault();
                 if (!isDrawing) return;
-                const rect = canvas.getBoundingClientRect();
                 const touch = e.touches[0];
-                const x = touch.clientX - rect.left;
-                const y = touch.clientY - rect.top;
+                const rect = canvas.getBoundingClientRect();
+                const currentX = touch.clientX - rect.left;
+                const currentY = touch.clientY - rect.top;
+                
                 ctx.strokeStyle = '#000';
                 ctx.lineWidth = 2;
                 ctx.lineJoin = 'round';
                 ctx.lineCap = 'round';
                 ctx.beginPath();
                 ctx.moveTo(lastX, lastY);
-                ctx.lineTo(x, y);
+                ctx.lineTo(currentX, currentY);
                 ctx.stroke();
-                [lastX, lastY] = [x, y];
+                
+                lastX = currentX;
+                lastY = currentY;
             });
 
             canvas.addEventListener('touchend', () => isDrawing = false);
 
-            signaturePads[canvasId] = canvas;
+            signaturePads[canvasId] = { canvas, ctx };
         }
 
-        // Navigation
-        function showPanel(panelId) {
-            document.querySelectorAll('.content-panel').forEach(panel => {
-                panel.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.getElementById(panelId).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        // Incident Reporting Functions
-        function submitIncident() {
-            const canvas = document.getElementById('incidentSignature');
-            if (isCanvasEmpty(canvas)) {
-                alert('Please provide a signature');
-                return;
-            }
-
-            const incidentType = document.getElementById('incidentType').value;
-            if (!incidentType) {
-                alert('Please select an incident type');
-                return;
-            }
-
-            const incident = {
-                type: incidentType,
-                description: document.getElementById('incidentDescription').value,
-                location: document.getElementById('incidentLocationInput').value,
-                dateTime: document.getElementById('incidentDateTime').value,
-                persons: document.getElementById('incidentPersons').value,
-                how: document.getElementById('incidentHow').value,
-                timestamp: new Date().toISOString(),
-                signature: canvas.toDataURL(),
-                reportedBy: appState.currentUser.name,
-                department: appState.currentUser.location,
-                incidentId: generateIncidentID()
-            };
-
-            appState.incidents.push(incident);
-            document.getElementById('incidentCount').textContent = appState.incidents.length;
-            
-            showToast('Incident reported successfully! Incident ID: ' + incident.incidentId, 'success');
-            
-            clearIncidentSignature();
-            
-            // Reset form
-            document.getElementById('incidentType').value = '';
-            document.getElementById('incidentDescription').value = '';
-            document.getElementById('incidentLocationInput').value = '';
-            document.getElementById('incidentDateTime').value = '';
-            document.getElementById('incidentPersons').value = '';
-            document.getElementById('incidentHow').value = '';
-        }
-
-        function generateIncidentID() {
-            const timestamp = Date.now();
-            const random = Math.floor(Math.random() * 10000);
-            return `INCIDENT-${timestamp.toString().slice(-6)}-${random.toString().padStart(4, '0')}`;
-        }
-
-        function clearIncidentSignature() {
-            const canvas = document.getElementById('incidentSignature');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        // Vehicle Functions
-        function calculateDistance() {
-            const startKM = parseFloat(document.getElementById('startKM').value) || 0;
-            const endKM = parseFloat(document.getElementById('endKM').value) || 0;
-            
-            if (startKM > 0 && endKM > 0) {
-                const distance = endKM - startKM;
-                if (distance >= 0) {
-                    document.getElementById('distanceValue').textContent = distance.toFixed(1) + ' km';
-                    document.getElementById('distanceSummary').style.display = 'block';
-                } else {
-                    document.getElementById('distanceSummary').style.display = 'none';
-                    showToast('End KM must be greater than Start KM', 'warning');
-                }
-            } else {
-                document.getElementById('distanceSummary').style.display = 'none';
-            }
-        }
-
-        function authorizeTrip() {
-            const canvas = document.getElementById('vehicleSignature');
-            if (isCanvasEmpty(canvas)) {
-                alert('Please provide a signature');
-                return;
-            }
-
-            const startKM = document.getElementById('startKM').value;
-            const endKM = document.getElementById('endKM').value;
-            
-            if (!startKM || !endKM) {
-                alert('Please enter both start and end kilometer readings');
-                return;
-            }
-            
-            if (parseFloat(endKM) <= parseFloat(startKM)) {
-                alert('End KM must be greater than Start KM');
-                return;
-            }
-
-            // Get vehicle checklist status
-            const checklistStatus = {};
-            for (let i = 1; i <= 10; i++) {
-                const checkbox = document.getElementById(`vehicleCheck${i}`);
-                checklistStatus[`check_${i}`] = checkbox.checked;
-            }
-
-            const trip = {
-                vehicle: document.getElementById('vehicleReg').value,
-                vehicleType: document.getElementById('vehicleType').value,
-                driver: document.getElementById('driverName').value,
-                reason: document.getElementById('tripReason').value,
-                startKM: startKM,
-                endKM: endKM,
-                distance: (parseFloat(endKM) - parseFloat(startKM)).toFixed(1),
-                timestamp: new Date().toISOString(),
-                checklist: checklistStatus,
-                signature: canvas.toDataURL(),
-                authorizedBy: appState.currentUser.name,
-                department: appState.currentUser.location
-            };
-
-            appState.trips.push(trip);
-            showToast('Trip authorized successfully! Distance: ' + trip.distance + ' km', 'success');
-            clearVehicleSignature();
-            
-            // Reset form
-            document.getElementById('vehicleReg').value = '';
-            document.getElementById('driverName').value = '';
-            document.getElementById('tripReason').value = '';
-            document.getElementById('startKM').value = '';
-            document.getElementById('endKM').value = '';
-            document.getElementById('distanceSummary').style.display = 'none';
-            
-            // Reset checkboxes
-            for (let i = 1; i <= 10; i++) {
-                document.getElementById(`vehicleCheck${i}`).checked = false;
-            }
-        }
-
-        // Other functions remain the same
-        // Roll Call Functions
-        function simulateScan() {
-            const workerId = 'KLM' + Math.floor(Math.random() * 9000 + 1000);
-            document.getElementById('manualWorkerId').value = workerId;
-            setTimeout(() => verifyWorker(), 500);
-        }
-
-        function verifyWorker() {
-            const workerId = document.getElementById('manualWorkerId').value;
-            if (!workerId) {
-                alert('Please enter a worker ID');
-                return;
-            }
-
-            const worker = {
-                id: workerId,
-                name: 'Worker ' + workerId.substring(3),
-                time: new Date().toLocaleTimeString(),
-                gpsStatus: '✅ Verified',
-                training: '✅ Valid',
-                verifiedBy: appState.currentUser.name,
-                location: appState.currentUser.location
-            };
-
-            appState.workers.push(worker);
-            updateRollCallTable();
-            document.getElementById('manualWorkerId').value = '';
-            document.getElementById('workerCount').textContent = appState.workers.length;
-            
-            showToast('Worker verified successfully!', 'success');
-        }
-
-        function updateRollCallTable() {
-            const tbody = document.querySelector('#rollcallTable tbody');
-            if (appState.workers.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">No workers checked in yet</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = appState.workers.map(worker => `
-                <tr>
-                    <td>${worker.time}</td>
-                    <td><strong>${worker.id}</strong></td>
-                    <td>${worker.name}</td>
-                    <td>${worker.gpsStatus}</td>
-                    <td>${worker.training}</td>
-                    <td>${worker.verifiedBy}</td>
-                </tr>
-            `).join('');
-
-            document.getElementById('rollcallCount').textContent = appState.workers.length;
-        }
-
-        // Inspection Functions
-        const checklists = {
-            ppe: {
-                regulation: 'MHSA Section 10(2) - Personal Protective Equipment',
-                items: [
-                    'Helmets free of cracks and damage',
-                    'Safety boots in good condition',
-                    'Reflective vests clean and visible',
-                    'Gloves appropriate for task',
-                    'Eye protection available',
-                    'Hearing protection provided',
-                    'Respiratory equipment (if required)'
-                ]
-            },
-            vehicle: {
-                regulation: 'MHSA Regulation 8.2 - Vehicle Safety',
-                items: [
-                    'Windscreen free of cracks',
-                    'All lights functioning',
-                    'Tire pressure and condition',
-                    'Brake system operational',
-                    'Steering responsive',
-                    'Seat belts functional',
-                    'Fire extinguisher present'
-                ]
-            },
-            electrical: {
-                regulation: 'MHSA Regulation 15.17 - Electrical Isolation',
-                items: [
-                    'Lock properly placed and secured',
-                    'Energy sources identified and isolated',
-                    'Risk assessment approved by Engineering',
-                    'All controls locked out',
-                    'Test for stored energy completed',
-                    'Area properly demarcated'
-                ]
-            },
-            excavation: {
-                regulation: 'MHSA Section 7 - Excavation Work Safety',
-                items: [
-                    'Hidden services identified',
-                    'Area properly demarcated',
-                    'Shoring/bracing in place (if required)',
-                    'Competent person supervising',
-                    'Safe access provided',
-                    'Persons working identified to place'
-                ]
-            },
-            confined: {
-                regulation: 'MHSA Section 5.2 - Confined Space Entry',
-                items: [
-                    'Gas monitoring completed',
-                    'Oxygen levels acceptable (19.5-23%)',
-                    'Atmospheric testing documented',
-                    'Entry permit issued',
-                    'Emergency rescue plan in place',
-                    'Communication system operational'
-                ]
-            }
-        };
-
-        function loadChecklist() {
-            const type = document.getElementById('inspectionType').value;
-            if (!type) return;
-
-            const checklist = checklists[type];
-            document.getElementById('regulationNote').textContent = '📋 ' + checklist.regulation;
-            
-            // Show the checklist container
-            document.getElementById('checklistContainer').style.display = 'block';
-            
-            // For PPE inspection, load the special PPE checklist
-            if (type === 'ppe') {
-                loadPPEChecklist();
-            } else {
-                // For other inspection types, load the standard checklist
-                const itemsHtml = checklist.items.map((item, index) => `
-                    <label class="checkbox-item">
-                        <input type="checkbox" id="check_${index}">
-                        <span>${item}</span>
-                    </label>
-                `).join('');
-
-                document.getElementById('checklistItems').innerHTML = itemsHtml;
-            }
-        }
-
-        function loadPPEChecklist() {
-            // Generate PPE checklist HTML
-            const ppeHtml = ppeItems.map(item => `
-                <div class="ppe-item">
-                    <input type="checkbox" class="ppe-checkbox" id="${item.id}" ${item.checked ? 'checked' : ''}>
-                    <label class="ppe-label" for="${item.id}">${item.name}</label>
-                    <span class="ppe-status ${item.checked ? 'checked' : 'unchecked'}">
-                        ${item.checked ? '✓' : '◦'}
-                    </span>
-                </div>
-            `).join('');
-
-            document.getElementById('ppeChecklist').innerHTML = ppeHtml;
-            
-            // Add event listeners to update status symbols
-            ppeItems.forEach(item => {
-                const checkbox = document.getElementById(item.id);
-                const status = checkbox.parentElement.querySelector('.ppe-status');
-                
-                checkbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        status.textContent = '✓';
-                        status.className = 'ppe-status checked';
-                    } else {
-                        status.textContent = '◦';
-                        status.className = 'ppe-status unchecked';
-                    }
-                });
-            });
-        }
-
-        function saveInspection() {
-            const type = document.getElementById('inspectionType').value;
-            if (!type) return;
-
-            const canvas = document.getElementById('signaturePad');
-            const isEmpty = isCanvasEmpty(canvas);
-            
-            if (isEmpty) {
-                alert('Please provide a signature to complete the inspection');
-                return;
-            }
-
-            // Get checklist status
-            let checklistStatus = {};
-            let jobsDescription = '';
-            
-            if (type === 'ppe') {
-                // For PPE inspection, get PPE checklist status
-                ppeItems.forEach(item => {
-                    const checkbox = document.getElementById(item.id);
-                    checklistStatus[item.id] = checkbox.checked;
-                });
-                
-                // Get jobs description
-                jobsDescription = document.getElementById('jobsDescription').value;
-            } else {
-                // For other inspections, get standard checklist status
-                const checklistItems = document.querySelectorAll('#checklistItems input[type="checkbox"]');
-                checklistItems.forEach((item, index) => {
-                    checklistStatus[`item_${index}`] = item.checked;
-                });
-            }
-
-            const inspection = {
-                type: type,
-                timestamp: new Date().toISOString(),
-                signature: canvas.toDataURL(),
-                notes: document.getElementById('inspectionNotes').value,
-                jobsDescription: jobsDescription,
-                checklist: checklistStatus,
-                inspector: appState.currentUser.name,
-                location: appState.currentUser.location,
-                hash: generateHash(canvas.toDataURL())
-            };
-
-            appState.inspections.push(inspection);
-            document.getElementById('inspectionCount').textContent = appState.inspections.length;
-            
-            showToast('Inspection saved with blockchain-like hash: ' + inspection.hash.substring(0, 16) + '...', 'success');
-            
-            clearSignature();
-            document.getElementById('inspectionType').value = '';
-            document.getElementById('inspectionNotes').value = '';
-            document.getElementById('jobsDescription').value = '';
-            document.getElementById('checklistContainer').style.display = 'none';
-        }
-
-        function isCanvasEmpty(canvas) {
-            const ctx = canvas.getContext('2d');
-            const pixelData = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-            for (let i = 0; i < pixelData.length; i += 4) {
-                if (pixelData[i + 3] !== 0) return false;
-            }
-            return true;
-        }
-
-        function generateHash(data) {
-            let hash = 0;
-            for (let i = 0; i < data.length; i++) {
-                const char = data.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char;
-                hash = hash & hash;
-            }
-            return Math.abs(hash).toString(16).padStart(16, '0');
-        }
-
-        // Hazard Functions
-        function selectHazard(element, type) {
-            document.querySelectorAll('.hazard-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            element.classList.add('selected');
-            appState.selectedHazardType = type;
-        }
-
-        function submitHazard() {
-            if (!appState.selectedHazardType) {
-                alert('Please select a hazard category');
-                return;
-            }
-
-            // Get risk assessment data
-            const riskAssessment = getRiskAssessmentData();
-
-            const hazard = {
-                type: appState.selectedHazardType,
-                timestamp: new Date().toISOString(),
-                riskLevel: document.getElementById('riskLevel').value,
-                description: document.getElementById('hazardDescription').value,
-                specificLocation: document.getElementById('hazardSpecificLocation').value,
-                department: appState.currentUser.location,
-                reportedBy: appState.currentUser.name,
-                position: appState.currentUser.position,
-                riskAssessment: riskAssessment
-            };
-
-            appState.hazards.push(hazard);
-            document.getElementById('hazardCount').textContent = appState.hazards.length;
-            
-            showToast('Hazard reported and assigned to supervisor@mine.com', 'success');
-            
-            // Reset form
-            document.querySelectorAll('.hazard-btn').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            appState.selectedHazardType = null;
-            document.getElementById('hazardDescription').value = '';
-            document.getElementById('hazardSpecificLocation').value = '';
-            
-            // Reset risk assessment table
-            loadRiskAssessmentTable();
-        }
-
-        // Permit Functions
-        function issuePermit() {
-            const applicantCanvas = document.getElementById('applicantSignature');
-            const supervisorCanvas = document.getElementById('supervisorSignature');
-            
-            if (isCanvasEmpty(applicantCanvas) || isCanvasEmpty(supervisorCanvas)) {
-                alert('Both applicant and supervisor signatures are required');
-                return;
-            }
-
-            // Get permit checklist status
-            const checklistStatus = {};
-            for (let i = 1; i <= 5; i++) {
-                const checkbox = document.getElementById(`permitCheck${i}`);
-                checklistStatus[`check_${i}`] = checkbox.checked;
-            }
-
-            const permit = {
-                type: document.getElementById('permitType').value,
-                location: document.getElementById('permitLocationInput').value,
-                description: document.getElementById('permitDescription').value,
-                timestamp: new Date().toISOString(),
-                checklist: checklistStatus,
-                applicantSignature: applicantCanvas.toDataURL(),
-                supervisorSignature: supervisorCanvas.toDataURL(),
-                issuedBy: appState.currentUser.name,
-                department: appState.currentUser.location,
-                permitId: generatePermitID()
-            };
-
-            appState.permits.push(permit);
-            showToast(`Permit ${permit.permitId} issued successfully!`, 'success');
-            
-            clearApplicantSignature();
-            clearSupervisorSignature();
-            
-            // Reset form
-            document.getElementById('permitLocationInput').value = '';
-            document.getElementById('permitDescription').value = '';
-            
-            // Reset checkboxes
-            for (let i = 1; i <= 5; i++) {
-                document.getElementById(`permitCheck${i}`).checked = false;
-            }
-        }
-
-        function generatePermitID() {
-            const timestamp = Date.now();
-            const random = Math.floor(Math.random() * 10000);
-            return `PERMIT-${timestamp.toString().slice(-6)}-${random.toString().padStart(4, '0')}`;
-        }
-
-        // Report Functions
-        function generateReportID() {
-            const timestamp = Date.now();
-            const random = Math.floor(Math.random() * 10000);
-            const year = new Date().getFullYear();
-            return `KLM-${year}-${timestamp.toString().slice(-6)}-${random.toString().padStart(4, '0')}`;
-        }
-
-        function generateReport() {
-            const reportType = document.getElementById('reportType').value;
-            const reportID = generateReportID();
-            
-            // Show progress
-            const progressFill = document.querySelector('.progress-fill');
-            const syncText = document.getElementById('syncText');
-            let progress = 0;
-            
-            const interval = setInterval(() => {
-                progress += 10;
-                progressFill.style.width = progress + '%';
-                syncText.textContent = progress + '%';
-                
-                if (progress >= 100) {
-                    clearInterval(interval);
-                    syncText.textContent = 'Complete';
-                    progressFill.style.width = '100%';
-                    
-                    // Generate and download PDF report
-                    setTimeout(() => {
-                        generatePDFReport(reportType, reportID);
-                        progress = 0;
-                        progressFill.style.width = '0%';
-                        syncText.textContent = 'Ready';
-                    }, 500);
-                }
-            }, 200);
-        }
-
-        function generatePDFReport(reportType, reportID) {
-            const doc = new jsPDF();
-            const date = new Date().toLocaleString();
-            const dateStart = document.getElementById('reportStartDate').value;
-            const dateEnd = document.getElementById('reportEndDate').value;
-            
-            // Set document properties
-            doc.setProperties({
-                title: `${reportType.toUpperCase()} - ${reportID}`,
-                subject: 'MHSA Compliance Report',
-                author: 'SafetyOfficer App',
-                keywords: 'mine, safety, mhsa, compliance',
-                creator: 'SafetyOfficer App v1.0'
-            });
-
-            // Add header
-            doc.setFontSize(20);
-            doc.setFont('helvetica', 'bold');
-            doc.setTextColor(40, 40, 40);
-            doc.text('KALAGADI MANGANESE MINE', 105, 20, { align: 'center' });
-            
-            doc.setFontSize(16);
-            doc.setTextColor(80, 80, 80);
-            doc.text('SAFETY COMPLIANCE SYSTEM', 105, 28, { align: 'center' });
-            
-            // Add report title based on type
-            doc.setFontSize(14);
-            doc.setTextColor(60, 60, 60);
-            let reportTitle = '';
-            switch(reportType) {
-                case 'dmr1741':
-                    reportTitle = 'DMR 1741 - ACCIDENT/INCIDENT REPORT';
-                    break;
-                case 'section23':
-                    reportTitle = 'SECTION 23(1) - DAILY ACTIVITY LOG';
-                    break;
-                case 'weekly':
-                    reportTitle = 'WEEKLY SAFETY SUMMARY';
-                    break;
-                case 'monthly':
-                    reportTitle = 'MONTHLY COMPLIANCE REPORT';
-                    break;
-                case 'hazard':
-                    reportTitle = 'HAZARD REGISTER EXPORT';
-                    break;
-                default:
-                    reportTitle = 'COMPREHENSIVE SAFETY REPORT';
-            }
-            doc.text(reportTitle, 105, 38, { align: 'center' });
-            
-            // Add report details
-            doc.setFontSize(10);
-            doc.setTextColor(100, 100, 100);
-            doc.text(`Report ID: ${reportID}`, 20, 50);
-            doc.text(`Generated: ${date}`, 20, 55);
-            doc.text(`Period: ${dateStart} to ${dateEnd}`, 20, 60);
-            doc.text(`Mine: Kalagadi Manganese Mine`, 20, 65);
-            doc.text(`Department: ${formatLocation(appState.currentUser.location)}`, 20, 70);
-            doc.text(`Prepared By: ${appState.currentUser.name} (${formatPosition(appState.currentUser.position)})`, 20, 75);
-            doc.text(`Compliance: MHSA Regulations`, 20, 80);
-            
-            // Add content based on report type
-            let yPosition = 95;
-            
-            switch(reportType) {
-                case 'dmr1741':
-                    yPosition = generateDMR1741PDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                case 'section23':
-                    yPosition = generateSection23PDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                case 'weekly':
-                    yPosition = generateWeeklyPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                case 'monthly':
-                    yPosition = generateMonthlyPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                case 'hazard':
-                    yPosition = generateHazardPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-                    break;
-                default:
-                    yPosition = generateDefaultPDF(doc, reportID, date, dateStart, dateEnd, yPosition);
-            }
-            
-            // Add footer
-            doc.setFontSize(8);
-            doc.setTextColor(150, 150, 150);
-            doc.text(`Report ID: ${reportID} | Generated: ${date} | Page 1 of 1`, 105, 290, { align: 'center' });
-            doc.text(`Prepared by: ${appState.currentUser.name} | Department: ${formatLocation(appState.currentUser.location)}`, 105, 295, { align: 'center' });
-            
-            // Save the PDF
-            const fileName = `${reportID}_${reportType.replace(/\s+/g, '_')}.pdf`;
-            doc.save(fileName);
-            
-            // Show success message
-            const successDiv = document.getElementById('reportSuccess');
-            successDiv.innerHTML = `
-                ✅ PDF Report generated successfully!<br>
-                <strong>Report ID: ${reportID}</strong><br>
-                <small>Data stored for 20+ years per MHSA Section 23(3)</small><br>
-                <button class="btn btn-primary" style="margin-top: 10px;" onclick="regeneratePDF('${reportType}', '${reportID}')">
-                    📥 Download Again
-                </button>
-            `;
-            successDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                successDiv.style.display = 'none';
-            }, 10000);
-            
-            showToast(`PDF Report ${reportID} downloaded successfully!`, 'success');
-        }
-
-        // Additional report functions
-        function generateDMRReport() {
-            const reportID = generateReportID();
-            generatePDFReport('dmr1741', reportID);
-            document.getElementById('dmrCount').textContent = parseInt(document.getElementById('dmrCount').textContent) + 1;
-        }
-
-        function viewSection23Logs() {
-            const reportID = generateReportID();
-            generatePDFReport('section23', reportID);
-            document.getElementById('section23Count').textContent = parseInt(document.getElementById('section23Count').textContent) + 1;
-        }
-
-        function exportIncidentReports() {
-            const reportID = generateReportID();
-            generatePDFReport('hazard', reportID);
-            document.getElementById('incidentCount').textContent = parseInt(document.getElementById('incidentCount').textContent) + 1;
-        }
-
-        // Helper functions
         function clearSignature() {
             const canvas = document.getElementById('signaturePad');
             const ctx = canvas.getContext('2d');
@@ -2937,91 +2970,495 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        function clearApplicantSignature() {
-            const canvas = document.getElementById('applicantSignature');
+        function clearIncidentSignature() {
+            const canvas = document.getElementById('incidentSignature');
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
 
-        function clearSupervisorSignature() {
-            const canvas = document.getElementById('supervisorSignature');
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Navigation
+        function showPanel(panelId) {
+            document.querySelectorAll('.content-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById(panelId).classList.add('active');
+            event.target.classList.add('active');
+            
+            updateDashboardStats();
         }
 
-        // Photo handling
-        function handlePhoto(input) {
-            if (input.files && input.files[0]) {
-                showToast('Photo captured successfully!', 'success');
-            }
-        }
-
-        // Toast notification
-        function showToast(message, type) {
-            const toastContainer = document.getElementById('toastContainer');
+        // Toast Notifications
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast toast-${type}`;
             toast.textContent = message;
             
-            toastContainer.appendChild(toast);
+            container.appendChild(toast);
             
             setTimeout(() => {
                 toast.remove();
             }, 3000);
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            // Check for existing login
-            checkExistingLogin();
-            
-            // Simulate offline mode
-            setInterval(() => {
-                const badge = document.getElementById('statusBadge');
-                if (Math.random() > 0.7) {
-                    badge.textContent = '📡 Online';
-                    badge.classList.remove('offline');
-                    appState.isOnline = true;
-                } else {
-                    badge.textContent = '📡 Offline Mode';
-                    badge.classList.add('offline');
-                    appState.isOnline = false;
-                }
-            }, 5000);
-        });
+        // Dashboard Functions
+        function updateDashboardStats() {
+            document.getElementById('workerCount').textContent = appState.workers.length;
+            document.getElementById('hazardCount').textContent = appState.hazards.length;
+            document.getElementById('inspectionCount').textContent = appState.inspections.length;
+        }
 
-        // Add CSS for signature grid
-        const style = document.createElement('style');
-        style.textContent = `
-            .signature-grid {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 20px;
-            }
+        // Roll Call Functions
+        function simulateScan() {
+            const workerIds = ['KLM3837', 'ABC1234', 'XYZ5678', 'DEF9012'];
+            const randomId = workerIds[Math.floor(Math.random() * workerIds.length)];
+            document.getElementById('manualWorkerId').value = randomId;
+            showToast('Worker badge scanned successfully', 'success');
+        }
+
+        function verifyWorker() {
+            const workerId = document.getElementById('manualWorkerId').value;
             
-            .signature-item {
-                display: flex;
-                flex-direction: column;
+            if (!workerId) {
+                showToast('Please enter a worker ID', 'warning');
+                return;
             }
-            
-            .date-range {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 15px;
+
+            const worker = {
+                id: workerId,
+                name: 'Worker ' + workerId,
+                time: new Date().toLocaleTimeString(),
+                gps: 'Active',
+                training: 'Valid',
+                verifiedBy: appState.currentUser.name
+            };
+
+            appState.workers.push(worker);
+            updateRollCallTable();
+            document.getElementById('manualWorkerId').value = '';
+            showToast('Worker verified successfully', 'success');
+        }
+
+        function updateRollCallTable() {
+            const tableBody = document.querySelector('#rollcallTable tbody');
+            document.getElementById('rollcallCount').textContent = appState.workers.length;
+
+            if (appState.workers.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">No workers checked in yet</td></tr>';
+                return;
             }
+
+            tableBody.innerHTML = appState.workers.map(worker => `
+                <tr>
+                    <td>${worker.time}</td>
+                    <td>${worker.id}</td>
+                    <td>${worker.name}</td>
+                    <td><span style="color: var(--success-color);">✓ ${worker.gps}</span></td>
+                    <td><span style="color: var(--success-color);">✓ ${worker.training}</span></td>
+                    <td>${worker.verifiedBy}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Inspection Functions
+        function loadChecklist() {
+            const type = document.getElementById('inspectionType').value;
+            const container = document.getElementById('checklistContainer');
             
-            @media (max-width: 768px) {
-                .signature-grid {
-                    grid-template-columns: 1fr;
+            if (!type) {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+            
+            const regulations = {
+                'ppe': 'MHSA Regulation 2.4.1: PPE must be inspected before each use',
+                'vehicle': 'MHSA Regulation 9.1.2: Vehicles must undergo pre-use inspection',
+                'electrical': 'MHSA Regulation 15.1: Electrical systems require proper isolation',
+                'excavation': 'MHSA Regulation 12.3: Excavations require risk assessment',
+                'confined': 'MHSA Regulation 11.5: Confined space entry requires permit'
+            };
+            
+            document.getElementById('regulationNote').textContent = regulations[type] || 'MHSA Compliance Required';
+            
+            loadPPEChecklist();
+        }
+
+        function loadPPEChecklist() {
+            const container = document.getElementById('ppeChecklist');
+            
+            container.innerHTML = ppeItems.map(item => `
+                <div class="ppe-item">
+                    <input type="checkbox" class="ppe-checkbox" id="ppe_${item.id}" ${item.checked ? 'checked' : ''} onchange="updatePPEStatus('${item.id}')">
+                    <label class="ppe-label" for="ppe_${item.id}">${item.name}</label>
+                    <span class="ppe-status ${item.checked ? 'checked' : 'unchecked'}" id="status_${item.id}">
+                        ${item.checked ? '✓' : '○'}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        function updatePPEStatus(itemId) {
+            const checkbox = document.getElementById(`ppe_${itemId}`);
+            const status = document.getElementById(`status_${itemId}`);
+            
+            if (checkbox.checked) {
+                status.textContent = '✓';
+                status.classList.remove('unchecked');
+                status.classList.add('checked');
+            } else {
+                status.textContent = '○';
+                status.classList.remove('checked');
+                status.classList.add('unchecked');
+            }
+        }
+
+        function handlePhoto(input) {
+            if (input.files && input.files[0]) {
+                showToast('Photo added successfully', 'success');
+            }
+        }
+
+        function saveInspection() {
+            const type = document.getElementById('inspectionType').value;
+            const notes = document.getElementById('inspectionNotes').value;
+            const jobsDescription = document.getElementById('jobsDescription').value;
+            
+            if (!type) {
+                showToast('Please select an inspection type', 'warning');
+                return;
+            }
+
+            const inspection = {
+                id: generateId(),
+                type,
+                notes,
+                jobsDescription,
+                timestamp: new Date().toISOString(),
+                inspector: appState.currentUser.name,
+                ppeItems: getPPEChecklistData(),
+                riskAssessment: getRiskAssessmentData()
+            };
+
+            appState.inspections.push(inspection);
+            showToast('Inspection saved successfully', 'success');
+            
+            // Reset form
+            document.getElementById('inspectionType').value = '';
+            document.getElementById('inspectionNotes').value = '';
+            document.getElementById('jobsDescription').value = '';
+            document.getElementById('checklistContainer').style.display = 'none';
+            clearSignature();
+        }
+
+        function getPPEChecklistData() {
+            const data = {};
+            ppeItems.forEach(item => {
+                const checkbox = document.getElementById(`ppe_${item.id}`);
+                if (checkbox) {
+                    data[item.name] = checkbox.checked;
                 }
+            });
+            return data;
+        }
+
+        // Hazard Functions
+        function selectHazard(element, type) {
+            document.querySelectorAll('.hazard-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            element.classList.add('selected');
+            appState.selectedHazardType = type;
+        }
+
+        function submitHazard() {
+            const description = document.getElementById('hazardDescription').value;
+            const location = document.getElementById('hazardSpecificLocation').value;
+            const riskLevel = document.getElementById('riskLevel').value;
+            
+            if (!appState.selectedHazardType) {
+                showToast('Please select a hazard category', 'warning');
+                return;
+            }
+            
+            if (!description) {
+                showToast('Please provide a description', 'warning');
+                return;
+            }
+
+            const hazard = {
+                id: generateId(),
+                type: appState.selectedHazardType,
+                description,
+                location,
+                riskLevel,
+                riskAssessment: getRiskAssessmentData(),
+                timestamp: new Date().toISOString(),
+                reporter: appState.currentUser.name,
+                status: 'Open'
+            };
+
+            appState.hazards.push(hazard);
+            showToast('Hazard reported successfully', 'success');
+            
+            // Reset form
+            document.querySelectorAll('.hazard-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('hazardDescription').value = '';
+            document.getElementById('hazardSpecificLocation').value = '';
+            appState.selectedHazardType = null;
+        }
+
+        // Vehicle Functions
+        function calculateDistance() {
+            const startKM = parseFloat(document.getElementById('startKM').value) || 0;
+            const endKM = parseFloat(document.getElementById('endKM').value) || 0;
+            
+            if (startKM > 0 && endKM > startKM) {
+                const distance = endKM - startKM;
+                document.getElementById('distanceSummary').style.display = 'block';
+                document.getElementById('distanceValue').textContent = `${distance.toFixed(1)} km`;
+            } else {
+                document.getElementById('distanceSummary').style.display = 'none';
+            }
+        }
+
+        function authorizeTrip() {
+            const vehicleReg = document.getElementById('vehicleReg').value;
+            const vehicleType = document.getElementById('vehicleType').value;
+            const driverName = document.getElementById('driverName').value;
+            const tripReason = document.getElementById('tripReason').value;
+            const startKM = document.getElementById('startKM').value;
+            
+            if (!vehicleReg || !driverName || !tripReason || !startKM) {
+                showToast('Please fill in all required fields', 'warning');
+                return;
+            }
+
+            // Check all checklist items
+            let allChecked = true;
+            for (let i = 1; i <= 10; i++) {
+                if (!document.getElementById(`vehicleCheck${i}`).checked) {
+                    allChecked = false;
+                    break;
+                }
+            }
+
+            if (!allChecked) {
+                showToast('Please complete all pre-use checks', 'warning');
+                return;
+            }
+
+            const trip = {
+                id: generateId(),
+                vehicleReg,
+                vehicleType,
+                driverName,
+                tripReason,
+                startKM,
+                timestamp: new Date().toISOString(),
+                authorizedBy: appState.currentUser.name
+            };
+
+            appState.trips.push(trip);
+            showToast('Trip authorized successfully', 'success');
+            
+            // Reset form
+            document.getElementById('vehicleReg').value = '';
+            document.getElementById('driverName').value = '';
+            document.getElementById('tripReason').value = '';
+            document.getElementById('startKM').value = '';
+            document.getElementById('endKM').value = '';
+            document.getElementById('distanceSummary').style.display = 'none';
+            
+            for (let i = 1; i <= 10; i++) {
+                document.getElementById(`vehicleCheck${i}`).checked = false;
+            }
+            
+            clearVehicleSignature();
+        }
+
+        // Permit Functions
+        function showPermitForm(permitType) {
+            document.querySelectorAll('.permit-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.permit-form').forEach(form => form.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`${permitType}-permit`).classList.add('active');
+        }
+
+        function issueElectricalPermit() {
+            showToast('Electrical Isolation Permit issued successfully', 'success');
+        }
+
+        function issueConfinedPermit() {
+            showToast('Confined Space Entry Permit issued successfully', 'success');
+        }
+
+        function issueHotWorkPermit() {
+            showToast('Hot Work Permit issued successfully', 'success');
+        }
+
+        function issueExcavationPermit() {
+            showToast('Excavation Work Permit issued successfully', 'success');
+        }
+
+        function issueHeightsPermit() {
+            showToast('Working at Heights Permit issued successfully', 'success');
+        }
+
+        function issueBlastingPermit() {
+            showToast('Blasting Operations Permit issued successfully', 'success');
+        }
+
+        function issueLiftingPermit() {
+            showToast('Lifting Operations Permit issued successfully', 'success');
+        }
+
+        // Incident Reporting Functions
+        function submitIncident() {
+            const type = document.getElementById('incidentType').value;
+            const description = document.getElementById('incidentDescription').value;
+            const location = document.getElementById('incidentLocationInput').value;
+            const dateTime = document.getElementById('incidentDateTime').value;
+            const persons = document.getElementById('incidentPersons').value;
+            const how = document.getElementById('incidentHow').value;
+            
+            if (!type || !description || !location || !dateTime) {
+                showToast('Please fill in all required fields', 'warning');
+                return;
+            }
+
+            const incident = {
+                id: generateId(),
+                type,
+                description,
+                location,
+                dateTime,
+                persons,
+                how,
+                timestamp: new Date().toISOString(),
+                reporter: appState.currentUser.name
+            };
+
+            appState.incidents.push(incident);
+            showToast('Incident report submitted successfully', 'success');
+            
+            // Reset form
+            document.getElementById('incidentType').value = '';
+            document.getElementById('incidentDescription').value = '';
+            document.getElementById('incidentLocationInput').value = '';
+            document.getElementById('incidentDateTime').value = '';
+            document.getElementById('incidentPersons').value = '';
+            document.getElementById('incidentHow').value = '';
+            clearIncidentSignature();
+        }
+
+        // Report Functions
+        function generateReport() {
+            const reportType = document.getElementById('reportType').value;
+            const startDate = document.getElementById('reportStartDate').value;
+            const endDate = document.getElementById('reportEndDate').value;
+            
+            if (!reportType) {
+                showToast('Please select a report type', 'warning');
+                return;
+            }
+
+            const doc = new jsPDF();
+            
+            // Add header
+            doc.setFontSize(20);
+            doc.text('SafetyOfficer - MHSA Compliance Report', 20, 20);
+            
+            doc.setFontSize(12);
+            doc.text(`Report Type: ${reportType}`, 20, 35);
+            doc.text(`Date Range: ${startDate} to ${endDate}`, 20, 45);
+            doc.text(`Generated By: ${appState.currentUser.name}`, 20, 55);
+            doc.text(`Generated On: ${new Date().toLocaleString()}`, 20, 65);
+            
+            // Add content based on report type
+            let yPosition = 80;
+            
+            if (reportType === 'dmr1741') {
+                doc.text('DMR 1741 - Accident/Incident Report', 20, yPosition);
+                yPosition += 15;
                 
-                .date-range {
-                    grid-template-columns: 1fr;
-                }
+                appState.incidents.forEach((incident, index) => {
+                    doc.text(`${index + 1}. ${incident.type} - ${incident.location}`, 25, yPosition);
+                    yPosition += 10;
+                    doc.text(`   Reporter: ${incident.reporter}`, 25, yPosition);
+                    yPosition += 10;
+                    
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                });
+            } else if (reportType === 'hazard') {
+                doc.text('Hazard Register Export', 20, yPosition);
+                yPosition += 15;
+                
+                appState.hazards.forEach((hazard, index) => {
+                    doc.text(`${index + 1}. ${hazard.type} - ${hazard.riskLevel}`, 25, yPosition);
+                    yPosition += 10;
+                    doc.text(`   Location: ${hazard.location}`, 25, yPosition);
+                    yPosition += 10;
+                    
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                });
             }
-        `;
-        document.head.appendChild(style);
+            
+            // Add footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(10);
+                doc.text(`Page ${i} of ${pageCount}`, 180, 285);
+                doc.text('© 2025 SafetyOfficer - Tech-hubris Africa', 20, 285);
+            }
+            
+            doc.save(`${reportType}_${new Date().toISOString().split('T')[0]}.pdf`);
+            
+            document.getElementById('reportSuccess').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('reportSuccess').style.display = 'none';
+            }, 5000);
+            
+            showToast('Report generated successfully', 'success');
+        }
+
+        function generateDMRReport() {
+            document.getElementById('reportType').value = 'dmr1741';
+            showPanel('reports');
+        }
+
+        function viewSection23Logs() {
+            document.getElementById('reportType').value = 'section23';
+            showPanel('reports');
+        }
+
+        function exportIncidentReports() {
+            document.getElementById('reportType').value = 'hazard';
+            showPanel('reports');
+        }
+
+        // Utility Functions
+        function generateId() {
+            return 'ID-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Initialize app
+        window.addEventListener('load', () => {
+            checkExistingLogin();
+        });
     </script>
 </body>
 </html>
-
