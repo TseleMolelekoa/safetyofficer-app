@@ -7,6 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -23,6 +24,8 @@
             --border-radius: 15px;
             --box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             --transition: all 0.3s ease;
+            --fire-blue: #1e3c72;
+            --fire-light-blue: #2a5298;
         }
 
         body {
@@ -844,7 +847,7 @@
         .risk-rating-select {
             width: 100%;
             padding: 6px;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #e2e8e6;
             border-radius: 4px;
             font-size: clamp(12px, 2.5vw, 13px);
         }
@@ -1238,6 +1241,279 @@
             gap: 15px;
         }
 
+        /* Fire Equipment Inspection System Styles */
+        .fire-equipment-header {
+            background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+        }
+
+        .fire-equipment-header h2 {
+            font-size: clamp(22px, 4vw, 28px);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .fire-equipment-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .fire-equipment-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .fire-equipment-tab {
+            background: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: clamp(14px, 3vw, 16px);
+            font-weight: 600;
+            transition: var(--transition);
+            white-space: nowrap;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-height: 54px;
+            flex-shrink: 0;
+            border-left: 5px solid var(--fire-blue);
+        }
+
+        .fire-equipment-tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(30, 60, 114, 0.15);
+        }
+
+        .fire-equipment-tab.active {
+            background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);
+            color: white;
+            border-left: 5px solid white;
+        }
+
+        .fire-equipment-content {
+            display: none;
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            animation: fadeIn 0.3s;
+        }
+
+        .fire-equipment-content.active {
+            display: block;
+        }
+
+        .fire-summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .fire-summary-card {
+            background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .fire-summary-value {
+            font-size: clamp(28px, 6vw, 36px);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .fire-summary-label {
+            font-size: clamp(12px, 2.5vw, 14px);
+            opacity: 0.9;
+        }
+
+        .fire-equipment-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .fire-equipment-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            border-left: 5px solid var(--fire-blue);
+        }
+
+        .fire-equipment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .fire-equipment-card h4 {
+            color: var(--fire-blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .fire-equipment-card ul {
+            list-style-position: inside;
+            color: #495057;
+            padding-left: 10px;
+        }
+
+        .fire-equipment-card ul li {
+            padding: 5px 0;
+            font-size: clamp(12px, 2.5vw, 14px);
+        }
+
+        .fire-checklist-form {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .fire-form-section {
+            margin-bottom: 25px;
+        }
+
+        .fire-form-section h3 {
+            color: var(--fire-blue);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+
+        .fire-form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .fire-checklist-items {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .fire-checklist-item {
+            display: grid;
+            grid-template-columns: 1fr 80px 80px;
+            gap: 15px;
+            align-items: center;
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .fire-checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .fire-checklist-item label {
+            font-weight: 500;
+            color: #495057;
+            font-size: clamp(14px, 2.5vw, 16px);
+        }
+
+        .fire-radio-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .fire-radio-group input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .fire-radio-label {
+            font-weight: 600;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .fire-signature-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .fire-icon {
+            font-size: 24px;
+        }
+
+        .fire-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        .fire-btn-primary {
+            background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);
+            color: white;
+        }
+
+        .fire-btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+        }
+
+        .fire-btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .fire-btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .fire-inspection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: #e3f2fd;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--fire-blue);
+        }
+
+        .fire-compliance-badge {
+            background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: clamp(12px, 2.5vw, 14px);
+            font-weight: 600;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -1368,6 +1644,32 @@
             .duration-grid {
                 grid-template-columns: 1fr;
             }
+
+            .fire-equipment-tab {
+                padding: 12px 15px;
+                font-size: 14px;
+            }
+
+            .fire-checklist-item {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .fire-form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fire-equipment-list {
+                grid-template-columns: 1fr;
+            }
+
+            .fire-signature-section {
+                grid-template-columns: 1fr;
+            }
+
+            .fire-summary-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -1407,6 +1709,19 @@
             .photo-upload {
                 padding: 20px;
             }
+
+            .fire-equipment-header {
+                padding: 20px;
+            }
+
+            .fire-equipment-tab {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .fire-checklist-form {
+                padding: 15px;
+            }
         }
 
         .toast-container {
@@ -1439,6 +1754,11 @@
 
         .toast-warning {
             background: var(--warning-color);
+            color: white;
+        }
+
+        .toast-fire {
+            background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);
             color: white;
         }
 
@@ -1564,6 +1884,7 @@
             <button class="nav-tab" onclick="showPanel('vehicle')">🚗 Vehicles</button>
             <button class="nav-tab" onclick="showPanel('permit')">📄 Permits</button>
             <button class="nav-tab" onclick="showPanel('incident')">🚨 Incident</button>
+            <button class="nav-tab" onclick="showPanel('fire-equipment')">🔥 Fire Equipment</button>
             <button class="nav-tab" onclick="showPanel('calculator')">🧮 Safety Calculator</button>
             <button class="nav-tab" onclick="showPanel('analytics')">📈 Analytics</button>
             <button class="nav-tab" onclick="showPanel('reports')">📊 Reports</button>
@@ -2630,6 +2951,1144 @@
             </div>
         </div>
 
+        <!-- Fire Equipment Inspection Panel -->
+        <div id="fire-equipment" class="content-panel">
+            <div class="fire-equipment-header">
+                <h2>🔥 Khumani Mine Fire Equipment Inspection System</h2>
+                <p>Comprehensive Fire Safety Equipment Management & Inspection</p>
+            </div>
+
+            <div class="fire-inspection-status">
+                <span>📊</span>
+                <span><strong>Current Status:</strong> All fire equipment requires monthly inspection per MHSA Regulation 2.4.1</span>
+                <span class="fire-compliance-badge">Compliance Required</span>
+            </div>
+
+            <div class="fire-equipment-tabs">
+                <button class="fire-equipment-tab active" onclick="showFireTab('fire-overview')">Overview</button>
+                <button class="fire-equipment-tab" onclick="showFireTab('fire-deluge')">Fire Deluge System</button>
+                <button class="fire-equipment-tab" onclick="showFireTab('fire-hydrant')">Fire Hydrant</button>
+                <button class="fire-equipment-tab" onclick="showFireTab('fire-hose')">Fire Hose Reel</button>
+                <button class="fire-equipment-tab" onclick="showFireTab('fire-extinguisher')">Fire Extinguisher/Hydrant Box</button>
+                <button class="fire-equipment-tab" onclick="showFireTab('fire-firstaid')">First-Aid Box</button>
+                <button class="fire-equipment-tab" onclick="showFireTab('fire-monthly')">Monthly Checklist</button>
+            </div>
+
+            <!-- Fire Equipment Overview -->
+            <div id="fire-overview" class="fire-equipment-content active">
+                <div class="fire-summary-grid">
+                    <div class="fire-summary-card">
+                        <div class="fire-summary-value">6</div>
+                        <div class="fire-summary-label">Equipment Types</div>
+                    </div>
+                    <div class="fire-summary-card">
+                        <div class="fire-summary-value">5</div>
+                        <div class="fire-summary-label">Inspection Forms</div>
+                    </div>
+                    <div class="fire-summary-card">
+                        <div class="fire-summary-value">Monthly</div>
+                        <div class="fire-summary-label">Inspection Frequency</div>
+                    </div>
+                    <div class="fire-summary-card">
+                        <div class="fire-summary-value" id="fire-inspection-count">0</div>
+                        <div class="fire-summary-label">Inspections This Month</div>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--fire-blue); margin-bottom: 15px;">Equipment Categories</h3>
+                <div class="fire-equipment-list">
+                    <div class="fire-equipment-card">
+                        <h4><span class="fire-icon">🚿</span> Fire Deluge System</h4>
+                        <ul>
+                            <li>Leak detection</li>
+                            <li>Pressure gauge monitoring (7-10 Bar)</li>
+                            <li>Main valve operation</li>
+                            <li>Lockout availability</li>
+                            <li>Accessibility & visibility</li>
+                            <li>Signage verification</li>
+                        </ul>
+                    </div>
+
+                    <div class="fire-equipment-card">
+                        <h4><span class="fire-icon">🔥</span> Fire Hydrant</h4>
+                        <ul>
+                            <li>Leak inspection</li>
+                            <li>Paul Assembly integrity</li>
+                            <li>Lip seal condition</li>
+                            <li>Hydrant barrier check</li>
+                            <li>Accessibility assessment</li>
+                            <li>Cleanliness verification</li>
+                        </ul>
+                    </div>
+
+                    <div class="fire-equipment-card">
+                        <h4><span class="fire-icon">🌊</span> Fire Hose Reel</h4>
+                        <ul>
+                            <li>Drum integrity</li>
+                            <li>Hose condition</li>
+                            <li>Nozzle functionality</li>
+                            <li>Seal inspection</li>
+                            <li>Valve operation</li>
+                            <li>Visibility & signage</li>
+                        </ul>
+                    </div>
+
+                    <div class="fire-equipment-card">
+                        <h4><span class="fire-icon">🧯</span> Fire Extinguisher Box</h4>
+                        <ul>
+                            <li>Box lock & key availability</li>
+                            <li>Glass integrity</li>
+                            <li>Equipment contents (2x65mm x 30m hose)</li>
+                            <li>Branch & T-spanner</li>
+                            <li>Accessibility check</li>
+                            <li>Signage & cleanliness</li>
+                        </ul>
+                    </div>
+
+                    <div class="fire-equipment-card">
+                        <h4><span class="fire-icon">🏥</span> First-Aid Box</h4>
+                        <ul>
+                            <li>Seal integrity</li>
+                            <li>Expiry date verification</li>
+                            <li>Monthly stock check</li>
+                            <li>First Aider details</li>
+                            <li>Accessibility</li>
+                            <li>Box cleanliness</li>
+                        </ul>
+                    </div>
+
+                    <div class="fire-equipment-card">
+                        <h4><span class="fire-icon">📋</span> Monthly Inspection</h4>
+                        <ul>
+                            <li>Safety pin intact & sealed</li>
+                            <li>Pressure gauge monitoring</li>
+                            <li>Discharge hose condition</li>
+                            <li>Information sticker check</li>
+                            <li>Service provider details</li>
+                            <li>Monthly inspection sticker</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px; text-align: center;">
+                    <button class="btn btn-primary" onclick="exportFireData()" style="background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);">
+                        📊 Export Fire Inspection Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Fire Deluge System -->
+            <div id="fire-deluge" class="fire-equipment-content">
+                <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Deluge System Inspection</h2>
+                <div class="fire-checklist-form">
+                    <div class="fire-form-section">
+                        <h3>Location Information</h3>
+                        <div class="fire-form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Site</label>
+                                <input type="text" class="form-input" placeholder="Enter site name" id="deluge-site">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area</label>
+                                <input type="text" class="form-input" placeholder="Enter area" id="deluge-area">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <input type="text" class="form-input" placeholder="Enter department" id="deluge-dept">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Equipment No.</label>
+                                <input type="text" class="form-input" placeholder="Enter equipment number" id="deluge-equipment-no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-form-section">
+                        <h3>Inspector Information</h3>
+                        <div class="fire-form-grid">
+                            <div class="form-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="inspector-parsons">
+                                    <span>Inspector: Parsons</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="inspector-bruce">
+                                    <span>Inspector: Bruce</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="inspector-king">
+                                    <span>Inspector: King</span>
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" id="load-out">
+                                    <span>Load Out</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-checklist-items">
+                        <h3 style="margin-bottom: 15px;">Inspection Checklist</h3>
+                        
+                        <div class="fire-checklist-item">
+                            <label>Any leaks visible</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-leaks" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-leaks" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Pressure Gauge @ 7 to 10 Bar</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-pressure" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-pressure" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Main Valve open</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-valve-open" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-valve-open" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Main Valve closed</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-valve-closed" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-valve-closed" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Lockout available</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-lockout" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-lockout" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Accessibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-access" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-access" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Visibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-visibility" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-visibility" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage in place</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-signage" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-signage" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage and Fire system unit clean</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="deluge-clean" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="deluge-clean" value="no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-form-section">
+                        <h3>Comments</h3>
+                        <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="deluge-comments"></textarea>
+                    </div>
+
+                    <div class="fire-signature-section">
+                        <div class="form-group">
+                            <label class="form-label">Inspected by</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="deluge-inspected-by">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Area Responsible Person</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="deluge-area-person">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Emergency Services Supervisor</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="deluge-supervisor">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input" id="deluge-date">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn fire-btn-primary" onclick="saveFireInspection('deluge')">Save Inspection</button>
+                        <button class="btn fire-btn-secondary" onclick="printFireInspection('deluge')">Print</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fire Hydrant -->
+            <div id="fire-hydrant" class="fire-equipment-content">
+                <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Hydrant Inspection</h2>
+                <div class="fire-checklist-form">
+                    <div class="fire-form-section">
+                        <h3>Location Information</h3>
+                        <div class="fire-form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Site</label>
+                                <input type="text" class="form-input" placeholder="Enter site name" id="hydrant-site">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area</label>
+                                <input type="text" class="form-input" placeholder="Enter area" id="hydrant-area">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <input type="text" class="form-input" placeholder="Enter department" id="hydrant-dept">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Equipment No.</label>
+                                <input type="text" class="form-input" placeholder="Enter equipment number" id="hydrant-equipment-no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-checklist-items">
+                        <h3 style="margin-bottom: 15px;">Inspection Checklist</h3>
+                        
+                        <div class="fire-checklist-item">
+                            <label>Any leaks visible</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hydrant-leaks" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hydrant-leaks" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Paul Assembly intact</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hydrant-paul" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hydrant-paul" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Lip seal intact</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hydrant-lip" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hydrant-lip" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Hydrant Barrier not damaged</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hydrant-barrier" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hydrant-barrier" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Accessibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hydrant-access" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hydrant-access" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Visibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hydrant-visibility" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hydrant-visibility" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage in place</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hydrant-signage" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hydrant-signage" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage and Fire hydrant clean</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hydrant-clean" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hydrant-clean" value="no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-form-section">
+                        <h3>Comments</h3>
+                        <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="hydrant-comments"></textarea>
+                    </div>
+
+                    <div class="fire-signature-section">
+                        <div class="form-group">
+                            <label class="form-label">Inspected by</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="hydrant-inspected-by">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Area Responsible Person</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="hydrant-area-person">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Emergency Services Supervisor</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="hydrant-supervisor">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input" id="hydrant-date">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn fire-btn-primary" onclick="saveFireInspection('hydrant')">Save Inspection</button>
+                        <button class="btn fire-btn-secondary" onclick="printFireInspection('hydrant')">Print</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fire Hose Reel -->
+            <div id="fire-hose" class="fire-equipment-content">
+                <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Hose Reel Inspection</h2>
+                <div class="fire-checklist-form">
+                    <div class="fire-form-section">
+                        <h3>Location Information</h3>
+                        <div class="fire-form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Site</label>
+                                <input type="text" class="form-input" placeholder="Enter site name" id="hose-site">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area</label>
+                                <input type="text" class="form-input" placeholder="Enter area" id="hose-area">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <input type="text" class="form-input" placeholder="Enter department" id="hose-dept">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Equipment No.</label>
+                                <input type="text" class="form-input" placeholder="Enter equipment number" id="hose-equipment-no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-checklist-items">
+                        <h3 style="margin-bottom: 15px;">Inspection Checklist</h3>
+                        
+                        <div class="fire-checklist-item">
+                            <label>Hose reel drum intact</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-drum" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-drum" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Hose intact</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-intact" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-intact" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Nozzle intact</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-nozzle" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-nozzle" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Seal not broken</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-seal" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-seal" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Valve complete</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-valve" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-valve" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Accessibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-access" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-access" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Visibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-visibility" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-visibility" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage in place</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-signage" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-signage" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage and Hose Reel clean</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="hose-clean" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="hose-clean" value="no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-form-section">
+                        <h3>Comments</h3>
+                        <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="hose-comments"></textarea>
+                    </div>
+
+                    <div class="fire-signature-section">
+                        <div class="form-group">
+                            <label class="form-label">Inspected by</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="hose-inspected-by">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Area Responsible Person</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="hose-area-person">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Emergency Services Supervisor</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="hose-supervisor">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input" id="hose-date">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn fire-btn-primary" onclick="saveFireInspection('hose')">Save Inspection</button>
+                        <button class="btn fire-btn-secondary" onclick="printFireInspection('hose')">Print</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fire Extinguisher/Hydrant Box -->
+            <div id="fire-extinguisher" class="fire-equipment-content">
+                <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Extinguisher / Hydrant Box Inspection</h2>
+                <div class="fire-checklist-form">
+                    <div class="fire-form-section">
+                        <h3>Location Information</h3>
+                        <div class="fire-form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Site</label>
+                                <input type="text" class="form-input" placeholder="Enter site name" id="ext-site">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area</label>
+                                <input type="text" class="form-input" placeholder="Enter area" id="ext-area">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <input type="text" class="form-input" placeholder="Enter department" id="ext-dept">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Equipment No.</label>
+                                <input type="text" class="form-input" placeholder="Enter equipment number" id="ext-equipment-no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-checklist-items">
+                        <h3 style="margin-bottom: 15px;">Inspection Checklist</h3>
+                        
+                        <div class="fire-checklist-item">
+                            <label>Box intact and locked</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-box" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-box" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Key available</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-key" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-key" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Key box glass intact</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-glass" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-glass" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>2 x 65 mm x 30 m lay flat hose</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-hose" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-hose" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>1 x Branch</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-branch" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-branch" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>1 x T-spanner</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-spanner" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-spanner" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Accessibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-access" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-access" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Visibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-visibility" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-visibility" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage in place</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-signage" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-signage" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage and Fire hose box clean</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="ext-clean" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="ext-clean" value="no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-form-section">
+                        <h3>Comments</h3>
+                        <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="ext-comments"></textarea>
+                    </div>
+
+                    <div class="fire-signature-section">
+                        <div class="form-group">
+                            <label class="form-label">Inspected by</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="ext-inspected-by">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Area Responsible Person</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="ext-area-person">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Emergency Services Supervisor</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="ext-supervisor">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input" id="ext-date">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn fire-btn-primary" onclick="saveFireInspection('extinguisher')">Save Inspection</button>
+                        <button class="btn fire-btn-secondary" onclick="printFireInspection('extinguisher')">Print</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- First-Aid Box -->
+            <div id="fire-firstaid" class="fire-equipment-content">
+                <h2 style="color: var(--fire-blue); margin-bottom: 20px;">First-Aid Box Inspection</h2>
+                <div class="fire-checklist-form">
+                    <div class="fire-form-section">
+                        <h3>Location Information</h3>
+                        <div class="fire-form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Site</label>
+                                <input type="text" class="form-input" placeholder="Enter site name" id="aid-site">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area</label>
+                                <input type="text" class="form-input" placeholder="Enter area" id="aid-area">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Department</label>
+                                <input type="text" class="form-input" placeholder="Enter department" id="aid-dept">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Equipment No.</label>
+                                <input type="text" class="form-input" placeholder="Enter equipment number" id="aid-equipment-no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-checklist-items">
+                        <h3 style="margin-bottom: 15px;">Inspection Checklist</h3>
+                        
+                        <div class="fire-checklist-item">
+                            <label>Seal intact</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="aid-seal" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="aid-seal" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Expiry dates</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="aid-expiry" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="aid-expiry" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Monthly check</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="aid-monthly" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="aid-monthly" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>First Aider details</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="aid-aider" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="aid-aider" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Accessibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="aid-access" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="aid-access" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Visibility</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="aid-visibility" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="aid-visibility" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage in place</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="aid-signage" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="aid-signage" value="no">
+                            </div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Signage and First-Aid box clean</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">Yes</span>
+                                <input type="radio" name="aid-clean" value="yes">
+                            </div>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">No</span>
+                                <input type="radio" name="aid-clean" value="no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-form-section">
+                        <h3>Comments</h3>
+                        <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="aid-comments"></textarea>
+                    </div>
+
+                    <div class="fire-signature-section">
+                        <div class="form-group">
+                            <label class="form-label">Inspected by</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="aid-inspected-by">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Area Responsible Person</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="aid-area-person">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">EMS Supervisor</label>
+                            <input type="text" class="form-input" placeholder="Name and Surname" id="aid-supervisor">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input" id="aid-date">
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn fire-btn-primary" onclick="saveFireInspection('firstaid')">Save Inspection</button>
+                        <button class="btn fire-btn-secondary" onclick="printFireInspection('firstaid')">Print</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Checklist -->
+            <div id="fire-monthly" class="fire-equipment-content">
+                <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Extinguishers Monthly Checklist</h2>
+                <div class="fire-checklist-form">
+                    <div class="fire-form-section">
+                        <h3>Equipment Information</h3>
+                        <div class="fire-form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Area</label>
+                                <input type="text" class="form-input" placeholder="Enter area" id="monthly-area">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Equipment Type</label>
+                                <input type="text" class="form-input" placeholder="e.g., 9kg DCP Fire Extinguisher" id="monthly-type">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Location</label>
+                                <input type="text" class="form-input" placeholder="Enter location" id="monthly-location">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Equipment Number</label>
+                                <input type="text" class="form-input" placeholder="e.g., KM/SE094" id="monthly-equipment-no">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-checklist-items">
+                        <h3 style="margin-bottom: 15px;">Monthly Inspection Items</h3>
+                        
+                        <div class="fire-checklist-item">
+                            <label>Safety pin intact and sealed</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">✓</span>
+                                <input type="checkbox" name="monthly-pin">
+                            </div>
+                            <div></div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Pressure gauge in the green</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">✓</span>
+                                <input type="checkbox" name="monthly-pressure">
+                            </div>
+                            <div></div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Discharge hose not cracked</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">✓</span>
+                                <input type="checkbox" name="monthly-hose">
+                            </div>
+                            <div></div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Information sticker available</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">✓</span>
+                                <input type="checkbox" name="monthly-sticker">
+                            </div>
+                            <div></div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Inspect condition of fire extinguisher</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">✓</span>
+                                <input type="checkbox" name="monthly-condition">
+                            </div>
+                            <div></div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Service provider sticker available</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">✓</span>
+                                <input type="checkbox" name="monthly-service">
+                            </div>
+                            <div></div>
+                        </div>
+
+                        <div class="fire-checklist-item">
+                            <label>Monthly inspection sticker</label>
+                            <div class="fire-radio-group">
+                                <span class="fire-radio-label">✓</span>
+                                <input type="checkbox" name="monthly-inspection">
+                            </div>
+                            <div></div>
+                        </div>
+                    </div>
+
+                    <div class="fire-form-section">
+                        <h3>Status Information</h3>
+                        <div class="fire-form-grid">
+                            <div class="form-group">
+                                <label class="form-label">Expiry Date</label>
+                                <input type="date" class="form-input" id="monthly-expiry">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Visibility</label>
+                                <select class="form-select" id="monthly-visibility">
+                                    <option value="">Select...</option>
+                                    <option value="good">Good</option>
+                                    <option value="needs-improvement">Needs Improvement</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Accessibility</label>
+                                <select class="form-select" id="monthly-accessibility">
+                                    <option value="">Select...</option>
+                                    <option value="accessible">Accessible</option>
+                                    <option value="blocked">Blocked</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <select class="form-select" id="monthly-status">
+                                    <option value="">Select...</option>
+                                    <option value="inspected">Inspected</option>
+                                    <option value="in-order">In Order</option>
+                                    <option value="needs-service">Needs Service</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="fire-form-section">
+                        <h3>Comments</h3>
+                        <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="monthly-comments"></textarea>
+                    </div>
+
+                    <div class="fire-signature-section">
+                        <div class="form-group">
+                            <label class="form-label">Actions Required</label>
+                            <textarea class="form-textarea" rows="2" placeholder="List any actions required" id="monthly-actions"></textarea>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <button class="btn fire-btn-primary" onclick="saveFireInspection('monthly')">Save Inspection</button>
+                        <button class="btn fire-btn-secondary" onclick="printFireInspection('monthly')">Print</button>
+                        <button class="btn fire-btn-secondary" onclick="exportFireData()">Export to Excel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Safety Calculator Panel -->
         <div id="calculator" class="content-panel">
             <div class="calculator-section">
@@ -2878,6 +4337,11 @@
                     <div class="stat-value" id="incidentCount">3</div>
                     <button class="btn" style="background: white; color: #00f2fe; margin-top: 15px;" onclick="exportIncidentReports()">Export</button>
                 </div>
+                <div class="stat-card" style="background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);">
+                    <div class="stat-label">Fire Equipment</div>
+                    <div class="stat-value" id="fireReportCount">0</div>
+                    <button class="btn" style="background: white; color: var(--fire-blue); margin-top: 15px;" onclick="exportFireReports()">Export</button>
+                </div>
             </div>
 
             <h3 style="margin-top: 30px; margin-bottom: 15px;">Generate Report</h3>
@@ -2891,6 +4355,7 @@
                     <option value="hazard">Hazard Register Export</option>
                     <option value="safety-calculator">Safety Calculator Summary</option>
                     <option value="incident-analysis">Incident Analysis Report</option>
+                    <option value="fire-equipment">Fire Equipment Inspection Report</option>
                 </select>
             </div>
 
@@ -2933,6 +4398,7 @@
             permits: [],
             reports: [],
             incidents: [],
+            fireInspections: [],
             isOnline: false,
             selectedHazardType: null,
             currentUser: null,
@@ -3127,6 +4593,9 @@
             
             // Initialize charts
             initializeCharts();
+            
+            // Initialize fire equipment
+            initializeFireEquipment();
         }
 
         function updateLocationInPanels() {
@@ -3387,6 +4856,7 @@
             document.getElementById('workerCount').textContent = appState.workers.length;
             document.getElementById('hazardCount').textContent = appState.hazards.length;
             document.getElementById('inspectionCount').textContent = appState.inspections.length;
+            document.getElementById('fireReportCount').textContent = appState.fireInspections.length;
             
             // Update safety calculator stats
             const totalIncidents = Object.values(appState.safetyData).reduce((sum, dept) => {
@@ -3878,6 +5348,194 @@
             });
         }
 
+        // Fire Equipment Functions
+        function showFireTab(tabId) {
+            // Hide all fire equipment contents
+            document.querySelectorAll('.fire-equipment-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all fire tabs
+            document.querySelectorAll('.fire-equipment-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Update inspection count
+            updateFireInspectionCount();
+        }
+
+        function saveFireInspection(type) {
+            const inspection = {
+                id: generateId(),
+                type: type,
+                timestamp: new Date().toISOString(),
+                inspector: appState.currentUser?.name || 'Unknown',
+                data: getFireInspectionData(type)
+            };
+
+            appState.fireInspections.push(inspection);
+            localStorage.setItem('safetyFireInspections', JSON.stringify(appState.fireInspections));
+            
+            showToast(`${type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')} inspection saved successfully!`, 'success');
+            updateFireInspectionCount();
+            
+            // Reset form
+            resetFireForm(type);
+        }
+
+        function getFireInspectionData(type) {
+            const data = {};
+            
+            // Get location information
+            data.site = document.getElementById(`${type}-site`)?.value || '';
+            data.area = document.getElementById(`${type}-area`)?.value || '';
+            data.department = document.getElementById(`${type}-dept`)?.value || '';
+            data.equipmentNo = document.getElementById(`${type}-equipment-no`)?.value || '';
+            
+            // Get checklist data
+            const checklistItems = document.querySelectorAll(`#fire-${type} .fire-checklist-item`);
+            data.checklist = {};
+            
+            checklistItems.forEach((item, index) => {
+                const label = item.querySelector('label')?.textContent || `Item ${index + 1}`;
+                const yesRadio = item.querySelector('input[value="yes"]');
+                const noRadio = item.querySelector('input[value="no"]');
+                
+                data.checklist[label] = yesRadio?.checked ? 'Yes' : 
+                                       noRadio?.checked ? 'No' : 'Not checked';
+            });
+            
+            // Get comments
+            data.comments = document.getElementById(`${type}-comments`)?.value || '';
+            
+            // Get signatures
+            data.inspectedBy = document.getElementById(`${type}-inspected-by`)?.value || '';
+            data.areaPerson = document.getElementById(`${type}-area-person`)?.value || '';
+            data.supervisor = document.getElementById(`${type}-supervisor`)?.value || '';
+            data.date = document.getElementById(`${type}-date`)?.value || new Date().toISOString().split('T')[0];
+            
+            return data;
+        }
+
+        function resetFireForm(type) {
+            // Reset location inputs
+            if (document.getElementById(`${type}-site`)) {
+                document.getElementById(`${type}-site`).value = '';
+                document.getElementById(`${type}-area`).value = '';
+                document.getElementById(`${type}-dept`).value = '';
+                document.getElementById(`${type}-equipment-no`).value = '';
+            }
+            
+            // Reset checklist
+            document.querySelectorAll(`#fire-${type} input[type="radio"]`).forEach(radio => {
+                radio.checked = false;
+            });
+            
+            // Reset comments
+            if (document.getElementById(`${type}-comments`)) {
+                document.getElementById(`${type}-comments`).value = '';
+            }
+            
+            // Reset signatures
+            if (document.getElementById(`${type}-inspected-by`)) {
+                document.getElementById(`${type}-inspected-by`).value = '';
+                document.getElementById(`${type}-area-person`).value = '';
+                document.getElementById(`${type}-supervisor`).value = '';
+            }
+            
+            // Reset date to today
+            if (document.getElementById(`${type}-date`)) {
+                document.getElementById(`${type}-date`).value = new Date().toISOString().split('T')[0];
+            }
+        }
+
+        function printFireInspection(type) {
+            const printContent = document.getElementById(`fire-${type}`).innerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            document.body.innerHTML = `
+                <div style="padding: 20px; font-family: Arial, sans-serif;">
+                    <h1 style="color: var(--fire-blue); text-align: center;">Fire Equipment Inspection Report</h1>
+                    <div>${printContent}</div>
+                    <div style="margin-top: 50px; text-align: center; font-size: 12px; color: #666;">
+                        Generated by SafetyOfficer - ${new Date().toLocaleString()}
+                    </div>
+                </div>
+            `;
+            
+            window.print();
+            document.body.innerHTML = originalContent;
+            window.location.reload();
+        }
+
+        function updateFireInspectionCount() {
+            const thisMonth = new Date().getMonth();
+            const thisYear = new Date().getFullYear();
+            
+            const monthlyInspections = appState.fireInspections.filter(inspection => {
+                const inspectionDate = new Date(inspection.timestamp);
+                return inspectionDate.getMonth() === thisMonth && 
+                       inspectionDate.getFullYear() === thisYear;
+            });
+            
+            document.getElementById('fire-inspection-count').textContent = monthlyInspections.length;
+        }
+
+        function exportFireData() {
+            // Export to Excel functionality
+            if (appState.fireInspections.length === 0) {
+                showToast('No fire inspection data to export', 'warning');
+                return;
+            }
+
+            const worksheetData = appState.fireInspections.map(inspection => {
+                return {
+                    'Type': inspection.type,
+                    'Date': new Date(inspection.timestamp).toLocaleDateString(),
+                    'Inspector': inspection.inspector,
+                    'Site': inspection.data?.site || '',
+                    'Area': inspection.data?.area || '',
+                    'Status': 'Completed'
+                };
+            });
+
+            const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Fire Inspections');
+            
+            XLSX.writeFile(workbook, `fire-inspections-${new Date().toISOString().split('T')[0]}.xlsx`);
+            showToast('Fire inspection data exported successfully', 'success');
+        }
+
+        function exportFireReports() {
+            document.getElementById('reportType').value = 'fire-equipment';
+            showPanel('reports');
+        }
+
+        // Initialize fire equipment on app load
+        function initializeFireEquipment() {
+            // Load saved inspections
+            const savedInspections = localStorage.getItem('safetyFireInspections');
+            if (savedInspections) {
+                appState.fireInspections = JSON.parse(savedInspections);
+            }
+            
+            // Set default dates
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                if (!input.value) {
+                    input.value = new Date().toISOString().split('T')[0];
+                }
+            });
+            
+            updateFireInspectionCount();
+        }
+
         // Report Functions
         function generateReport() {
             const reportType = document.getElementById('reportType').value;
@@ -3951,6 +5609,21 @@
                     doc.addPage();
                     yPosition = 20;
                 }
+            } else if (reportType === 'fire-equipment') {
+                doc.text('Fire Equipment Inspection Report', 20, yPosition);
+                yPosition += 15;
+                
+                appState.fireInspections.forEach((inspection, index) => {
+                    doc.text(`${index + 1}. ${inspection.type} - ${inspection.data?.area || 'Unknown Area'}`, 25, yPosition);
+                    yPosition += 10;
+                    doc.text(`   Inspector: ${inspection.inspector}`, 25, yPosition);
+                    yPosition += 10;
+                    
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                });
             }
             
             // Add footer
@@ -4009,6 +5682,3 @@
     </script>
 </body>
 </html>
-
-
-
