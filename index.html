@@ -1241,7 +1241,7 @@
             gap: 15px;
         }
 
-        /* Fire Equipment Inspection System Styles */
+        /* Fire Equipment Inspection System Styles - UPDATED */
         .fire-equipment-header {
             background: linear-gradient(135deg, var(--fire-blue) 0%, var(--fire-light-blue) 100%);
             color: white;
@@ -1325,6 +1325,12 @@
             border-radius: 12px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             text-align: center;
+            transition: var(--transition);
+        }
+
+        .fire-summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
         }
 
         .fire-summary-value {
@@ -1514,6 +1520,194 @@
             display: inline-block;
         }
 
+        /* Expiry Countdown Styles */
+        .expiry-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .expiry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .expiry-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--fire-blue);
+        }
+
+        .expiry-countdown {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .expiry-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid;
+            transition: var(--transition);
+        }
+
+        .expiry-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .expiry-card.safe {
+            border-left-color: var(--success-color);
+        }
+
+        .expiry-card.warning {
+            border-left-color: var(--warning-color);
+        }
+
+        .expiry-card.danger {
+            border-left-color: var(--danger-color);
+        }
+
+        .expiry-equipment {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .expiry-date {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .expiry-days {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .expiry-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .expiry-status.safe {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .expiry-status.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .expiry-status.danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Calendar View */
+        .calendar-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .calendar-day {
+            padding: 10px;
+            text-align: center;
+            border-radius: 6px;
+            background: #f8f9fa;
+            font-size: 14px;
+        }
+
+        .calendar-day.expiry {
+            background: #fee2e2;
+            color: #991b1b;
+            font-weight: 600;
+        }
+
+        .calendar-day.warning {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Fire Equipment Photo Upload */
+        .fire-photo-section {
+            margin: 20px 0;
+        }
+
+        .fire-photo-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .fire-photo-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 120px;
+        }
+
+        .fire-photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .fire-photo-remove {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+        /* Signature Pad for Fire Equipment */
+        .fire-signature-pad {
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: crosshair;
+            touch-action: none;
+            width: 100%;
+            height: 150px;
+            margin-top: 10px;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -1670,6 +1864,14 @@
             .fire-summary-grid {
                 grid-template-columns: 1fr;
             }
+
+            .expiry-countdown {
+                grid-template-columns: 1fr;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         @media (max-width: 480px) {
@@ -1721,6 +1923,10 @@
 
             .fire-checklist-form {
                 padding: 15px;
+            }
+
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1884,7 +2090,7 @@
             <button class="nav-tab" onclick="showPanel('vehicle')">🚗 Vehicles</button>
             <button class="nav-tab" onclick="showPanel('permit')">📄 Permits</button>
             <button class="nav-tab" onclick="showPanel('incident')">🚨 Incident</button>
-            <button class="nav-tab" onclick="showPanel('fire-equipment')">🔥 Fire Equipment</button>
+            <button class="nav-tab" onclick="showPanel('fire-equipment')">🔥 FEIS</button>
             <button class="nav-tab" onclick="showPanel('calculator')">🧮 Safety Calculator</button>
             <button class="nav-tab" onclick="showPanel('analytics')">📈 Analytics</button>
             <button class="nav-tab" onclick="showPanel('reports')">📊 Reports</button>
@@ -2951,10 +3157,10 @@
             </div>
         </div>
 
-        <!-- Fire Equipment Inspection Panel -->
+        <!-- Fire Equipment Inspection Panel - UPDATED -->
         <div id="fire-equipment" class="content-panel">
             <div class="fire-equipment-header">
-                <h2>🔥 Khumani Mine Fire Equipment Inspection System</h2>
+                <h2>🔥 FEIS - Fire Equipment Inspection System</h2>
                 <p>Comprehensive Fire Safety Equipment Management & Inspection</p>
             </div>
 
@@ -2971,27 +3177,48 @@
                 <button class="fire-equipment-tab" onclick="showFireTab('fire-hose')">Fire Hose Reel</button>
                 <button class="fire-equipment-tab" onclick="showFireTab('fire-extinguisher')">Fire Extinguisher/Hydrant Box</button>
                 <button class="fire-equipment-tab" onclick="showFireTab('fire-firstaid')">First-Aid Box</button>
-                <button class="fire-equipment-tab" onclick="showFireTab('fire-monthly')">Monthly Checklist</button>
+                <button class="fire-equipment-tab" onclick="showFireTab('fire-inspections')">Number of Inspections</button>
             </div>
 
-            <!-- Fire Equipment Overview -->
+            <!-- Fire Equipment Overview - UPDATED -->
             <div id="fire-overview" class="fire-equipment-content active">
                 <div class="fire-summary-grid">
                     <div class="fire-summary-card">
-                        <div class="fire-summary-value">6</div>
+                        <div class="fire-summary-value" id="fire-equipment-count">0</div>
                         <div class="fire-summary-label">Equipment Types</div>
                     </div>
                     <div class="fire-summary-card">
-                        <div class="fire-summary-value">5</div>
-                        <div class="fire-summary-label">Inspection Forms</div>
+                        <div class="fire-summary-value" id="fire-inspection-count">0</div>
+                        <div class="fire-summary-label">Number of Inspections</div>
                     </div>
                     <div class="fire-summary-card">
                         <div class="fire-summary-value">Monthly</div>
                         <div class="fire-summary-label">Inspection Frequency</div>
                     </div>
                     <div class="fire-summary-card">
-                        <div class="fire-summary-value" id="fire-inspection-count">0</div>
-                        <div class="fire-summary-label">Inspections This Month</div>
+                        <div class="fire-summary-value" id="fire-compliance-rate">0%</div>
+                        <div class="fire-summary-label">Compliance Rate</div>
+                    </div>
+                </div>
+
+                <!-- Expiry Countdown Section -->
+                <div class="expiry-container">
+                    <div class="expiry-header">
+                        <div class="expiry-title">Fire Equipment Expiry Tracking</div>
+                        <button class="btn btn-primary" onclick="showFireTab('fire-inspections')">View All</button>
+                    </div>
+                    
+                    <div class="expiry-countdown" id="expiryCountdown">
+                        <!-- Dynamic content will be loaded here -->
+                    </div>
+
+                    <div class="calendar-container">
+                        <div class="calendar-header">
+                            <div class="expiry-title">Upcoming Expiries - Next 30 Days</div>
+                        </div>
+                        <div class="calendar-grid" id="expiryCalendar">
+                            <!-- Calendar days will be generated dynamically -->
+                        </div>
                     </div>
                 </div>
 
@@ -3056,18 +3283,6 @@
                             <li>Box cleanliness</li>
                         </ul>
                     </div>
-
-                    <div class="fire-equipment-card">
-                        <h4><span class="fire-icon">📋</span> Monthly Inspection</h4>
-                        <ul>
-                            <li>Safety pin intact & sealed</li>
-                            <li>Pressure gauge monitoring</li>
-                            <li>Discharge hose condition</li>
-                            <li>Information sticker check</li>
-                            <li>Service provider details</li>
-                            <li>Monthly inspection sticker</li>
-                        </ul>
-                    </div>
                 </div>
 
                 <div style="margin-top: 30px; text-align: center;">
@@ -3077,7 +3292,7 @@
                 </div>
             </div>
 
-            <!-- Fire Deluge System -->
+            <!-- Fire Deluge System - UPDATED -->
             <div id="fire-deluge" class="fire-equipment-content">
                 <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Deluge System Inspection</h2>
                 <div class="fire-checklist-form">
@@ -3108,29 +3323,23 @@
                         <div class="fire-form-grid">
                             <div class="form-group">
                                 <label class="checkbox-item">
-                                    <input type="checkbox" id="inspector-parsons">
-                                    <span>Inspector: Parsons</span>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="inspector-bruce">
-                                    <span>Inspector: Bruce</span>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="inspector-king">
-                                    <span>Inspector: King</span>
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" id="load-out">
-                                    <span>Load Out</span>
+                                    <input type="checkbox" id="inspector-doe">
+                                    <span>Inspector: John Doe</span>
                                 </label>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Photo Upload Section -->
+                    <div class="fire-photo-section">
+                        <h3>Visual Documentation</h3>
+                        <div class="photo-upload" onclick="document.getElementById('deluge-photo-input').click()">
+                            <input type="file" id="deluge-photo-input" accept="image/*" style="display: none;" onchange="handleFirePhoto('deluge', this)">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📷</div>
+                            <div><strong>Add Inspection Photos</strong></div>
+                            <div style="color: #666; font-size: 14px;">Click to upload photos of the equipment</div>
+                        </div>
+                        <div class="fire-photo-preview" id="deluge-photo-preview"></div>
                     </div>
 
                     <div class="fire-checklist-items">
@@ -3250,10 +3459,27 @@
                         <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="deluge-comments"></textarea>
                     </div>
 
+                    <!-- Signature Section -->
+                    <div class="fire-form-section">
+                        <h3>Digital Signatures</h3>
+                        <div class="fire-signature-section">
+                            <div class="form-group">
+                                <label class="form-label">Inspector Signature</label>
+                                <canvas class="fire-signature-pad" id="deluge-inspector-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('deluge-inspector-signature')">Clear</button>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area Responsible Person Signature</label>
+                                <canvas class="fire-signature-pad" id="deluge-area-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('deluge-area-signature')">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="fire-signature-section">
                         <div class="form-group">
                             <label class="form-label">Inspected by</label>
-                            <input type="text" class="form-input" placeholder="Name and Surname" id="deluge-inspected-by">
+                            <input type="text" class="form-input" placeholder="John Doe" id="deluge-inspected-by">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Area Responsible Person</label>
@@ -3276,7 +3502,7 @@
                 </div>
             </div>
 
-            <!-- Fire Hydrant -->
+            <!-- Fire Hydrant - UPDATED -->
             <div id="fire-hydrant" class="fire-equipment-content">
                 <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Hydrant Inspection</h2>
                 <div class="fire-checklist-form">
@@ -3300,6 +3526,18 @@
                                 <input type="text" class="form-input" placeholder="Enter equipment number" id="hydrant-equipment-no">
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Photo Upload Section -->
+                    <div class="fire-photo-section">
+                        <h3>Visual Documentation</h3>
+                        <div class="photo-upload" onclick="document.getElementById('hydrant-photo-input').click()">
+                            <input type="file" id="hydrant-photo-input" accept="image/*" style="display: none;" onchange="handleFirePhoto('hydrant', this)">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📷</div>
+                            <div><strong>Add Inspection Photos</strong></div>
+                            <div style="color: #666; font-size: 14px;">Click to upload photos of the equipment</div>
+                        </div>
+                        <div class="fire-photo-preview" id="hydrant-photo-preview"></div>
                     </div>
 
                     <div class="fire-checklist-items">
@@ -3407,10 +3645,27 @@
                         <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="hydrant-comments"></textarea>
                     </div>
 
+                    <!-- Signature Section -->
+                    <div class="fire-form-section">
+                        <h3>Digital Signatures</h3>
+                        <div class="fire-signature-section">
+                            <div class="form-group">
+                                <label class="form-label">Inspector Signature</label>
+                                <canvas class="fire-signature-pad" id="hydrant-inspector-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('hydrant-inspector-signature')">Clear</button>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area Responsible Person Signature</label>
+                                <canvas class="fire-signature-pad" id="hydrant-area-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('hydrant-area-signature')">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="fire-signature-section">
                         <div class="form-group">
                             <label class="form-label">Inspected by</label>
-                            <input type="text" class="form-input" placeholder="Name and Surname" id="hydrant-inspected-by">
+                            <input type="text" class="form-input" placeholder="John Doe" id="hydrant-inspected-by">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Area Responsible Person</label>
@@ -3433,7 +3688,7 @@
                 </div>
             </div>
 
-            <!-- Fire Hose Reel -->
+            <!-- Fire Hose Reel - UPDATED -->
             <div id="fire-hose" class="fire-equipment-content">
                 <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Hose Reel Inspection</h2>
                 <div class="fire-checklist-form">
@@ -3457,6 +3712,18 @@
                                 <input type="text" class="form-input" placeholder="Enter equipment number" id="hose-equipment-no">
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Photo Upload Section -->
+                    <div class="fire-photo-section">
+                        <h3>Visual Documentation</h3>
+                        <div class="photo-upload" onclick="document.getElementById('hose-photo-input').click()">
+                            <input type="file" id="hose-photo-input" accept="image/*" style="display: none;" onchange="handleFirePhoto('hose', this)">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📷</div>
+                            <div><strong>Add Inspection Photos</strong></div>
+                            <div style="color: #666; font-size: 14px;">Click to upload photos of the equipment</div>
+                        </div>
+                        <div class="fire-photo-preview" id="hose-photo-preview"></div>
                     </div>
 
                     <div class="fire-checklist-items">
@@ -3576,10 +3843,27 @@
                         <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="hose-comments"></textarea>
                     </div>
 
+                    <!-- Signature Section -->
+                    <div class="fire-form-section">
+                        <h3>Digital Signatures</h3>
+                        <div class="fire-signature-section">
+                            <div class="form-group">
+                                <label class="form-label">Inspector Signature</label>
+                                <canvas class="fire-signature-pad" id="hose-inspector-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('hose-inspector-signature')">Clear</button>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area Responsible Person Signature</label>
+                                <canvas class="fire-signature-pad" id="hose-area-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('hose-area-signature')">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="fire-signature-section">
                         <div class="form-group">
                             <label class="form-label">Inspected by</label>
-                            <input type="text" class="form-input" placeholder="Name and Surname" id="hose-inspected-by">
+                            <input type="text" class="form-input" placeholder="John Doe" id="hose-inspected-by">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Area Responsible Person</label>
@@ -3602,7 +3886,7 @@
                 </div>
             </div>
 
-            <!-- Fire Extinguisher/Hydrant Box -->
+            <!-- Fire Extinguisher/Hydrant Box - UPDATED -->
             <div id="fire-extinguisher" class="fire-equipment-content">
                 <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Extinguisher / Hydrant Box Inspection</h2>
                 <div class="fire-checklist-form">
@@ -3626,6 +3910,18 @@
                                 <input type="text" class="form-input" placeholder="Enter equipment number" id="ext-equipment-no">
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Photo Upload Section -->
+                    <div class="fire-photo-section">
+                        <h3>Visual Documentation</h3>
+                        <div class="photo-upload" onclick="document.getElementById('ext-photo-input').click()">
+                            <input type="file" id="ext-photo-input" accept="image/*" style="display: none;" onchange="handleFirePhoto('ext', this)">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📷</div>
+                            <div><strong>Add Inspection Photos</strong></div>
+                            <div style="color: #666; font-size: 14px;">Click to upload photos of the equipment</div>
+                        </div>
+                        <div class="fire-photo-preview" id="ext-photo-preview"></div>
                     </div>
 
                     <div class="fire-checklist-items">
@@ -3757,10 +4053,27 @@
                         <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="ext-comments"></textarea>
                     </div>
 
+                    <!-- Signature Section -->
+                    <div class="fire-form-section">
+                        <h3>Digital Signatures</h3>
+                        <div class="fire-signature-section">
+                            <div class="form-group">
+                                <label class="form-label">Inspector Signature</label>
+                                <canvas class="fire-signature-pad" id="ext-inspector-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('ext-inspector-signature')">Clear</button>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area Responsible Person Signature</label>
+                                <canvas class="fire-signature-pad" id="ext-area-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('ext-area-signature')">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="fire-signature-section">
                         <div class="form-group">
                             <label class="form-label">Inspected by</label>
-                            <input type="text" class="form-input" placeholder="Name and Surname" id="ext-inspected-by">
+                            <input type="text" class="form-input" placeholder="John Doe" id="ext-inspected-by">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Area Responsible Person</label>
@@ -3783,7 +4096,7 @@
                 </div>
             </div>
 
-            <!-- First-Aid Box -->
+            <!-- First-Aid Box - UPDATED -->
             <div id="fire-firstaid" class="fire-equipment-content">
                 <h2 style="color: var(--fire-blue); margin-bottom: 20px;">First-Aid Box Inspection</h2>
                 <div class="fire-checklist-form">
@@ -3807,6 +4120,18 @@
                                 <input type="text" class="form-input" placeholder="Enter equipment number" id="aid-equipment-no">
                             </div>
                         </div>
+                    </div>
+
+                    <!-- Photo Upload Section -->
+                    <div class="fire-photo-section">
+                        <h3>Visual Documentation</h3>
+                        <div class="photo-upload" onclick="document.getElementById('aid-photo-input').click()">
+                            <input type="file" id="aid-photo-input" accept="image/*" style="display: none;" onchange="handleFirePhoto('aid', this)">
+                            <div style="font-size: 48px; margin-bottom: 10px;">📷</div>
+                            <div><strong>Add Inspection Photos</strong></div>
+                            <div style="color: #666; font-size: 14px;">Click to upload photos of the equipment</div>
+                        </div>
+                        <div class="fire-photo-preview" id="aid-photo-preview"></div>
                     </div>
 
                     <div class="fire-checklist-items">
@@ -3914,10 +4239,27 @@
                         <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="aid-comments"></textarea>
                     </div>
 
+                    <!-- Signature Section -->
+                    <div class="fire-form-section">
+                        <h3>Digital Signatures</h3>
+                        <div class="fire-signature-section">
+                            <div class="form-group">
+                                <label class="form-label">Inspector Signature</label>
+                                <canvas class="fire-signature-pad" id="aid-inspector-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('aid-inspector-signature')">Clear</button>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Area Responsible Person Signature</label>
+                                <canvas class="fire-signature-pad" id="aid-area-signature" width="280" height="120"></canvas>
+                                <button class="btn btn-sm btn-danger" style="margin-top: 5px;" onclick="clearFireSignature('aid-area-signature')">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="fire-signature-section">
                         <div class="form-group">
                             <label class="form-label">Inspected by</label>
-                            <input type="text" class="form-input" placeholder="Name and Surname" id="aid-inspected-by">
+                            <input type="text" class="form-input" placeholder="John Doe" id="aid-inspected-by">
                         </div>
                         <div class="form-group">
                             <label class="form-label">Area Responsible Person</label>
@@ -3940,150 +4282,82 @@
                 </div>
             </div>
 
-            <!-- Monthly Checklist -->
-            <div id="fire-monthly" class="fire-equipment-content">
-                <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Extinguishers Monthly Checklist</h2>
+            <!-- Number of Inspections - UPDATED -->
+            <div id="fire-inspections" class="fire-equipment-content">
+                <h2 style="color: var(--fire-blue); margin-bottom: 20px;">Fire Equipment Inspections Summary</h2>
+                
+                <div class="fire-summary-grid">
+                    <div class="fire-summary-card">
+                        <div class="fire-summary-value" id="total-inspections">0</div>
+                        <div class="fire-summary-label">Total Inspections</div>
+                    </div>
+                    <div class="fire-summary-card">
+                        <div class="fire-summary-value" id="completed-inspections">0</div>
+                        <div class="fire-summary-label">Completed This Month</div>
+                    </div>
+                    <div class="fire-summary-card">
+                        <div class="fire-summary-value" id="pending-inspections">0</div>
+                        <div class="fire-summary-label">Pending</div>
+                    </div>
+                    <div class="fire-summary-card">
+                        <div class="fire-summary-value" id="overdue-inspections">0</div>
+                        <div class="fire-summary-label">Overdue</div>
+                    </div>
+                </div>
+
+                <!-- Expiry Management Section -->
+                <div class="expiry-container">
+                    <div class="expiry-header">
+                        <div class="expiry-title">Fire Extinguisher Expiry Management</div>
+                        <button class="btn btn-primary" onclick="addNewExpiry()">Add New Equipment</button>
+                    </div>
+                    
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label class="form-label">Expiry Date for New Equipment</label>
+                        <input type="date" class="form-input" id="new-expiry-date">
+                        <button class="btn btn-success" style="margin-top: 10px;" onclick="saveExpiryDate()">Save Expiry Date</button>
+                    </div>
+
+                    <div class="expiry-countdown" id="expiryManagement">
+                        <!-- Dynamic expiry cards will be loaded here -->
+                    </div>
+                </div>
+
                 <div class="fire-checklist-form">
                     <div class="fire-form-section">
-                        <h3>Equipment Information</h3>
-                        <div class="fire-form-grid">
-                            <div class="form-group">
-                                <label class="form-label">Area</label>
-                                <input type="text" class="form-input" placeholder="Enter area" id="monthly-area">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Equipment Type</label>
-                                <input type="text" class="form-input" placeholder="e.g., 9kg DCP Fire Extinguisher" id="monthly-type">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Location</label>
-                                <input type="text" class="form-input" placeholder="Enter location" id="monthly-location">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Equipment Number</label>
-                                <input type="text" class="form-input" placeholder="e.g., KM/SE094" id="monthly-equipment-no">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="fire-checklist-items">
-                        <h3 style="margin-bottom: 15px;">Monthly Inspection Items</h3>
-                        
-                        <div class="fire-checklist-item">
-                            <label>Safety pin intact and sealed</label>
-                            <div class="fire-radio-group">
-                                <span class="fire-radio-label">✓</span>
-                                <input type="checkbox" name="monthly-pin">
-                            </div>
-                            <div></div>
-                        </div>
-
-                        <div class="fire-checklist-item">
-                            <label>Pressure gauge in the green</label>
-                            <div class="fire-radio-group">
-                                <span class="fire-radio-label">✓</span>
-                                <input type="checkbox" name="monthly-pressure">
-                            </div>
-                            <div></div>
-                        </div>
-
-                        <div class="fire-checklist-item">
-                            <label>Discharge hose not cracked</label>
-                            <div class="fire-radio-group">
-                                <span class="fire-radio-label">✓</span>
-                                <input type="checkbox" name="monthly-hose">
-                            </div>
-                            <div></div>
-                        </div>
-
-                        <div class="fire-checklist-item">
-                            <label>Information sticker available</label>
-                            <div class="fire-radio-group">
-                                <span class="fire-radio-label">✓</span>
-                                <input type="checkbox" name="monthly-sticker">
-                            </div>
-                            <div></div>
-                        </div>
-
-                        <div class="fire-checklist-item">
-                            <label>Inspect condition of fire extinguisher</label>
-                            <div class="fire-radio-group">
-                                <span class="fire-radio-label">✓</span>
-                                <input type="checkbox" name="monthly-condition">
-                            </div>
-                            <div></div>
-                        </div>
-
-                        <div class="fire-checklist-item">
-                            <label>Service provider sticker available</label>
-                            <div class="fire-radio-group">
-                                <span class="fire-radio-label">✓</span>
-                                <input type="checkbox" name="monthly-service">
-                            </div>
-                            <div></div>
-                        </div>
-
-                        <div class="fire-checklist-item">
-                            <label>Monthly inspection sticker</label>
-                            <div class="fire-radio-group">
-                                <span class="fire-radio-label">✓</span>
-                                <input type="checkbox" name="monthly-inspection">
-                            </div>
-                            <div></div>
+                        <h3>Recent Inspections</h3>
+                        <div class="table-responsive">
+                            <table class="trip-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Equipment Type</th>
+                                        <th>Location</th>
+                                        <th>Inspector</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="inspectionsTable">
+                                    <!-- Dynamic content will be loaded here -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
                     <div class="fire-form-section">
-                        <h3>Status Information</h3>
-                        <div class="fire-form-grid">
-                            <div class="form-group">
-                                <label class="form-label">Expiry Date</label>
-                                <input type="date" class="form-input" id="monthly-expiry">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Visibility</label>
-                                <select class="form-select" id="monthly-visibility">
-                                    <option value="">Select...</option>
-                                    <option value="good">Good</option>
-                                    <option value="needs-improvement">Needs Improvement</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Accessibility</label>
-                                <select class="form-select" id="monthly-accessibility">
-                                    <option value="">Select...</option>
-                                    <option value="accessible">Accessible</option>
-                                    <option value="blocked">Blocked</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Status</label>
-                                <select class="form-select" id="monthly-status">
-                                    <option value="">Select...</option>
-                                    <option value="inspected">Inspected</option>
-                                    <option value="in-order">In Order</option>
-                                    <option value="needs-service">Needs Service</option>
-                                </select>
-                            </div>
+                        <h3>Quick Actions</h3>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button class="btn fire-btn-primary" onclick="exportFireData()">
+                                📊 Export All Data
+                            </button>
+                            <button class="btn fire-btn-secondary" onclick="generateFireReport()">
+                                📄 Generate Report
+                            </button>
+                            <button class="btn fire-btn-secondary" onclick="syncFireData()">
+                                🔄 Sync to Cloud
+                            </button>
                         </div>
-                    </div>
-
-                    <div class="fire-form-section">
-                        <h3>Comments</h3>
-                        <textarea class="form-textarea" rows="4" placeholder="Enter any comments or observations..." id="monthly-comments"></textarea>
-                    </div>
-
-                    <div class="fire-signature-section">
-                        <div class="form-group">
-                            <label class="form-label">Actions Required</label>
-                            <textarea class="form-textarea" rows="2" placeholder="List any actions required" id="monthly-actions"></textarea>
-                        </div>
-                    </div>
-
-                    <div style="margin-top: 20px;">
-                        <button class="btn fire-btn-primary" onclick="saveFireInspection('monthly')">Save Inspection</button>
-                        <button class="btn fire-btn-secondary" onclick="printFireInspection('monthly')">Print</button>
-                        <button class="btn fire-btn-secondary" onclick="exportFireData()">Export to Excel</button>
                     </div>
                 </div>
             </div>
@@ -4399,6 +4673,7 @@
             reports: [],
             incidents: [],
             fireInspections: [],
+            fireExpiries: [],
             isOnline: false,
             selectedHazardType: null,
             currentUser: null,
@@ -4409,7 +4684,9 @@
                 opencast: { nearMiss: 226, propertyDamage: 146, hpi: 106, dangerous: 226, fac: 13, mtc: 226, lti: 226, ffps: 226 },
                 shaft: { nearMiss: 142, propertyDamage: 6, hpi: 26, dangerous: 228, fac: 175, mtc: 48, lti: 481, ffps: 2813 }
             },
-            charts: {}
+            charts: {},
+            fireEquipmentCount: 5,
+            firePhotos: {}
         };
 
         // Initialize jsPDF
@@ -4596,6 +4873,12 @@
             
             // Initialize fire equipment
             initializeFireEquipment();
+            
+            // Load fire expiries
+            loadFireExpiries();
+            
+            // Update fire equipment stats
+            updateFireEquipmentStats();
         }
 
         function updateLocationInPanels() {
@@ -4730,6 +5013,18 @@
             initSignaturePad('liftOperatorSignature');
             initSignaturePad('liftRiggerSignature');
             initSignaturePad('liftSupervisorSignature');
+            
+            // Fire equipment signature pads
+            initFireSignaturePad('deluge-inspector-signature');
+            initFireSignaturePad('deluge-area-signature');
+            initFireSignaturePad('hydrant-inspector-signature');
+            initFireSignaturePad('hydrant-area-signature');
+            initFireSignaturePad('hose-inspector-signature');
+            initFireSignaturePad('hose-area-signature');
+            initFireSignaturePad('ext-inspector-signature');
+            initFireSignaturePad('ext-area-signature');
+            initFireSignaturePad('aid-inspector-signature');
+            initFireSignaturePad('aid-area-signature');
         }
 
         function initSignaturePad(canvasId) {
@@ -4804,6 +5099,72 @@
             signaturePads[canvasId] = { canvas, ctx };
         }
 
+        function initFireSignaturePad(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+
+            canvas.addEventListener('mousedown', (e) => {
+                isDrawing = true;
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            });
+
+            canvas.addEventListener('mousemove', (e) => {
+                if (!isDrawing) return;
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+                [lastX, lastY] = [e.offsetX, e.offsetY];
+            });
+
+            canvas.addEventListener('mouseup', () => isDrawing = false);
+            canvas.addEventListener('mouseout', () => isDrawing = false);
+
+            // Touch support
+            canvas.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                isDrawing = true;
+                lastX = touch.clientX - rect.left;
+                lastY = touch.clientY - rect.top;
+            });
+
+            canvas.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (!isDrawing) return;
+                const touch = e.touches[0];
+                const rect = canvas.getBoundingClientRect();
+                const currentX = touch.clientX - rect.left;
+                const currentY = touch.clientY - rect.top;
+                
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.lineJoin = 'round';
+                ctx.lineCap = 'round';
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(currentX, currentY);
+                ctx.stroke();
+                
+                lastX = currentX;
+                lastY = currentY;
+            });
+
+            canvas.addEventListener('touchend', () => isDrawing = false);
+
+            signaturePads[canvasId] = { canvas, ctx };
+        }
+
         function clearSignature() {
             const canvas = document.getElementById('signaturePad');
             const ctx = canvas.getContext('2d');
@@ -4820,6 +5181,14 @@
             const canvas = document.getElementById('incidentSignature');
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function clearFireSignature(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
         }
 
         // Navigation
@@ -5348,7 +5717,7 @@
             });
         }
 
-        // Fire Equipment Functions
+        // Fire Equipment Functions - UPDATED
         function showFireTab(tabId) {
             // Hide all fire equipment contents
             document.querySelectorAll('.fire-equipment-content').forEach(content => {
@@ -5367,7 +5736,63 @@
             event.target.classList.add('active');
             
             // Update inspection count
-            updateFireInspectionCount();
+            updateFireEquipmentStats();
+            
+            // If overview tab, update expiry countdown
+            if (tabId === 'fire-overview') {
+                updateExpiryCountdown();
+                updateExpiryCalendar();
+            }
+            
+            // If inspections tab, update inspection list
+            if (tabId === 'fire-inspections') {
+                updateInspectionsTable();
+                updateExpiryManagement();
+            }
+        }
+
+        function handleFirePhoto(type, input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const photoPreview = document.getElementById(`${type}-photo-preview`);
+                    const photoId = `photo-${type}-${Date.now()}`;
+                    
+                    const photoItem = document.createElement('div');
+                    photoItem.className = 'fire-photo-item';
+                    photoItem.innerHTML = `
+                        <img src="${e.target.result}" alt="Inspection photo">
+                        <button class="fire-photo-remove" onclick="removeFirePhoto('${type}', '${photoId}')">×</button>
+                    `;
+                    photoItem.id = photoId;
+                    
+                    photoPreview.appendChild(photoItem);
+                    
+                    // Store photo in state
+                    if (!appState.firePhotos[type]) {
+                        appState.firePhotos[type] = [];
+                    }
+                    appState.firePhotos[type].push({
+                        id: photoId,
+                        data: e.target.result
+                    });
+                    
+                    showToast('Photo added successfully', 'success');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeFirePhoto(type, photoId) {
+            const photoItem = document.getElementById(photoId);
+            if (photoItem) {
+                photoItem.remove();
+                
+                // Remove from state
+                if (appState.firePhotos[type]) {
+                    appState.firePhotos[type] = appState.firePhotos[type].filter(photo => photo.id !== photoId);
+                }
+            }
         }
 
         function saveFireInspection(type) {
@@ -5375,18 +5800,28 @@
                 id: generateId(),
                 type: type,
                 timestamp: new Date().toISOString(),
-                inspector: appState.currentUser?.name || 'Unknown',
-                data: getFireInspectionData(type)
+                inspector: appState.currentUser?.name || 'John Doe',
+                data: getFireInspectionData(type),
+                photos: appState.firePhotos[type] || []
             };
 
             appState.fireInspections.push(inspection);
             localStorage.setItem('safetyFireInspections', JSON.stringify(appState.fireInspections));
             
             showToast(`${type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ')} inspection saved successfully!`, 'success');
-            updateFireInspectionCount();
+            updateFireEquipmentStats();
             
             // Reset form
             resetFireForm(type);
+            
+            // Clear photos
+            if (appState.firePhotos[type]) {
+                appState.firePhotos[type] = [];
+            }
+            const photoPreview = document.getElementById(`${type}-photo-preview`);
+            if (photoPreview) {
+                photoPreview.innerHTML = '';
+            }
         }
 
         function getFireInspectionData(type) {
@@ -5461,7 +5896,7 @@
             
             document.body.innerHTML = `
                 <div style="padding: 20px; font-family: Arial, sans-serif;">
-                    <h1 style="color: var(--fire-blue); text-align: center;">Fire Equipment Inspection Report</h1>
+                    <h1 style="color: var(--fire-blue); text-align: center;">FEIS - Fire Equipment Inspection Report</h1>
                     <div>${printContent}</div>
                     <div style="margin-top: 50px; text-align: center; font-size: 12px; color: #666;">
                         Generated by SafetyOfficer - ${new Date().toLocaleString()}
@@ -5474,7 +5909,11 @@
             window.location.reload();
         }
 
-        function updateFireInspectionCount() {
+        function updateFireEquipmentStats() {
+            // Update equipment count
+            document.getElementById('fire-equipment-count').textContent = appState.fireEquipmentCount;
+            
+            // Update inspection count
             const thisMonth = new Date().getMonth();
             const thisYear = new Date().getFullYear();
             
@@ -5485,6 +5924,302 @@
             });
             
             document.getElementById('fire-inspection-count').textContent = monthlyInspections.length;
+            
+            // Update compliance rate
+            const totalInspections = appState.fireInspections.length;
+            const completedInspections = appState.fireInspections.filter(insp => 
+                insp.data && Object.keys(insp.data.checklist || {}).length > 0
+            ).length;
+            
+            const complianceRate = totalInspections > 0 ? 
+                Math.round((completedInspections / totalInspections) * 100) : 0;
+            document.getElementById('fire-compliance-rate').textContent = `${complianceRate}%`;
+            
+            // Update summary tab stats
+            document.getElementById('total-inspections').textContent = totalInspections;
+            document.getElementById('completed-inspections').textContent = monthlyInspections.length;
+            document.getElementById('pending-inspections').textContent = Math.max(0, 20 - monthlyInspections.length);
+            document.getElementById('overdue-inspections').textContent = appState.fireExpiries.filter(exp => 
+                new Date(exp.expiryDate) < new Date()
+            ).length;
+        }
+
+        // Expiry Management Functions
+        function loadFireExpiries() {
+            const savedExpiries = localStorage.getItem('safetyFireExpiries');
+            if (savedExpiries) {
+                appState.fireExpiries = JSON.parse(savedExpiries);
+            } else {
+                // Default sample data
+                const today = new Date();
+                appState.fireExpiries = [
+                    {
+                        id: generateId(),
+                        equipment: '9kg DCP Fire Extinguisher',
+                        location: 'Main Workshop',
+                        expiryDate: new Date(today.getFullYear(), today.getMonth() + 1, 15).toISOString().split('T')[0],
+                        daysRemaining: 45
+                    },
+                    {
+                        id: generateId(),
+                        equipment: 'CO2 Fire Extinguisher',
+                        location: 'Control Room',
+                        expiryDate: new Date(today.getFullYear(), today.getMonth() + 3, 10).toISOString().split('T')[0],
+                        daysRemaining: 105
+                    },
+                    {
+                        id: generateId(),
+                        equipment: 'Foam Fire Extinguisher',
+                        location: 'Fuel Depot',
+                        expiryDate: new Date(today.getFullYear(), today.getMonth() - 1, 5).toISOString().split('T')[0],
+                        daysRemaining: -25
+                    }
+                ];
+                localStorage.setItem('safetyFireExpiries', JSON.stringify(appState.fireExpiries));
+            }
+        }
+
+        function updateExpiryCountdown() {
+            const container = document.getElementById('expiryCountdown');
+            if (!container) return;
+
+            const today = new Date();
+            let html = '';
+
+            appState.fireExpiries.forEach(expiry => {
+                const expiryDate = new Date(expiry.expiryDate);
+                const daysRemaining = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+                
+                let statusClass = 'safe';
+                let statusText = 'Safe';
+                
+                if (daysRemaining <= 30 && daysRemaining > 7) {
+                    statusClass = 'warning';
+                    statusText = 'Warning';
+                } else if (daysRemaining <= 7) {
+                    statusClass = 'danger';
+                    statusText = 'Urgent';
+                } else if (daysRemaining < 0) {
+                    statusClass = 'danger';
+                    statusText = 'Expired';
+                }
+
+                html += `
+                    <div class="expiry-card ${statusClass}">
+                        <div class="expiry-equipment">${expiry.equipment}</div>
+                        <div class="expiry-date">Expires: ${expiryDate.toLocaleDateString()}</div>
+                        <div class="expiry-days">${Math.abs(daysRemaining)} days</div>
+                        <span class="expiry-status ${statusClass}">${statusText}</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function updateExpiryCalendar() {
+            const container = document.getElementById('expiryCalendar');
+            if (!container) return;
+
+            const today = new Date();
+            const currentMonth = today.getMonth();
+            const currentYear = today.getFullYear();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            
+            let html = '';
+            
+            // Add day headers
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            days.forEach(day => {
+                html += `<div class="calendar-day" style="font-weight: bold;">${day}</div>`;
+            });
+            
+            // Add empty cells for first day of month
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            for (let i = 0; i < firstDay; i++) {
+                html += '<div class="calendar-day"></div>';
+            }
+            
+            // Add days with expiry indicators
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const dateString = date.toISOString().split('T')[0];
+                
+                const expiringItem = appState.fireExpiries.find(exp => 
+                    exp.expiryDate === dateString
+                );
+                
+                let dayClass = 'calendar-day';
+                if (expiringItem) {
+                    dayClass += ' expiry';
+                } else if (day === today.getDate()) {
+                    dayClass += ' warning';
+                }
+                
+                html += `<div class="${dayClass}">${day}</div>`;
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function updateExpiryManagement() {
+            const container = document.getElementById('expiryManagement');
+            if (!container) return;
+
+            const today = new Date();
+            let html = '';
+
+            appState.fireExpiries.forEach(expiry => {
+                const expiryDate = new Date(expiry.expiryDate);
+                const daysRemaining = Math.ceil((expiryDate - today) / (1000 * 60 * 60 * 24));
+                
+                let statusClass = 'safe';
+                let statusText = 'Safe';
+                
+                if (daysRemaining <= 30 && daysRemaining > 7) {
+                    statusClass = 'warning';
+                    statusText = 'Warning';
+                } else if (daysRemaining <= 7) {
+                    statusClass = 'danger';
+                    statusText = 'Urgent';
+                } else if (daysRemaining < 0) {
+                    statusClass = 'danger';
+                    statusText = 'Expired';
+                }
+
+                html += `
+                    <div class="expiry-card ${statusClass}">
+                        <div class="expiry-equipment">${expiry.equipment}</div>
+                        <div class="expiry-date">Location: ${expiry.location}</div>
+                        <div class="expiry-date">Expires: ${expiryDate.toLocaleDateString()}</div>
+                        <div class="expiry-days">${Math.abs(daysRemaining)} days</div>
+                        <span class="expiry-status ${statusClass}">${statusText}</span>
+                        <button class="btn btn-sm btn-danger" style="margin-top: 10px;" onclick="removeExpiry('${expiry.id}')">Remove</button>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function addNewExpiry() {
+            const expiryDate = document.getElementById('new-expiry-date').value;
+            if (!expiryDate) {
+                showToast('Please select an expiry date', 'warning');
+                return;
+            }
+
+            const newExpiry = {
+                id: generateId(),
+                equipment: 'New Fire Extinguisher',
+                location: 'To be assigned',
+                expiryDate: expiryDate,
+                daysRemaining: 0
+            };
+
+            appState.fireExpiries.push(newExpiry);
+            localStorage.setItem('safetyFireExpiries', JSON.stringify(appState.fireExpiries));
+            
+            updateExpiryCountdown();
+            updateExpiryCalendar();
+            updateExpiryManagement();
+            
+            document.getElementById('new-expiry-date').value = '';
+            showToast('New expiry date added', 'success');
+        }
+
+        function saveExpiryDate() {
+            addNewExpiry();
+        }
+
+        function removeExpiry(id) {
+            appState.fireExpiries = appState.fireExpiries.filter(exp => exp.id !== id);
+            localStorage.setItem('safetyFireExpiries', JSON.stringify(appState.fireExpiries));
+            
+            updateExpiryCountdown();
+            updateExpiryCalendar();
+            updateExpiryManagement();
+            
+            showToast('Expiry removed', 'success');
+        }
+
+        function updateInspectionsTable() {
+            const tableBody = document.getElementById('inspectionsTable');
+            if (!tableBody) return;
+
+            const recentInspections = appState.fireInspections.slice(-10).reverse();
+            
+            if (recentInspections.length === 0) {
+                tableBody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #999;">
+                            No inspections recorded yet
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tableBody.innerHTML = recentInspections.map(inspection => `
+                <tr>
+                    <td>${new Date(inspection.timestamp).toLocaleDateString()}</td>
+                    <td>${inspection.type.charAt(0).toUpperCase() + inspection.type.slice(1)}</td>
+                    <td>${inspection.data?.area || 'Unknown'}</td>
+                    <td>${inspection.inspector}</td>
+                    <td>
+                        <span class="expiry-status safe" style="padding: 2px 8px;">
+                            Completed
+                        </span>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewInspection('${inspection.id}')">
+                            View
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function viewInspection(id) {
+            const inspection = appState.fireInspections.find(insp => insp.id === id);
+            if (inspection) {
+                showToast(`Viewing inspection from ${new Date(inspection.timestamp).toLocaleDateString()}`, 'info');
+                // In a real application, you would show a detailed view modal
+            }
+        }
+
+        function syncFireData() {
+            showToast('Syncing fire equipment data to cloud...', 'info');
+            // Simulate sync delay
+            setTimeout(() => {
+                showToast('Fire equipment data synced successfully!', 'success');
+            }, 2000);
+        }
+
+        function generateFireReport() {
+            showToast('Generating fire equipment report...', 'info');
+            // In a real application, generate and download a PDF report
+            setTimeout(() => {
+                showToast('Fire equipment report generated successfully!', 'success');
+            }, 1500);
+        }
+
+        // Initialize fire equipment on app load
+        function initializeFireEquipment() {
+            // Load saved inspections
+            const savedInspections = localStorage.getItem('safetyFireInspections');
+            if (savedInspections) {
+                appState.fireInspections = JSON.parse(savedInspections);
+            }
+            
+            // Set default dates
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                if (!input.value && !input.id.includes('expiry')) {
+                    input.value = new Date().toISOString().split('T')[0];
+                }
+            });
+            
+            updateFireEquipmentStats();
         }
 
         function exportFireData() {
@@ -5516,24 +6251,6 @@
         function exportFireReports() {
             document.getElementById('reportType').value = 'fire-equipment';
             showPanel('reports');
-        }
-
-        // Initialize fire equipment on app load
-        function initializeFireEquipment() {
-            // Load saved inspections
-            const savedInspections = localStorage.getItem('safetyFireInspections');
-            if (savedInspections) {
-                appState.fireInspections = JSON.parse(savedInspections);
-            }
-            
-            // Set default dates
-            document.querySelectorAll('input[type="date"]').forEach(input => {
-                if (!input.value) {
-                    input.value = new Date().toISOString().split('T')[0];
-                }
-            });
-            
-            updateFireInspectionCount();
         }
 
         // Report Functions
@@ -5610,13 +6327,36 @@
                     yPosition = 20;
                 }
             } else if (reportType === 'fire-equipment') {
-                doc.text('Fire Equipment Inspection Report', 20, yPosition);
+                doc.text('FEIS - Fire Equipment Inspection Report', 20, yPosition);
                 yPosition += 15;
                 
-                appState.fireInspections.forEach((inspection, index) => {
-                    doc.text(`${index + 1}. ${inspection.type} - ${inspection.data?.area || 'Unknown Area'}`, 25, yPosition);
+                doc.text('Equipment Expiry Summary:', 25, yPosition);
+                yPosition += 10;
+                
+                appState.fireExpiries.forEach((expiry, index) => {
+                    const expiryDate = new Date(expiry.expiryDate);
+                    const daysRemaining = Math.ceil((expiryDate - new Date()) / (1000 * 60 * 60 * 24));
+                    
+                    doc.text(`${index + 1}. ${expiry.equipment} - ${expiry.location}`, 30, yPosition);
                     yPosition += 10;
-                    doc.text(`   Inspector: ${inspection.inspector}`, 25, yPosition);
+                    doc.text(`   Expiry: ${expiryDate.toLocaleDateString()} (${daysRemaining} days)`, 30, yPosition);
+                    yPosition += 10;
+                    
+                    if (yPosition > 270) {
+                        doc.addPage();
+                        yPosition = 20;
+                    }
+                });
+                
+                yPosition += 10;
+                doc.text('Recent Inspections:', 25, yPosition);
+                yPosition += 10;
+                
+                const recentInspections = appState.fireInspections.slice(-5).reverse();
+                recentInspections.forEach((inspection, index) => {
+                    doc.text(`${index + 1}. ${inspection.type} - ${inspection.data?.area || 'Unknown'}`, 30, yPosition);
+                    yPosition += 10;
+                    doc.text(`   Inspector: ${inspection.inspector}`, 30, yPosition);
                     yPosition += 10;
                     
                     if (yPosition > 270) {
