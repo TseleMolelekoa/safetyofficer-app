@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+remove the hazard catergory and keep the responsiness: <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -2231,7 +2231,64 @@
             </div>
         </div>
 
-        
+        <!-- Hazard Panel -->
+        <div id="hazard" class="content-panel">
+            <h2 style="margin-bottom: 20px;">Report Hazard - <span id="hazardLocation"></span></h2>
+            
+            <div class="alert alert-warning">
+                ⚠️ MHSA Regulation 2.13.1: All hazards must be reported immediately and risk-assessed
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Hazard Category</label>
+                <div class="hazard-grid">
+                    <div class="hazard-btn" onclick="selectHazard(this, 'rockfall')">
+                        <div style="font-size: 40px;">🪨</div>
+                        <div>Rockfall</div>
+                    </div>
+                    <div class="hazard-btn" onclick="selectHazard(this, 'ventilation')">
+                        <div style="font-size: 40px;">💨</div>
+                        <div>Ventilation</div>
+                    </div>
+                    <div class="hazard-btn" onclick="selectHazard(this, 'machinery')">
+                        <div style="font-size: 40px;">⚙️</div>
+                        <div>Machinery</div>
+                    </div>
+                    <div class="hazard-btn" onclick="selectHazard(this, 'electrical')">
+                        <div style="font-size: 40px;">⚡</div>
+                        <div>Electrical</div>
+                    </div>
+                    <div class="hazard-btn" onclick="selectHazard(this, 'chemical')">
+                        <div style="font-size: 40px;">🧪</div>
+                        <div>Chemical</div>
+                    </div>
+                    <div class="hazard-btn" onclick="selectHazard(this, 'other')">
+                        <div style="font-size: 40px;">⚠️</div>
+                        <div>Other</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Risk Level (Auto-calculated)</label>
+                <select class="form-select" id="riskLevel">
+                    <option value="immediate">🔴 Immediate Risk - Stop Work</option>
+                    <option value="high">🟠 High Priority - 24hr Action</option>
+                    <option value="medium">🟡 Medium Priority - 7 days</option>
+                    <option value="low">🟢 Low Priority - Monitor</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Description</label>
+                <textarea class="form-textarea" placeholder="Describe the hazard in detail..." id="hazardDescription"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">Specific Location</label>
+                <input type="text" class="form-input" placeholder="Specific area/sector (GPS: Auto-detected)" id="hazardSpecificLocation">
+            </div>
+
             <!-- Risk Assessment Table -->
             <div class="risk-assessment">
                 <div class="risk-title">Hazard Risk Assessment</div>
@@ -6365,4 +6422,3 @@
     </script>
 </body>
 </html>
-
